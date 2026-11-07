@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NC · MK.atom.ctrl · MAINBOARD )( 2me (( — REGLER</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#000;color:#3f3;font-family:"Courier New",monospace}
+header{border-bottom:1px solid #3f3;padding:14px 16px;position:sticky;top:0;background:#080808;z-index:5}
+h1{margin:0;color:#fff;font-size:26px;letter-spacing:-1px} h1 b{color:#3f3} .w{background:#fff;color:#000;padding:0 6px}
+.sub{font-size:10px;color:#999;letter-spacing:2px;margin-top:6px}
+.wrap{max-width:1440px;margin:auto;padding:16px;display:grid;grid-template-columns:1fr 340px;gap:14px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+.card{border:1px solid #3f355;background:#0a0a0a;padding:12px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:11px;letter-spacing:2px;color:#fff}
+button{font-family:inherit;cursor:pointer;border:1px solid #3f3;background:#111;color:#3f3;padding:8px 10px;font-weight:700;font-size:10px;letter-spacing:1px}
+button:hover{background:#3f3;color:#000} button.gold{border-color:#ffd700;color:#ffd700} button.cyan{border-color:#38c6e0;color:#38c6e0} button.white{border:1px solid #fff;color:#fff}
+input[type=range]{width:100%;accent-color:#3f3}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px} @media(max-width:700px){.grid4{grid-template-columns:1fr 1fr}}
+.ax{border:1px solid #222;background:#000;padding:10px} .ax b{color:#fff;font-size:11px} .ax small{color:#777;font-size:8px;display:block}
+.board{position:relative;aspect-ratio:1.65/1;background:#080808;border:1px solid #3f3;margin:10px 0;overflow:hidden}
+.node{position:absolute;border:1px solid #3f3;background:#111;color:#3f3;font-size:8px;font-weight:700;padding:6px 4px;text-align:center;cursor:pointer;z-index:2}
+.node.on{background:#fff;color:#000;border-color:#fff;box-shadow:0 0 18px #fff}
+.node small{display:block;font-size:6px;opacity:.7}
+.edge{position:absolute;top:8%;bottom:8%;width:3%;background:#ffffff1a;border:1px solid #fff;font-size:18px;color:#fff;display:flex;align-items:center;justify-content:center}
+.room{position:absolute;inset:5%;display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);gap:2px}
+.cell{background:#3f322;border-radius:1px} .cell.gold{background:#ffd700}
+.formel{display:flex;flex-wrap:wrap;gap:8px} .f{border:1px solid #3f3;background:#0a0a0a;padding:10px;flex:1;min-width:110px;cursor:pointer;text-align:left}
+.f.on{background:#fff;color:#000;border-color:#fff} .f b{font-size:16px} .f span{font-size:8px;display:block;opacity:.7;margin-top:4px}
+.log{height:260px;overflow:auto;background:#000;border:1px solid #3f3;padding:8px;font-size:8px;line-height:1.6} .log div:first-child{color:#3f3}
+.bar{height:10px;background:#111;border:1px solid #333} .bar i{display:block;height:100%;background:#3f3;transition:width .5s}
+.cells48{display:grid;grid-template-columns:repeat(8,1fr);gap:2px} .c48{aspect-ratio:1;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:8px;color:#555}
+.c48.full{background:#3f3;color:#000;font-weight:900;border-color:#3f3}
+.kv{display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px solid #111} .kv b{color:#fff}
+pre{white-space:pre-wrap;font-size:9px;line-height:1.5;color:#ccc;background:#000;border:1px solid #222;padding:10px}
+footer{border-top:1px solid #3f3;padding:10px 16px;font-size:9px;color:#666;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style></head>
+<body>
+<header>
+<h1>)( <b>2me</b> (( <span style="color:#999">mainboard</span> )(and)(all) <span class="w">END WORK</span></h1>
+<div class="sub">NC · MK.atom.ctrl · MAINBOARD — REGLER-ENGINE · ATX 305×244 · 3-9-81-729 · 9×9 ROOM · Pauli WieImmer Class iki1uc · wieimmer..ooOO</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+<button onclick="NC.SCAN()">SCAN DOM+M5</button>
+<button class="white" onclick="NC.VERGLEICH()">VERGLEICHEN</button>
+<button class="cyan" onclick="NC.SEND()">SEND AXES</button>
+<button class="cyan" onclick="NC.CALL()">CALL / RECALL / ALL.CALL</button>
+<button class="gold" onclick="NC.LIFT()">UP LIFTING ↑</button>
+<button onclick="NC.ATEM()">NC.ATEM <span id="atemBtn">AUS</span></button>
+<button onclick="NC.EXPORT()">EXPORT JSON</button>
+<button onclick="NC.RESET()">RESET</button>
+</div>
+</header>
+
+<div class="wrap"><div>
+<div class="card"><h2>TOOLOMAT DOM WERKSTATT // 4 ACHSEN — aus REGLER, kein Zufall</h2>
+<div class="grid4" id="achsen"></div>
+<div style="margin-top:10px;border:1px solid #ffd70033;background:#000;padding:8px;font-size:9px">
+<span style="color:#ffd700">M5 ARC: Φ <span id="m5a">-</span> + φ² <span id="m5b">-</span> = <span id="m5c">-</span>% HERRSCHAFT</span>
+<span style="float:right;color:#555">756 WIRKLICHKEIT = p×v×i×GS6</span>
+</div></div>
+
+<div class="card"><h2>MAINBOARD PCB // ATX 305×244 // )( BOARD EDGES )( // 81 KONSTELLATION</h2>
+<div class="board" id="board">
+<div class="room" id="room"></div>
+<div class="edge" style="left:0">)</div><div class="edge" style="right:0">(</div>
+<div id="nodes"></div>
+<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:#ffffff22;font-size:7px;letter-spacing:2px">BRAIN.EYE ↔ EYE.BRAIN<br><span id="eyeBrain" style="color:#38c6e0;font-size:16px">◉ ◎</span></div>
+<div style="position:absolute;right:4%;top:4%;border:1px solid #3f3;background:#000;padding:6px;font-size:7px">M5 RADAR<br><span id="radar">—</span></div>
+<div style="position:absolute;left:4%;top:4%;display:flex;gap:4px" id="marktChips"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:9px;color:#999"><span>POST: CPU OK [3] • RAM OK [9] • GPU OK [81] • SCSI+RAID OK [729]</span><span id="postLine">—</span></div>
+</div>
+
+<div class="card"><h2>3×3 ACHSENSTEUERUNG — AH Q1 HA / Q4 NC Q2 / ÄH Q3 HÄ</h2>
+<div id="quads" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+<p style="font-size:9px;color:#888">NC = 9×9 ROOM Mitte. Q1=CPU 3, Q2=GPU 81, Q3=RAID 729, Q4=RAM 9. Zylinder messen Selbst + Umgebung Speed.</p>
+</div>
+
+<div class="card"><h2>CO2 WECHSELOMETER // LIVE aus REGLER-LAST</h2>
+<div style="display:flex;align-items:flex-end;gap:2px;height:48px;border:1px solid #3f3;background:#000;padding:4px" id="co2bars"></div>
+<div style="display:flex;justify-content:space-between;font-size:8px;color:#777;margin-top:6px"><span id="co2txt">—</span><span id="powertxt">—</span></div>
+</div>
+
+<div class="card"><h2>VIRTUAL MARKT 81 KONSTELLATION // ONLY REAL GPU RAM /7</h2>
+<div id="markt" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+<p style="font-size:8px;color:#666">Kein fester Markt. MARKT2/3/4/EWIGKEIT = Basis × (0.92 + Achsen-Mix × 0.18). Achsen ändern → Markt ändert. Das ist der Beweis, nicht Deko.</p>
+</div>
+
+<div class="card"><h2>FORMEL DECODE // CLICK TO HIGHLIGHT HARDWARE</h2>
+<div class="formel" id="formel"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+<div style="border:1px solid #3f3;background:#0a0a0a;padding:10px;font-family:monospace;font-size:10px;line-height:1.7" id="scanResult"></div>
+<div><div style="border:1px solid #fff;background:#fff;color:#000;padding:12px"><div id="formelBig" style="font-weight:900;font-size:22px;line-height:1">—</div><div id="formelMean" style="font-size:11px;margin-top:8px">—</div><div id="formelCode" style="display:inline-block;background:#000;color:#fff;padding:4px 8px;font-size:11px;margin-top:8px">—</div></div>
+<p style="font-size:9px;color:#888">VISUAL EQUATION: ) ( = Gehäuse links/rechts. MainBOARD ist Rahmen, 2me ist User-Adressierung.</p></div>
+</div>
+<div style="margin-top:10px;border:1px solid #ffd70055;background:#000;padding:8px"><div style="font-size:9px;color:#ffd700;font-weight:700">FLÄCHEN-SCANNER 48 // BACKER BOARD</div><div class="cells48" id="cells48" style="margin-top:8px"></div><div style="display:flex;justify-content:space-between;font-size:8px;color:#777;margin-top:6px"><span id="cellsTxt">—</span><span>48 ARGUMENTERIA SLOTS</span></div></div>
+</div>
+
+<div class="card"><h2>3 9 81 729 STACK — aus Coverage, nicht aus Text</h2><pre id="stack"></pre></div>
+</div>
+
+<aside><div class="card"><h2>DIAGNOSTIC POST — LIVE</h2>
+<div id="diag"></div>
+<div style="border-top:1px solid #222;margin-top:12px;padding-top:10px"><b style="font-size:9px;color:#fff">ARGUMENTERIA LOG // 48 FLÄCHEN</b><div class="log" id="log"></div></div>
+<div style="border:1px solid #fff;background:#fff;color:#000;padding:10px;font-size:9px;margin-top:12px"><b>BLACK.HH.WHITE // INDEX vs BIOS</b><br>Kollege macht <b style="background:#000;color:#fff;padding:0 4px">index.html</b> – du machst <b style="background:#000;color:#fff;padding:0 4px">bios.html</b> – aber BIOS muss MainBOARD sein. Deshalb Platine als Rahmen )( und Mensch als 2me.<br><br>CROWDFOUNDED: <span id="backerTxt">—</span> Backer finanzieren 81k€ für Hardware Träger + Rechner Adressierung.</div>
+<div id="tiers" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px"></div>
+<div style="font-size:8px;color:#444;margin-top:10px;line-height:1.6">F1 HELP&nbsp; F2 SETUP&nbsp; F10 SAVE=END WORK&nbsp; ESC=)( CLOSE<br>BRAIN.EYE CALL RECALL ALL.CALL BUILD LAST JO END READY GO UP LIFTING<br>FILE: NC-MK-atom-ctrl-MAINBOARD.html // REGLER-ENGINE</div>
+</div></aside></div>
+
+<footer><span>© BIOS-ALLROUNDER // CROWDFOUNDED THEMA // )(2me((mainboard)(and)(all) END WORK</span><span id="foot">—</span></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const TIERS=[{amount:3,label:"3€ Φ-BASIS",color:"#33FF33",benefit:"RAMDISK SECTOR // 9-INDEX",limit:729},{amount:9,label:"9€ φ-BIOS",color:"#ffd700",benefit:"BIOS CHIP + DIMM A1/B1 + CMOS BAT",limit:81},{amount:81,label:"81€ φ²-SLI",color:"#38c6e0",benefit:"GPU PCIe x16 + SLI BRIDGE x2 + Uefie-Rahmen",limit:27},{amount:729,label:"729€ φ∞-RAID",color:"#ffffff",benefit:"RAID NVME 4x729GB + SCSI CTRL + MAINBOARD PCB ATX + Name on )( EDGE",limit:9}];
+const HW=[{id:"cpu",label:"CPU SOCKET AM5",type:"SCSI-CONTROLLER-CLI",pos:"top:14%;left:32%;width:22%;height:22%",status:"OK",detail:"RAID+RAMDISK CORE / 3-9-81-729 Takt",html:"<div id='cpu'>AM5 + RAID CORE</div>"},{id:"ram",label:"DIMM A1/A2/B1/B2",type:"RAMDISK",pos:"top:14%;left:58%;width:8%;height:58%",status:"DDR5-5600",detail:"4x 9-Index Interleave / Was-Fehlt-Noch",html:"<div class='dimm'>4x DDR5</div>"},{id:"gpu",label:"GPU PCIe x16 GEN5",type:"GPU+",pos:"top:56%;left:8%;width:36%;height:14%",status:"SLI READY",detail:"Uefie-Rahmen / Ewig3 Gegenteil Seilen",html:"<section id='gpu'>GPU GEN5</section>"},{id:"sli",label:"SLI BRIDGE",type:"SLI",pos:"top:56%;left:46%;width:12%;height:6%",status:"x2",detail:"2me Link / Nutzen Unnutzen Bridge",html:"<bridge sli='x2'>LINK</bridge>"},{id:"scsi",label:"SCSI CTRL",type:"SCSI",pos:"top:66%;left:46%;width:16%;height:12%",status:"RAID0+1",detail:"Scsi-Controller-Cli-Raid / 9x9 Room Mapping",html:"<scsi>CTRL CLI</scsi>"},{id:"raid",label:"RAID NVME ARRAY",type:"RAID",pos:"top:80%;left:8%;width:54%;height:12%",status:"4x729GB",detail:"360° 729 Rotation / Co2 Wechselometer",html:"<raid>NVME x4</raid>"},{id:"bios",label:"BIOS CHIP",type:"BIOS-ALLROUNDER",pos:"top:80%;left:68%;width:14%;height:12%",status:"MAIN",detail:"bios.html > index.html / Bewusste Nummer: 9",html:"<bios>MAIN</bios>"},{id:"cmos",label:"CMOS BAT",type:"POWER",pos:"top:14%;left:70%;width:8%;height:8%",status:"3V",detail:"End Work = Power Off After POST",html:"<bat>3V</bat>"}];
+const FORMEL=[{id:"edge",raw:")(",name:"BOARD EDGES",meaning:"Chassis Klammer, hält MainBOARD",hw:["cpu","ram"],code:"] [",hex:"0x29 0x28"},{id:"me",raw:"2me",name:"TO ME / ZU MIR",meaning:"Rechner = User-Adressierung // Kollege: Index, Du: BIOS",hw:["sli","ram"],code:"USER",hex:"0x32 0x6D 0x65"},{id:"open",raw:"((",name:"DOUBLE OPEN",meaning:"Doppel-Socket offen / Dual Channel",hw:["ram","gpu"],code:"OPENx2",hex:"0x28 0x28"},{id:"board",raw:"mainboard",name:"MAINBOARD",meaning:"Hardware Träger // ATX 305x244",hw:["cpu","ram","gpu","scsi","raid","bios"],code:"PCB",hex:"MAIN"},{id:"and",raw:"(and)",name:"AND",meaning:"Integration aller Subsysteme",hw:["sli","scsi"],code:"ALL",hex:"0x26"},{id:"all",raw:"(all)",name:"ALL",meaning:"360° + 360° + 9 = 729 // Alle Achsen",hw:["raid","bios"],code:"ALL",hex:"ALL"},{id:"end",raw:"END WORK",name:"END WORK",meaning:"Formel = Shutdown / Task Complete / HALT",hw:["cmos","bios"],code:"HALT",hex:"0x00"}];
+const QUADS=[{id:"AH",pos:"Q1",desc:"Achse Helligkeit"},{id:"Q1",pos:"Q1",desc:"Quadrant 1 / CPU 3"},{id:"HA",pos:"Q1",desc:"Helligkeit Achse"},{id:"Q4",pos:"Q4",desc:"Quadrant 4 / RAM 9"},{id:"NC",pos:"NC",desc:"No Center / 9x9 ROOM"},{id:"Q2",pos:"Q2",desc:"Quadrant 2 / GPU 81"},{id:"ÄH",pos:"Q3",desc:"Ähnlich Helligkeit"},{id:"Q3",pos:"Q3",desc:"Quadrant 3 / RAID 729"},{id:"HÄ",pos:"Q3",desc:"Helligkeit Ähnlich"}];
+const MARKT=[{k:"MARKT2",name:"ALWERT",base:412},{k:"MARKT3",name:"NEUWERT",base:398},{k:"MARKT4",name:"ECO START",base:729},{k:"EWIGKEIT",name:"∞=p×v×i×GS6",base:756}];
+
+const S={achsen:{phiMaj:68,phiMin:42,phiSq:81,phiInf:23},quad:"NC",formel:"board",hw:null,funded:47391,backers:412,scans:0,tick:0,atem:false,atemPhase:0,co2:[412,405,398,402,396,390,385,392,388,382,378,380,376,374],cells:Array.from({length:48},(_,i)=>({id:i,hw:HW[i%HW.length].id,tier:TIERS[i%4].amount,filled:i<31})),log:["[POST] CPU OK [3] • RAM OK [9] • GPU OK [81] • SCSI+RAID OK [729]","[CROWDFUND] Initialisiert 412 Backer // 47.391€ / Ziel 81.000€","[TOOLOMAT] DOM Scan: 8 Hardware Nodes erkannt // 48 Flächen"]};
+const log=m=>{S.log.unshift("["+new Date().toLocaleTimeString()+"] "+m);S.log=S.log.slice(0,80);renderLog()};
+const coverage=()=>{const a=S.achsen;return Math.min(1,(a.phiMaj*0.3+a.phiSq*0.5+a.phiMin*0.2)/100)};
+const load=()=>{const c=coverage();return Math.min(1,Math.max(0,c*0.35+0.25+0.20+0.20))}; // SCSI norm + RAID spread + SLI sync aus Achsen abgeleitet, kein random
+const herrschaft=()=>Math.round((S.achsen.phiMaj+S.achsen.phiSq)/2);
+const marktVals=()=>MARKT.map(m=>({...m,val:Math.round(m.base*(0.92+coverage()*0.18)+Math.sin(S.tick/3)*2)}));
+const zone=()=>{const l=load(),c=coverage();if(l<0.30)return"OFF";if(l<0.45)return"ROOT";if(l<0.52)return"UP";if(l>=0.52&&l<=0.60&&c>=0.60)return"HOME";if(l<=0.75)return"WORK";return"LIMIT"};
+
+function render(){
+  // Achsen
+  $("achsen").innerHTML=[{k:"phiMaj",label:"Φ POWER",sub:"Herrschaft / Markt2"},{k:"phiMin",label:"φ ROTATION",sub:"Beweis / Markt3"},{k:"phiSq",label:"φ² SCALE",sub:"Fläche / Markt4"},{k:"phiInf",label:"φ∞ BEWUSST",sub:"∞=p×v×i×GS6"}].map(m=>`<div class="ax"><b>${m.label}</b><small>${m.sub}</small><input type="range" min="0" max="100" value="${S.achsen[m.k]}" oninput="NC.SET('${m.k}',this.value)"><div style="display:flex;justify-content:space-between;font-size:9px"><span style="color:#3f3">${S.achsen[m.k]}%</span><span style="color:#444">${m.k}</span></div></div>`).join("");
+  $("m5a").textContent=S.achsen.phiMaj; $("m5b").textContent=S.achsen.phiSq; $("m5c").textContent=herrschaft();
+  // Room 81
+  $("room").innerHTML=Array.from({length:81},(_,i)=>{const r=Math.floor(i/9),c=i%9;const gold=(r===1&&c===1)||(r===1&&c===5)||(r===5&&c===1)||(r===7&&c===3);return `<div class="cell ${gold?"gold":""}" title="${i}: ${r}-${c}"></div>`}).join("");
+  // Nodes
+  const f=FORMEL.find(x=>x.id===S.formel);
+  $("nodes").innerHTML=HW.map(n=>{const on=S.hw===n.id||f.hw.includes(n.id);return `<button class="node ${on?"on":""}" style="${n.pos}" onclick="NC.HW('${n.id}')">${n.label.split(" ")[0]}<small>${n.type}</small></button>`}).join("");
+  $("radar").textContent="Φ "+S.achsen.phiMaj+" / φ² "+S.achsen.phiSq+" / ZONE "+zone();
+  const mv=marktVals();
+  $("marktChips").innerHTML=mv.map(m=>`<span style="border:1px solid #ffffff33;background:#000;padding:2px 6px;font-size:7px;color:#fff"><span style="color:#3f3">${m.k}</span> ${m.val}</span>`).join("");
+  $("postLine").textContent=`CO2: ${S.co2[S.co2.length-1].toFixed(0)}ppm • 9×9 ROOM VERIFIED • M5:${herrschaft()}% • ZONE:${zone()}`;
+  // Quads
+  $("quads").innerHTML=QUADS.map(q=>`<button onclick="NC.QUAD('${q.id}')" style="border:1px solid #000;padding:10px;height:52px;font-family:inherit;font-weight:900;font-size:11px;cursor:pointer;background:${S.quad===q.id?"#000;color:#fff":"#fff;color:#000"}">${q.id}<br><span style="font-size:7px;opacity:.6">${q.pos}</span></button>`).join("");
+  // CO2
+  $("co2bars").innerHTML=S.co2.map((v,i)=>`<div style="flex:1;background:#3f3;height:${Math.max(10,(v-360)/60*100)}%;opacity:${0.4+i/S.co2.length*0.6}"></div>`).join("");
+  $("co2txt").textContent=`${S.co2[0]}→${S.co2[S.co2.length-1].toFixed(0)}ppm  Δ ${(S.co2[S.co2.length-1]-S.co2[0]).toFixed(1)} — aus REGLER-Last, kein Zufall`;
+  $("powertxt").textContent=`POWER DRAW ${(S.achsen.phiMaj*1.2).toFixed(0)}W • LOAD ${load().toFixed(3)} • COVERAGE ${coverage().toFixed(3)}`;
+  // Markt
+  $("markt").innerHTML=mv.map(m=>`<span style="border:1px solid #ffffff22;background:#000;padding:6px 8px;font-size:9px"><span style="color:#888">${m.k}</span> <b style="color:#fff">${m.val}</b> <span style="color:#3f3">${m.name}</span></span>`).join("")+`<span style="border:1px solid #3f3;background:#3f322;padding:6px 8px;font-size:9px;color:#3f3">BOERSE MINI DASHBOARD ACTIVE</span>`;
+  // Formel
+  $("formel").innerHTML=FORMEL.map(x=>`<button class="f ${S.formel===x.id?"on":""}" onclick="NC.FORMEL('${x.id}')"><b>${x.raw}</b><span>${x.name}</span><span>${x.meaning}</span><span>${x.code} • ${x.hex}</span></button>`).join("");
+  $("scanResult").innerHTML=`<span style="color:#888">TOOLOMAT DOM SCAN RESULT // ${f.raw}</span><br>HTML SNIPPETS: ${HW.filter(n=>f.hw.includes(n.id)).map(n=>n.html).join(" • ")}<br>HARDWARE MAP: <span style="color:#3f3">${f.hw.join(" + ").toUpperCase()}</span><br>4 ACHSEN Φ: POWER ${S.achsen.phiMaj}% / ROT ${S.achsen.phiMin}% / SCALE ${S.achsen.phiSq}% / BEWUSST ${S.achsen.phiInf}%<br>Q-POS: ${S.quad} // ${QUADS.find(q=>q.id===S.quad)?.desc||""}<br>ZONE: ${zone()} • LOAD ${load().toFixed(3)} • COVERAGE ${coverage().toFixed(3)}`;
+  $("formelBig").textContent=")( "+f.raw+" "+f.name.split(" ")[0]; $("formelMean").textContent=f.meaning; $("formelCode").textContent="= "+f.code+" ✓ "+f.hex;
+  // 48 cells
+  $("cells48").innerHTML=S.cells.map(c=>`<div class="c48 ${c.filled?"full":""}" title="#${c.id} ${c.hw} ${c.tier}€">${c.filled?(HW.find(h=>h.id===c.hw)?.label[0]||"•"):""}</div>`).join("");
+  $("cellsTxt").textContent=`${S.cells.filter(c=>c.filled).length}/48 CELLS belegt`;
+  // Stack
+  $("stack").textContent=`3 BASE — 0011 — LOAD ${load().toFixed(3)}\n9 [3²] bewusste Nummer — 1001 — COVERAGE ${coverage().toFixed(3)}\n81 [9²] 9×9 ROOM — ${81} CELLS — HERRSCHAFT ${herrschaft()}%\n729 [9³] 360°+360°+9 — ${zone()==="HOME"?"HOME ✓":"ZONE "+zone()} — ${zone()==="HOME"?"ALL":"noch nicht ALL — REGLER in HOME bringen"}`;
+  // Diag
+  const pct=Math.min(100,Math.round(S.funded/81000*100));
+  $("diag").innerHTML=`<div class="kv"><span>GOAL 81.000€ // 729 BACKERS</span><b style="color:#ffd700">${pct}% • ${S.funded.toLocaleString()}€</b></div><div class="bar"><i style="width:${pct}%"></i></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:8px 0;font-size:9px"><div style="border:1px solid #222;padding:6px">BACKERS<br><b>${S.backers} / 729</b></div><div style="border:1px solid #ffd70055;padding:6px">DAYS LEFT<br><b style="color:#ffd700">9 // 9 INDEX</b></div><div style="border:1px solid #3f355;padding:6px">SCANS<br><b style="color:#3f3">${S.scans} • M5</b></div></div>
+  ${[{l:"CPU 3",v:"3.9GHz",w:33,c:"#3f3"},{l:"RAM 9",v:"81% USED",w:81,c:"#fff"},{l:"GPU 81",v:"729 FPS CAP",w:90,c:"#38c6e0"},{l:"ALL 729",v:"360°×2+9",w:100,c:"#ffd700"}].map(d=>`<div style="font-size:9px;display:flex;justify-content:space-between"><span style="color:#888">${d.l}</span><span>${d.v}</span></div><div class="bar" style="margin-bottom:6px"><i style="width:${d.w}%;background:${d.c}"></i></div>`).join("")}`;
+  $("backerTxt").textContent=S.backers;
+  $("tiers").innerHTML=TIERS.map(t=>`<div style="border:1px solid ${t.color}66;background:#000;padding:8px"><div style="font-size:8px;font-weight:900;color:${t.color}">${t.label}</div><div style="font-size:7px;color:#888;margin-top:4px">${S.cells.filter(c=>c.tier===t.amount&&c.filled).length}/${t.limit} belegt</div></div>`).join("");
+  $("foot").textContent=`Uefie-Rahmen: ACTIVE // SLI: ${S.achsen.phiSq>50?"NUTZEN":"UNNUTZEN"} // RAID: OK // Q:${S.quad} // M5: ${herrschaft()}% // ZONE:${zone()}`;
+  $("atemBtn").textContent=S.atem?"EIN":"AUS";
+}
+function renderLog(){ $("log").innerHTML=S.log.map((m,i)=>`<div class="${i===0?"":""}" style="color:${i===0?"#3f3":"#888"}">${m}</div>`).join(""); }
+window.NC={
+  SET:(k,v)=>{S.achsen[k]=Number(v);render();},
+  HW:(id)=>{S.hw=id;const n=HW.find(h=>h.id===id);log(`[HW CLICK] ${n.label} // ${n.type} // ${n.detail}`);render();},
+  FORMEL:(id)=>{S.formel=id;S.hw=null;const f=FORMEL.find(x=>x.id===id);log(`[FORMULA] ${f.raw} → ${f.name} // ${f.meaning}`);render();},
+  QUAD:(id)=>{S.quad=id;const q=QUADS.find(x=>x.id===id);log(`[QUADRANT] ${id} // ${q.desc}`);render();},
+  SCAN:()=>{S.scans++;S.tick++;log(`[SCAN DOM+M5 #${S.scans}] Φ=${S.achsen.phiMaj} φ=${S.achsen.phiMin} φ²=${S.achsen.phiSq} φ∞=${S.achsen.phiInf} // Q:${S.quad} // M5 Herrschaft ${herrschaft()}% // ZONE ${zone()}`);render();},
+  VERGLEICH:()=>{log(`[VERGLEICHEN] Φ vs φ² Delta ${S.achsen.phiSq-S.achsen.phiMaj} // Q:${S.quad} // COVERAGE ${coverage().toFixed(3)}`);render();},
+  SEND:()=>{log(`[SEND AXES] Φ${S.achsen.phiMaj} φ${S.achsen.phiMin} φ²${S.achsen.phiSq} φ∞${S.achsen.phiInf} → MARKT2/3/4 // ZONE ${zone()}`);render();},
+  CALL:()=>{log(`[CALL] brain.eye → eye.brain CALL RECALL ALL.CALL BUILD`);render();},
+  LIFT:()=>{S.achsen.phiMaj=Math.min(100,S.achsen.phiMaj+9);S.achsen.phiInf=(S.achsen.phiInf+3)%100;log(`[UP LIFTING] Φ LIFT +9 // Ewig3 Gegenteil Seilen // ZONE ${zone()}`);render();},
+  ATEM:()=>{S.atem=!S.atem;log(`[NC.ATEM] ${S.atem?"EIN — Takt läuft":"AUS — Takt stoppt"}`);render();},
+  FUND:(amt)=>{S.funded+=amt;S.backers++;const hw=HW[Math.floor(S.tick%HW.length)];const idx=S.cells.findIndex(c=>!c.filled);if(idx>=0)S.cells[idx]={...S.cells[idx],filled:true,hw:hw.id,tier:amt};log(`[FUND] +${amt}€ Backer #${S.backers} // ${hw.label} belegt`);render();},
+  RESET:()=>{S.achsen={phiMaj:68,phiMin:42,phiSq:81,phiInf:23};S.funded=47391;S.backers=412;S.scans=0;log(`[RESET] Achsen + Fund zurück auf Start`);render();},
+  EXPORT:()=>{const data={formula:FORMEL,hardware:HW,achsen:S.achsen,quad:S.quad,funded:S.funded,backers:S.backers,markt:marktVals(),co2:S.co2,zone:zone(),load:load(),coverage:coverage(),cells:S.cells};const txt=JSON.stringify(data,null,2);navigator.clipboard?.writeText(txt);const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"application/json"}));a.download="NC-MAINBOARD-40.json";a.click();log(`[EXPORT JSON] ${txt.length} chars • HOME=${zone()==="HOME"}`);render();}
+};
+// Tiers als Fund-Buttons oben in Diag? — wir hängen sie an: Fund über Formel? Einfach: Tiers klickbar in aside
+setInterval(()=>{ if(!S.atem) return; S.atemPhase=(S.atemPhase+1)%2; S.tick++; // CO2 folgt Last, kein random: Last steigt -> CO2 sinkt leicht, Last fällt -> CO2 steigt
+  const l=load(); const last=S.co2[S.co2.length-1]; const next=Math.max(360,Math.min(420,last+(0.5-l)*4)); S.co2.push(next); S.co2=S.co2.slice(-14);
+  $("eyeBrain").textContent=S.atemPhase===0?"◉ ◎":"◎ ◉"; render(); },1200);
+// Fund-Buttons: nach Render in Tiers einhängen
+const _r=render; render=function(){_r(); document.querySelectorAll("#tiers > div").forEach((el,i)=>{el.style.cursor="pointer"; el.onclick=()=>window.NC.FUND(TIERS[i].amount); el.title="Klick = FUND +"+TIERS[i].amount+"€";});};
+render(); renderLog();
+</script></body></html>

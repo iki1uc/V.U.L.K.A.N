@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BTC729 — 729k Schöpfer → 81k Radar → 9k Kern → 3k Essenz</title>
+<style>
+:root{--bg:#0d0f0c;--panel:#131610;--line:#26281f;--ink:#f2efe8;--muted:#9a958a;--gold:#e8c87a;--green:#7ec98a;--red:#ff8a8a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.6 Georgia,serif;max-width:900px;margin:0 auto;padding:28px 18px 60px}
+header{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}
+.eyebrow{font:10px/1 ui-monospace,monospace;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+h1{font-weight:400;font-size:28px;line-height:1.2;margin:10px 0} h1 b{color:var(--gold)}
+.rule{font-style:italic;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+figure{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;position:relative;aspect-ratio:1.618/1;display:flex;align-items:center;justify-content:center}
+figure.tel{border-color:#4a5a44}
+figcaption{position:absolute;top:8px;left:12px;font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);z-index:1}
+figcaption b{color:var(--gold)}
+canvas{max-width:100%;max-height:100%;display:block}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;font-style:italic}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:12px}
+.metrics>div{background:var(--panel);padding:12px 14px}
+.metrics small{font:9px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);display:block}
+.metrics b{font-size:20px;font-weight:400;display:block;margin-top:4px}
+.metrics b.pos{color:var(--green)} .metrics b.neg{color:var(--red)}
+.fixline{display:flex;gap:18px;flex-wrap:wrap;padding:10px 14px;background:#0a0d08;border:1px solid var(--line);border-radius:13px;font:12px/1 ui-monospace,monospace;color:var(--muted);margin-bottom:14px}
+.fixline b{color:var(--ink)} .ok{color:var(--green)} .bad{color:var(--red)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px;margin-bottom:14px}
+.panel h2{font:11px/1 ui-monospace,monospace;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;font-weight:400}
+.controls{display:grid;gap:10px;margin-bottom:12px}
+.ctl{display:grid;grid-template-columns:80px 1fr 48px;gap:10px;align-items:center}
+.ctl label{font:11px/1 ui-monospace,monospace;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.ctl input{width:100%;accent-color:var(--gold)} .ctl output{font:13px/1 ui-monospace,monospace;color:var(--gold);text-align:right}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:600px){.actions{grid-template-columns:1fr 1fr}}
+button{font:inherit;font-size:13px;padding:13px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover:not(:disabled){border-color:var(--gold)} button:disabled{opacity:.3;cursor:not-allowed}
+button.go{border-color:var(--gold);background:#1e180a;color:var(--gold);font-weight:600}
+.radar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+@media(max-width:600px){.radar{grid-template-columns:1fr 1fr}}
+.radar figure{aspect-ratio:1}
+.radar canvas{width:100%;height:100%}
+table{width:100%;border-collapse:collapse;font:12px/1.5 ui-monospace,monospace}
+th{color:var(--muted);font-weight:400;text-align:left;letter-spacing:.1em;text-transform:uppercase;font-size:10px}
+td,th{padding:6px 8px;border-bottom:1px solid var(--line)}
+textarea{width:100%;height:110px;background:#0a0d08;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:11px/1.5 ui-monospace,monospace}
+footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<header>
+<p class="eyebrow">BTC729 · Analyse-Codec · SCSI RAID SLI</p>
+<h1>729k <b>Schöpfer</b> → 81k <b>SAT / Radar / Tiefe</b> → 9k <b>Kern</b> → 3k <b>Essenz</b> → zurück</h1>
+<p class="rule">RAW bleibt RAW · 729 = 27×27 Zellen · 81 = 9×9 Radar · 9 = Kerncluster · 3 = DETAIL / LICHT / TIEFE · Rekonstruktion 3→9→81→729→Bild · PSNR / SSIM pro Ebene</p>
+</header>
+<main>
+<section class="grid">
+<figure><figcaption>ORIGINAL · SCSI</figcaption><canvas id="raw" hidden></canvas><div class="empty" id="eRaw">Bild wählen.<br>Es bleibt unberührt.</div></figure>
+<figure class="tel"><figcaption><b>BIO.TEL</b> · Rekonstruktion aus 3k</figcaption><canvas id="tel" hidden></canvas><div class="empty" id="eTel">Hier erscheint die Rekonstruktion.<br>3k → 9k → 81k → 729k → Bild.</div></figure>
+</section>
+<section class="metrics">
+<div><small>ORIGINAL SCORE</small><b id="mRaw">—</b></div>
+<div><small>BIO.TEL SCORE</small><b id="mTel">—</b></div>
+<div><small>DELTA · LIVE</small><b id="mDelta">—</b></div>
+<div><small>PSNR 729 / SSIM</small><b id="mPsnr">—</b></div>
+</section>
+<div class="fixline"><span>f = <b>min(x,40)</b></span><span>f(tel)=<b id="mF1">—</b> · f²(tel)=<b id="mF2">—</b></span><span>stabil: <b id="mStable">—</b></span><span>SCSI verwurzelt · RAID prüft · SLI parallel</span></div>
+
+<section class="panel"><h2>3k Essenz — Regler wirken auf 3k, dann 3→9→81→729→Bild</h2>
+<div class="controls">
+<div class="ctl"><label>Detail</label><input id="sDetail" type="range" min="0" max="100" value="84"><output id="oDetail">84</output></div>
+<div class="ctl"><label>Licht</label><input id="sLight" type="range" min="0" max="100" value="72"><output id="oLight">72</output></div>
+<div class="ctl"><label>Tiefe</label><input id="sDepth" type="range" min="0" max="100" value="69"><output id="oDepth">69</output></div>
+<div class="ctl"><label>Menge</label><input id="mix" type="range" min="0" max="100" value="55"><output id="mixOut">55</output></div>
+</div>
+<div class="actions"><input id="file" type="file" accept="image/*" hidden><button id="load">Bild wählen</button><button id="go" class="go" disabled>Encode + Rekonstruktion</button><button id="dl" disabled>Download TEL</button><button id="export" disabled>Export BTC729 JSON</button></div>
+<div style="display:flex;gap:10px"><input id="importFile" type="file" accept=".json,application/json" hidden><button id="importBtn" style="flex:1">Import BTC729 JSON</button><button id="resetEssence" style="flex:1">Essenz aus Bild</button></div>
+</section>
+
+<section class="panel"><h2>Radar — 729 / 81 / 9 / 3</h2>
+<div class="radar">
+<figure><figcaption>729 SCHÖPFER 27×27</figcaption><canvas id="c729" width="270" height="270"></canvas></figure>
+<figure><figcaption>81 RADAR 9×9</figcaption><canvas id="c81" width="270" height="270"></canvas></figure>
+<figure><figcaption>9 KERN 3×3</figcaption><canvas id="c9" width="270" height="270"></canvas></figure>
+<figure><figcaption>3 ESSENZ D/L/T</figcaption><canvas id="c3" width="270" height="270"></canvas></figure>
+</div></section>
+
+<section class="panel"><h2>Qualität pro Ebene — PSNR / SSIM — wie viel geht verloren?</h2>
+<table><thead><tr><th>Ebene</th><th>Zellen</th><th>PSNR dB</th><th>SSIM</th><th>Delta</th></tr></thead><tbody id="qtbody">
+<tr><td>729 Schöpfer</td><td>729</td><td id="q729p">—</td><td id="q729s">—</td><td id="q729d">—</td></tr>
+<tr><td>81 Radar</td><td>81</td><td id="q81p">—</td><td id="q81s">—</td><td id="q81d">—</td></tr>
+<tr><td>9 Kern</td><td>9</td><td id="q9p">—</td><td id="q9s">—</td><td id="q9d">—</td></tr>
+<tr><td>3 Essenz</td><td>3</td><td id="q3p">—</td><td id="q3s">—</td><td id="q3d">—</td></tr>
+</tbody></table>
+<p style="color:var(--muted);font-size:12px;margin-top:8px">Erwartung: 729 → hohe Ähnlichkeit · 81 → grobe Struktur · 9 → Motivcharakter · 3 → reine Essenz. Nur 3 Werte = kein präzises Original, aber beste Essenz für BIO.TEL.</p>
+</section>
+
+<section class="panel"><h2>BTC729 JSON — Codec</h2><textarea id="jsonOut" readonly placeholder='{"codec":"BTC729","version":"0.1","core3":[...],"radar9":[...],"radar81":[...],"creator729":[...]}'></textarea></section>
+</main>
+<footer>BTC729 · 729 → 81 → 9 → 3 → 9 → 81 → 729 · ein Regler, ein Knopf, ein Delta · lokal · raw bleibt raw</footer>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const F=x=>Math.max(0,Math.min(40,Number(x)||0));
+const state={raw:null,rawPixels:null,rawGray:null,w:0,h:0,codec:null,essence:{detail:0.84,light:0.72,depth:0.69},raf:0,need:false};
+const clamp01=v=>Math.max(0,Math.min(1,v));
+// --- SCORE (wie bio.tel) ---
+function scoreFromGray(gray,w,h){
+  let sum=0; for(let i=0;i<gray.length;i++) sum+=gray[i]; const mean=sum/gray.length;
+  let vs=0; for(let i=0;i<gray.length;i++) vs+=(gray[i]-mean)**2;
+  const contrast=Math.sqrt(vs/gray.length);
+  let edge=0,eN=0; for(let j=0;j<gray.length-2;j+=7){edge+=Math.abs(gray[j]-gray[j+1])+Math.abs(gray[j]-gray[j+2]);eN+=2;}
+  const sharp=eN?edge/eN:0; const brightness=100-Math.min(100,Math.abs(mean-108)*0.9);
+  return Math.round(Math.max(0,Math.min(100,brightness*0.35+Math.min(100,contrast*1.55)*0.40+Math.min(100,sharp*8)*0.25)));
+}
+function grayFromRGBA(data){const g=new Float32Array(data.length/4); for(let i=0,j=0;i<data.length;i+=4,j++) g[j]=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2]; return g;}
+// --- ENCODE 729 ---
+function encode729(rgba,w,h){
+  const GRID=27, cells=[]; const cw=w/GRID, ch=h/GRID;
+  for(let gy=0;gy<GRID;gy++) for(let gx=0;gx<GRID;gx++){
+    const x0=Math.floor(gx*cw), y0=Math.floor(gy*ch), x1=Math.max(x0+1,Math.floor((gx+1)*cw)), y1=Math.max(y0+1,Math.floor((gy+1)*ch));
+    let lum=0, r=0,g=0,b=0, cnt=0, edge=0, lumSq=0;
+    // sample max ~ 64 px pro Zelle für Speed, aber echte Daten
+    const stepX=Math.max(1,Math.floor((x1-x0)/8)), stepY=Math.max(1,Math.floor((y1-y0)/8));
+    let prev=0;
+    for(let y=y0;y<y1;y+=stepY) for(let x=x0;x<x1;x+=stepX){
+      const idx=(y*w+x)*4; const l=0.299*rgba[idx]+0.587*rgba[idx+1]+0.114*rgba[idx+2];
+      lum+=l; r+=rgba[idx]; g+=rgba[idx+1]; b+=rgba[idx+2]; lumSq+=l*l; edge+=Math.abs(l-prev); prev=l; cnt++;
+    }
+    if(!cnt) cnt=1;
+    const mean=lum/cnt; const variance=Math.max(0,lumSq/cnt-mean*mean); const contrast=Math.sqrt(variance);
+    cells.push({lum:mean, contrast, edge:edge/cnt, texture:contrast, r:r/cnt, g:g/cnt, b:b/cnt, color:(r+g+b)/3/cnt});
+  }
+  return cells;
+}
+function collapse729to81(c729){
+  // 27x27 -> 9x9, je 3x3 Zellen
+  const out=[];
+  for(let by=0;by<9;by++) for(let bx=0;bx<9;bx++){
+    let lum=0,contrast=0,edge=0,texture=0,r=0,g=0,b=0;
+    for(let dy=0;dy<3;dy++) for(let dx=0;dx<3;dx++){const c=c729[(by*3+dy)*27+(bx*3+dx)]; lum+=c.lum; contrast+=c.contrast; edge+=c.edge; texture+=c.texture; r+=c.r; g+=c.g; b+=c.b;}
+    out.push({lum:lum/9,contrast:contrast/9,edge:edge/9,texture:texture/9,r:r/9,g:g/9,b:b/9});
+  }
+  return out;
+}
+function collapse81to9(c81){
+  // 9x9 -> 3x3, je 3x3
+  const out=[];
+  for(let by=0;by<3;by++) for(let bx=0;bx<3;bx++){
+    let lum=0,contrast=0,edge=0,texture=0,r=0,g=0,b=0;
+    for(let dy=0;dy<3;dy++) for(let dx=0;dx<3;dx++){const c=c81[(by*3+dy)*9+(bx*3+dx)]; lum+=c.lum; contrast+=c.contrast; edge+=c.edge; texture+=c.texture; r+=c.r; g+=c.g; b+=c.b;}
+    out.push({lum:lum/9,contrast:contrast/9,edge:edge/9,texture:texture/9,r:r/9,g:g/9,b:b/9});
+  }
+  return out;
+}
+function collapse9to3(c9){
+  // 9 Cluster: 0 Licht,1 Schatten,2 Kanten,3 Tiefe,4 Fokus,5 Textur,6 Farbe,7 Struktur,8 Dynamik
+  const avg=a=>a.reduce((s,v)=>s+v,0)/a.length;
+  const lum=c9.map(c=>c.lum), edge=c9.map(c=>c.edge), con=c9.map(c=>c.contrast), tex=c9.map(c=>c.texture);
+  const light=avg(lum)/255, detail=clamp01((avg(edge)/30 + avg(tex)/40)/2), depth=clamp01(avg(con)/50);
+  // Detail = Kante+Textur, Licht = Helligkeit, Tiefe = Kontrast/Tiefe
+  return {detail, light, depth, D:detail, L:light, T:depth};
+}
+function encodeBTC729(rgba,w,h){
+  const creator729=encode729(rgba,w,h);
+  const radar81=collapse729to81(creator729);
+  const radar9=collapse81to9(radar81);
+  const core3=collapse9to3(radar9);
+  return {codec:'BTC729',version:'0.1',size:{width:w,height:h},core3,radar9,radar81,creator729};
+}
+// --- DECODE / EXPAND ---
+function expand3to9(core){
+  // core.detail/light/depth -> 9 Werte: Licht, Schatten, Kanten, Tiefe, Fokus, Textur, Farbe, Struktur, Dynamik
+  const D=core.detail, L=core.light, T=core.depth;
+  return [
+    {lum:L*255,edge:D*30,contrast:T*50,texture:D*40},
+    {lum:L*255*0.6,edge:D*20,contrast:T*40,texture:D*30},
+    {lum:L*255*0.9,edge:D*40,contrast:T*60,texture:D*50},
+    {lum:L*255*0.8,edge:D*25,contrast:T*70,texture:D*35},
+    {lum:L*255,edge:D*35,contrast:T*50,texture:D*45},
+    {lum:L*255*0.7,edge:D*30,contrast:T*45,texture:D*40},
+    {lum:L*255*0.85,edge:D*20,contrast:T*40,texture:D*30},
+    {lum:L*255*0.9,edge:D*30,contrast:T*55,texture:D*40},
+    {lum:L*255*0.75,edge:D*28,contrast:T*48,texture:D*38},
+  ];
+}
+function expand9to81(nine){
+  const out=[];
+  for(let by=0;by<3;by++) for(let bx=0;bx<3;bx++){
+    const src=nine[by*3+bx];
+    for(let dy=0;dy<3;dy++) for(let dx=0;dx<3;dx++) out.push({...src});
+  }
+  // out ist 81 in 9x9 Ordnung? Wir brauchen 9x9 zeilenweise: obige Schleife erzeugt 81 in Block-Ordnung, umsortieren:
+  // Einfacher: direkt 9x9 erzeugen
+  const out2=[];
+  for(let y=0;y<9;y++) for(let x=0;x<9;x++){ out2.push({...nine[Math.floor(y/3)*3+Math.floor(x/3)]}); }
+  return out2;
+}
+function expand81to729(e81){
+  const out=[];
+  for(let y=0;y<27;y++) for(let x=0;x<27;x++){ out.push({...e81[Math.floor(y/3)*9+Math.floor(x/3)]}); }
+  return out;
+}
+function render729(cells,w,h,menge,essence){
+  // 729 Zellen -> Bild, Menge + Essenz wirken auf 3k->9k->... aber hier direkt: Zellen-Lum + Essenz-Gain
+  const out=new Uint8ClampedArray(w*h*4);
+  const t=menge/100;
+  const bright=8+t*38, contrastGain=(100+(8+t*28))/100, gamma=0.98-t*0.42;
+  // Essenz-Gains: Detail -> Schärfe/Kante, Licht -> Helligkeit, Tiefe -> Kontrast
+  const dGain=0.7+essence.detail*0.6, lGain=0.7+essence.light*0.6, tGain=0.7+essence.depth*0.6;
+  const GRID=27, cw=w/GRID, ch=h/GRID;
+  for(let gy=0;gy<GRID;gy++) for(let gx=0;gx<GRID;gx++){
+    const c=cells[gy*GRID+gx];
+    const x0=Math.floor(gx*cw), y0=Math.floor(gy*ch), x1=Math.floor((gx+1)*cw), y1=Math.floor((gy+1)*ch);
+    // Basisfarbe aus Zelle + Essenz
+    let rr=c.r!==undefined?c.r:c.lum, gg=c.g!==undefined?c.g:c.lum, bb=c.b!==undefined?c.b:c.lum;
+    // Wenn aus 3k rekonstruiert (kein r/g/b), nutze lum grau
+    if(c.r===undefined){rr=gg=bb=c.lum;}
+    for(let y=y0;y<y1;y++) for(let x=x0;x<x1;x++){
+      const idx=(y*w+x)*4;
+      // Original-Farbanteil für 729-Ebene erhalten, für höhere Ebenen wird es weicher
+      let r=rr, g=gg, b=bb;
+      // Menge + Essenz anwenden
+      r=(r-128)*contrastGain*tGain+128+bright*lGain; g=(g-128)*contrastGain*tGain+128+bright*lGain; b=(b-128)*contrastGain*tGain+128+bright*lGain;
+      r=255*Math.pow(Math.max(0,Math.min(255,r))/255,gamma); g=255*Math.pow(Math.max(0,Math.min(255,g))/255,gamma); b=255*Math.pow(Math.max(0,Math.min(255,b))/255,gamma);
+      // Detail: Kante verstärken über Zell-Edge
+      const edgeBoost=(c.edge||0)/30*0.2*dGain;
+      r+=edgeBoost*10; g+=edgeBoost*10; b+=edgeBoost*10;
+      out[idx]=Math.max(0,Math.min(255,r)); out[idx+1]=Math.max(0,Math.min(255,g)); out[idx+2]=Math.max(0,Math.min(255,b)); out[idx+3]=255;
+    }
+  }
+  return out;
+}
+function psnr(origGray, reconRGBA, w, h){
+  let mse=0, n=w*h;
+  for(let i=0,j=0;i<reconRGBA.length;i+=4,j++){
+    const rl=0.299*reconRGBA[i]+0.587*reconRGBA[i+1]+0.114*reconRGBA[i+2];
+    const d=origGray[j]-rl; mse+=d*d;
+  }
+  mse/=n; if(mse===0) return Infinity;
+  return 10*Math.log10((255*255)/mse);
+}
+function ssim(origGray, reconRGBA, w, h){
+  const n=w*h; let mA=0,mB=0;
+  for(let j=0;j<n;j++){mA+=origGray[j]; const i=j*4; mB+=0.299*reconRGBA[i]+0.587*reconRGBA[i+1]+0.114*reconRGBA[i+2];}
+  mA/=n; mB/=n; let vA=0,vB=0,cov=0;
+  for(let j=0;j<n;j++){const da=origGray[j]-mA; const i=j*4; const rl=0.299*reconRGBA[i]+0.587*reconRGBA[i+1]+0.114*reconRGBA[i+2]; const db=rl-mB; vA+=da*da; vB+=db*db; cov+=da*db;}
+  vA/=n; vB/=n; cov/=n; const C1=6.5025, C2=58.5225;
+  return ((2*mA*mB+C1)*(2*cov+C2))/((mA*mA+mB*mB+C1)*(vA+vB+C2));
+}
+function drawRadar(){
+  if(!state.codec) return;
+  // 729
+  let c=$('c729'), ctx=c.getContext('2d'); ctx.clearRect(0,0,270,270);
+  state.codec.creator729.forEach((cell,i)=>{const x=(i%27)*10, y=Math.floor(i/27)*10; const v=Math.max(0,Math.min(255,cell.lum)); ctx.fillStyle=`rgb(${v},${v},${v})`; ctx.fillRect(x,y,10,10);});
+  // 81
+  c=$('c81'); ctx=c.getContext('2d'); ctx.clearRect(0,0,270,270);
+  state.codec.radar81.forEach((cell,i)=>{const x=(i%9)*30, y=Math.floor(i/9)*30; const v=Math.max(0,Math.min(255,cell.lum)); ctx.fillStyle=`rgb(${v},${v},${v})`; ctx.fillRect(x,y,30,30); ctx.strokeStyle='rgba(232,200,122,0.3)'; ctx.strokeRect(x,y,30,30);});
+  // 9
+  c=$('c9'); ctx=c.getContext('2d'); ctx.clearRect(0,0,270,270);
+  state.codec.radar9.forEach((cell,i)=>{const x=(i%3)*90, y=Math.floor(i/3)*90; const v=Math.max(0,Math.min(255,cell.lum)); ctx.fillStyle=`rgb(${v},${v},${v})`; ctx.fillRect(x,y,90,90); ctx.strokeStyle='#e8c87a'; ctx.strokeRect(x,y,90,90);});
+  // 3
+  c=$('c3'); ctx=c.getContext('2d'); ctx.clearRect(0,0,270,270);
+  const e=state.essence;
+  const vals=[{label:'DETAIL',v:e.detail,color:'#7ec98a'},{label:'LICHT',v:e.light,color:'#e8c87a'},{label:'TIEFE',v:e.depth,color:'#5eead4'}];
+  vals.forEach((vv,i)=>{const hgt=vv.v*220; ctx.fillStyle=vv.color; ctx.fillRect(20+i*80, 250-hgt, 60, hgt); ctx.fillStyle='#f2efe8'; ctx.font='11px monospace'; ctx.fillText(vv.label, 20+i*80, 265); ctx.fillText((vv.v).toFixed(2), 20+i*80, 240-hgt);});
+}
+function updateQuality(){
+  if(!state.codec||!state.rawGray) return;
+  const w=state.w,h=state.h, menge=Number($('mix').value), ess=state.essence;
+  const levels=[
+    {cells:state.codec.creator729, exp:'729'},
+    {cells:expand81to729(state.codec.radar81), exp:'81'},
+    {cells:expand81to729(expand9to81(state.codec.radar9)), exp:'9'},
+    {cells:expand81to729(expand9to81(expand3to9(ess))), exp:'3'},
+  ];
+  levels.forEach((lv,idx)=>{
+    const recon=render729(lv.cells,w,h,menge,ess);
+    const p=psnr(state.rawGray,recon,w,h), s=ssim(state.rawGray,recon,w,h);
+    const ids=[['q729p','q729s','q729d'],['q81p','q81s','q81d'],['q9p','q9s','q9d'],['q3p','q3s','q3d']][idx];
+    $(ids[0]).textContent=(p===Infinity?'∞':p.toFixed(1)+' dB');
+    $(ids[1]).textContent=s.toFixed(3);
+    const sc=scoreFromGray(grayFromRGBA(recon),w,h); const d=sc-state.rawScore;
+    $(ids[2]).textContent=(d>=0?'+':'')+d;
+    if(idx===3){
+      // TEL ist 3k-Rekonstruktion
+      const tc=$('tel'); tc.width=w; tc.height=h; tc.getContext('2d').putImageData(new ImageData(recon,w,h),0,0); tc.hidden=false; $('eTel').hidden=true;
+      state.telScore=sc; $('mTel').textContent=sc; const dd=sc-state.rawScore; $('mDelta').textContent=(dd>=0?'+':'')+dd; $('mDelta').className=dd>0?'pos':dd<0?'neg':'';
+      $('mPsnr').textContent=(p===Infinity?'∞':p.toFixed(1)+' dB')+' / '+s.toFixed(3);
+      const f1=F(sc), f2=F(f1); $('mF1').textContent=f1; $('mF2').textContent=f2; $('mStable').textContent=f1===f2?'Ja ✓':'Nein'; $('mStable').className=f1===f2?'ok':'bad';
+      $('dl').disabled=false;
+    }
+  });
+}
+function refreshJSON(){
+  if(!state.codec) return;
+  const out={codec:'BTC729',version:'0.1',size:{width:state.w,height:state.h},core3:state.essence,radar9:state.codec.radar9,radar81:state.codec.radar81,creator729:state.codec.creator729};
+  $('jsonOut').value=JSON.stringify(out).slice(0,6000)+(JSON.stringify(out).length>6000?' ... (gekürzt, Export = vollständig)':'');
+}
+function encodeAndRender(){
+  if(!state.raw) return;
+  const rgba=new Uint8ClampedArray(state.rawPixels);
+  state.codec=encodeBTC729(rgba,state.w,state.h);
+  // Essenz aus Bild, außer User hat Regler bewegt? Wir behalten Slider-Werte als Essenz, aber initial aus Bild:
+  // Wenn noch nie bewegt, setze aus Bild
+  if(!state._essenceTouched){
+    state.essence={detail:state.codec.core3.detail, light:state.codec.core3.light, depth:state.codec.core3.depth};
+    $('sDetail').value=Math.round(state.essence.detail*100); $('oDetail').textContent=$('sDetail').value;
+    $('sLight').value=Math.round(state.essence.light*100); $('oLight').textContent=$('sLight').value;
+    $('sDepth').value=Math.round(state.essence.depth*100); $('oDepth').textContent=$('sDepth').value;
+  }
+  drawRadar(); updateQuality(); refreshJSON(); $('export').disabled=false;
+}
+function load(file){
+  if(!file||!file.type.startsWith('image/')) return;
+  const url=URL.createObjectURL(file); const img=new Image();
+  img.onload=()=>{
+    const sc=Math.min(1,900/img.naturalWidth); const w=Math.max(1,Math.round(img.naturalWidth*sc)); const h=Math.max(1,Math.round(img.naturalHeight*sc));
+    const rc=$('raw'); rc.width=w; rc.height=h; const rctx=rc.getContext('2d',{willReadFrequently:true});
+    rctx.drawImage(img,0,0,w,h); rc.hidden=false; $('eRaw').hidden=true;
+    state.raw=rc; state.w=w; state.h=h;
+    const imgData=rctx.getImageData(0,0,w,h);
+    state.rawPixels=new Uint8ClampedArray(imgData.data);
+    state.rawGray=grayFromRGBA(imgData.data);
+    state.rawScore=scoreFromGray(state.rawGray,w,h);
+    $('mRaw').textContent=state.rawScore; $('mTel').textContent='—'; $('mDelta').textContent='—'; $('mDelta').className=''; $('mPsnr').textContent='—';
+    $('mF1').textContent='—'; $('mF2').textContent='—'; $('mStable').textContent='—';
+    state._essenceTouched=false; state.codec=null;
+    const tc=$('tel'); tc.width=w; tc.height=h; tc.hidden=true; $('eTel').hidden=false; $('eTel').innerHTML='Bereit.<br>Encode drücken.';
+    $('go').disabled=false; $('dl').disabled=true; $('export').disabled=true;
+    URL.revokeObjectURL(url);
+  };
+  img.onerror=()=>URL.revokeObjectURL(url); img.src=url;
+}
+$('load').onclick=()=>$('file').click();
+$('file').onchange=e=>load(e.target.files[0]);
+$('go').onclick=encodeAndRender;
+function essenceFromSliders(){
+  state._essenceTouched=true;
+  state.essence={detail:Number($('sDetail').value)/100, light:Number($('sLight').value)/100, depth:Number($('sDepth').value)/100};
+  $('oDetail').textContent=$('sDetail').value; $('oLight').textContent=$('sLight').value; $('oDepth').textContent=$('sDepth').value;
+  if(state.codec){ drawRadar(); updateQuality(); refreshJSON(); }
+}
+['sDetail','sLight','sDepth'].forEach(id=>{$(id).oninput=()=>{ if(state.raf) cancelAnimationFrame(state.raf); state.raf=requestAnimationFrame(essenceFromSliders); };});
+$('mix').oninput=e=>{$('mixOut').textContent=e.target.value; if(state.codec){ if(state.raf) cancelAnimationFrame(state.raf); state.raf=requestAnimationFrame(()=>{updateQuality();}); }};
+$('resetEssence').onclick=()=>{ if(!state.codec) return; state._essenceTouched=false; encodeAndRender(); };
+$('dl').onclick=()=>{ const tc=$('tel'); if(tc.hidden) return; const a=document.createElement('a'); a.download='bio-tel-btc729.png'; a.href=tc.toDataURL('image/png'); a.click(); };
+$('export').onclick=()=>{
+  if(!state.codec) return;
+  const out={codec:'BTC729',version:'0.1',size:{width:state.w,height:state.h},core3:state.essence,radar9:state.codec.radar9,radar81:state.codec.radar81,creator729:state.codec.creator729};
+  const blob=new Blob([JSON.stringify(out)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='btc729.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>{ try{ const j=JSON.parse(r.result); if(j.core3){ state.essence={detail:j.core3.detail??j.core3.D??0.84, light:j.core3.light??j.core3.L??0.72, depth:j.core3.depth??j.core3.T??0.69}; state.codec={creator729:j.creator729||[], radar81:j.radar81||[], radar9:j.radar9||[], core3:state.essence}; $('sDetail').value=Math.round(state.essence.detail*100); $('oDetail').textContent=$('sDetail').value; $('sLight').value=Math.round(state.essence.light*100); $('oLight').textContent=$('sLight').value; $('sDepth').value=Math.round(state.essence.depth*100); $('oDepth').textContent=$('sDepth').value; state._essenceTouched=true; drawRadar(); if(state.raw) updateQuality(); refreshJSON(); alert('BTC729 importiert: 3k Essenz geladen'); }catch(err){alert('Import Fehler: '+err.message);} } ; r.readAsText(f);
+};
+})();
+</script>
+</body>
+</html>

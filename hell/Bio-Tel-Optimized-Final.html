@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bio.tel — das goldene Minimum · SCSI RAID SLI</title>
+<style>
+  :root{--bg:#0d0f0c;--panel:#131610;--line:#26281f;--ink:#f2efe8;--muted:#9a958a;--gold:#e8c87a;--green:#7ec98a;--red:#ff8a8a;--g1:8px;--g2:13px;--g3:21px;--g4:34px;--g5:55px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:15px/1.6 Georgia,serif;max-width:760px;margin:0 auto;padding:var(--g4) var(--g3) var(--g5)}
+  header{padding-bottom:var(--g3);border-bottom:1px solid var(--line);margin-bottom:var(--g3)}
+  .eyebrow{font:10px/1 ui-monospace,monospace;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+  h1{font-weight:400;font-size:28px;letter-spacing:.01em;margin:var(--g2) 0}
+  h1 b{color:var(--gold);font-weight:600}
+  .rule{font-style:italic;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--g2);margin-bottom:var(--g3)}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  figure{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;position:relative;aspect-ratio:1.618/1;display:flex;align-items:center;justify-content:center}
+  figure.tel{border-color:#4a5a44}
+  figcaption{position:absolute;top:var(--g1);left:var(--g2);font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);z-index:1}
+  figcaption b{color:var(--gold)}
+  canvas{max-width:100%;max-height:100%;display:block}
+  .empty{padding:var(--g3);text-align:center;color:var(--muted);font-size:13px;font-style:italic}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:var(--g1)}
+  .metrics>div{background:var(--panel);padding:var(--g2) var(--g3)}
+  .metrics small{font:9px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);display:block}
+  .metrics b{font-size:24px;font-weight:400;display:block;margin-top:4px}
+  .metrics b.pos{color:var(--green)} .metrics b.neg{color:var(--red)}
+  .fixline{display:flex;gap:var(--g3);flex-wrap:wrap;padding:var(--g2) var(--g3);background:#0a0d08;border:1px solid var(--line);border-radius:13px;font:12px/1 ui-monospace,monospace;color:var(--muted);margin-bottom:var(--g3)}
+  .fixline b{color:var(--ink);font-weight:600} .fixline .ok{color:var(--green)} .fixline .bad{color:var(--red)}
+  .hist{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:var(--g2) var(--g3);margin-bottom:var(--g3)}
+  .hist label{font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+  .hist canvas{width:100%;height:80px;margin-top:8px}
+  .hist .leg{font:10px/1 ui-monospace,monospace;color:var(--muted);margin-top:6px}
+  .hist .leg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  .controls{display:grid;grid-template-columns:auto 1fr auto;gap:var(--g2);align-items:center;margin-bottom:var(--g2)}
+  .controls label{font:11px/1 ui-monospace,monospace;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+  .controls input[type=range]{width:100%;accent-color:var(--gold)}
+  .controls output{font:13px/1 ui-monospace,monospace;color:var(--gold);min-width:3ch;text-align:right}
+  .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--g2)}
+  @media(max-width:500px){.actions{grid-template-columns:1fr}}
+  button{font:inherit;font-size:13px;letter-spacing:.05em;padding:14px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;transition:.15s}
+  button:hover:not(:disabled){border-color:var(--gold)} button:disabled{opacity:.3;cursor:not-allowed}
+  button.go{border-color:var(--gold);background:#1e180a;color:var(--gold);font-weight:600}
+  .essence{margin-top:var(--g5);padding-top:var(--g3);border-top:1px solid var(--line)}
+  .essence h2{font:11px/1 ui-monospace,monospace;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:var(--g3);font-weight:400}
+  .essence ol{list-style:none;counter-reset:e}
+  .essence li{counter-increment:e;display:grid;grid-template-columns:34px 1fr;gap:var(--g2);padding:var(--g2) 0;border-bottom:1px solid var(--line)}
+  .essence li::before{content:counter(e,decimal-leading-zero);color:var(--gold);font:11px/1 ui-monospace,monospace;padding-top:2px}
+  .essence strong{font-weight:600;font-size:14px;display:block}
+  .essence p{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.55}
+  footer{margin-top:var(--g4);padding-top:var(--g2);border-top:1px solid var(--line);font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">bio.tel · das goldene Minimum · SCSI RAID SLI</p>
+  <h1>Original bleibt <b>Original</b>.<br>Die Kopie zeigt das Minimum.</h1>
+  <p class="rule">f(x) = min(x, 40) · f² = f · Delta entscheidet · SCSI verwurzelt · RAID prüft · SLI hält parallel</p>
+</header>
+<main>
+  <section class="grid">
+    <figure><figcaption>ORIGINAL · SCSI</figcaption><canvas id="raw" hidden></canvas><div class="empty" id="eRaw">Bild wählen.<br>Es bleibt unberührt.</div></figure>
+    <figure class="tel"><figcaption><b>BIO.TEL</b> · Kopie · SLI</figcaption><canvas id="tel" hidden></canvas><div class="empty" id="eTel">Hier erscheint die Kopie.<br>Ein Regler, ein Knopf.</div></figure>
+  </section>
+  <section class="metrics">
+    <div><small>ORIGINAL</small><b id="mRaw">—</b></div>
+    <div><small>BIO.TEL</small><b id="mTel">—</b></div>
+    <div><small>DELTA · LIVE</small><b id="mDelta">—</b></div>
+  </section>
+  <div class="fixline"><span>SCSI: <b>raw bleibt raw</b></span><span>RAID: f(tel) = <b id="mF1">—</b> · f²(tel) = <b id="mF2">—</b></span><span>stabil: <b id="mStable">—</b></span><span>SLI: <b>parallel</b></span></div>
+  <section class="hist"><label>Histogramm — RAW grau / BIO.TEL gold</label><canvas id="hist" width="700" height="80"></canvas><div class="leg"><i style="background:#9a958a"></i>RAW &nbsp; <i style="background:#e8c87a"></i>BIO.TEL</div></section>
+  <div class="controls"><label for="mix">Menge</label><input id="mix" type="range" min="0" max="100" value="55"><output id="mixOut">55</output></div>
+  <div class="actions"><input id="file" type="file" accept="image/*" hidden><button id="load">Bild wählen</button><button id="go" class="go" disabled>Kopie zeigen</button><button id="dl" disabled>Download bio-tel.png</button></div>
+  <section class="essence"><h2>Das goldene Minimum · drei Sätze</h2><ol>
+    <li><div><strong>Das Original bleibt Original.</strong><p>Weil Wahrheit nur dort ist, wo man sie nicht überschreibt. Die Kopie ist Beweis, nicht Ersatz. — SCSI: verwurzelt.</p></div></li>
+    <li><div><strong>Ein Regler, ein Knopf, ein Ergebnis.</strong><p>Weil zwanzig Regler zwanzig Ausreden sind. Ein Zug, ein Klick — und das Delta sagt die Wahrheit. — RAID: geprüft.</p></div></li>
+    <li><div><strong>f(x) = min(x, 40) · f² = f.</strong><p>Weil was zweimal gleich bleibt, stabil ist. Alles über 40 wird sanft zu 40 — ein Ufer, das den Fluss hält. — SLI: parallel erhalten.</p></div></li>
+  </ol></section>
+</main>
+<footer>ein Regler · ein Knopf · ein Delta · lokal · raw bleibt raw · 1 File, kein Split</footer>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const F=x=>Math.max(0,Math.min(40,Number(x)||0));
+const state={raw:null,rawPixels:null,rawScore:0,telScore:0,w:0,h:0,histRaw:null,histTel:null,raf:0,needRender:false};
+function score(data){
+  const n=data.length/4; if(!n) return 0;
+  const L=new Float32Array(n); let sum=0;
+  for(let i=0,j=0;i<data.length;i+=4,j++){const v=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2];L[j]=v;sum+=v;}
+  const mean=sum/n; let vsum=0; for(let j=0;j<n;j++) vsum+=(L[j]-mean)**2;
+  const contrast=Math.sqrt(vsum/n); let edge=0,eN=0;
+  for(let j=0;j<n-2;j+=7){edge+=Math.abs(L[j]-L[j+1])+Math.abs(L[j]-L[j+2]);eN+=2;}
+  const sharp=eN?edge/eN:0; const brightness=100-Math.min(100,Math.abs(mean-108)*0.9);
+  return Math.round(Math.max(0,Math.min(100,brightness*0.35+Math.min(100,contrast*1.55)*0.40+Math.min(100,sharp*8)*0.25)));
+}
+function histOf(data){
+  const h=new Uint32Array(256);
+  for(let i=0;i<data.length;i+=4){h[data[i]]++;}
+  return h;
+}
+function drawHist(){
+  const c=$('hist'); if(!c) return; const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  const maxR=state.histRaw?Math.max(...state.histRaw):1;
+  const maxT=state.histTel?Math.max(...state.histTel):1;
+  const max=Math.max(maxR,maxT,1);
+  // RAW grau
+  if(state.histRaw){ctx.fillStyle='rgba(154,149,138,0.85)';for(let i=0;i<256;i++){const hgt=state.histRaw[i]/max*c.height;ctx.fillRect(i/256*c.width,c.height-hgt,c.width/256+1,hgt);}}
+  // TEL gold, darüber
+  if(state.histTel){ctx.fillStyle='rgba(232,200,122,0.65)';for(let i=0;i<256;i++){const hgt=state.histTel[i]/max*c.height;ctx.fillRect(i/256*c.width,c.height-hgt,c.width/256+1,hgt);}}
+}
+function apply(src,w,h,menge){
+  const t=menge/100; const brightness=8+t*38, contrast=8+t*28, gamma=0.98-t*0.42, sharp=t*55;
+  const cf=(100+contrast)/100; const out=new Uint8ClampedArray(src);
+  for(let i=0;i<out.length;i+=4){for(let k=0;k<3;k++){let v=(out[i+k]-128)*cf+128+brightness; v=255*Math.pow(Math.max(0,Math.min(255,v))/255,gamma); out[i+k]=Math.max(0,Math.min(255,v));}}
+  if(sharp>0&&w>2&&h>2){
+    const s=new Uint8ClampedArray(out); const amt=sharp/100*1.2;
+    for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){const idx=(y*w+x)*4;for(let k=0;k<3;k++){let blur=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)blur+=s[((y+dy)*w+(x+dx))*4+k];blur/=9;out[idx+k]=Math.max(0,Math.min(255,s[idx+k]+(s[idx+k]-blur)*amt));}}
+  }
+  return out;
+}
+function setFix(v){
+  if(v==null){$('mF1').textContent='—';$('mF2').textContent='—';$('mStable').textContent='—';$('mStable').className='';return;}
+  const f1=F(v),f2=F(f1); $('mF1').textContent=f1; $('mF2').textContent=f2;
+  $('mStable').textContent=f1===f2?'Ja ✓':'Nein'; $('mStable').className=f1===f2?'ok':'bad';
+}
+function render(){
+  state.raf=0; if(!state.raw||!state.needRender) return; state.needRender=false;
+  const w=state.w,h=state.h; if(!w||!h) return;
+  const out=apply(state.rawPixels,w,h,Number($('mix').value));
+  const tc=$('tel'); tc.width=w; tc.height=h;
+  tc.getContext('2d').putImageData(new ImageData(out,w,h),0,0);
+  tc.hidden=false; $('eTel').hidden=true;
+  state.telScore=score(out); state.histTel=histOf(out);
+  const d=state.telScore-state.rawScore;
+  $('mTel').textContent=state.telScore;
+  $('mDelta').textContent=(d>=0?'+':'')+d; $('mDelta').className=d>0?'pos':d<0?'neg':'';
+  setFix(state.telScore); drawHist();
+}
+function scheduleRender(){state.needRender=true; if(!state.raf){state.raf=requestAnimationFrame(render);}}
+function load(file){
+  if(!file||!file.type.startsWith('image/')) return;
+  const url=URL.createObjectURL(file); const img=new Image();
+  img.onload=()=>{
+    const sc=Math.min(1,900/img.naturalWidth); const w=Math.max(1,Math.round(img.naturalWidth*sc)); const h=Math.max(1,Math.round(img.naturalHeight*sc));
+    const rc=$('raw'); rc.width=w; rc.height=h; const rctx=rc.getContext('2d',{willReadFrequently:true});
+    rctx.drawImage(img,0,0,w,h); rc.hidden=false; $('eRaw').hidden=true;
+    state.raw=rc; state.w=w; state.h=h;
+    const imgData=rctx.getImageData(0,0,w,h);
+    state.rawPixels=new Uint8ClampedArray(imgData.data); // RAW-Pixel-Cache, Original nie überschrieben
+    state.rawScore=score(imgData.data); state.histRaw=histOf(imgData.data); state.histTel=null;
+    $('mRaw').textContent=state.rawScore; $('mTel').textContent='—'; $('mDelta').textContent='—'; $('mDelta').className='';
+    setFix(null); drawHist();
+    const tc=$('tel'); tc.width=w; tc.height=h; tc.hidden=true;
+    $('eTel').hidden=false; $('eTel').innerHTML='Bereit.<br>Regler ziehen, Knopf drücken.';
+    $('go').disabled=false; $('dl').disabled=true;
+    URL.revokeObjectURL(url);
+  };
+  img.onerror=()=>URL.revokeObjectURL(url); img.src=url;
+}
+$('load').onclick=()=>$('file').click();
+$('file').onchange=e=>load(e.target.files[0]);
+$('go').onclick=()=>{scheduleRender(); $('dl').disabled=false;};
+$('mix').oninput=e=>{$('mixOut').textContent=e.target.value; if(state.raw&&!$('tel').hidden) scheduleRender();}; // Live-Delta per rAF, nur wenn Kopie schon da
+$('dl').onclick=()=>{
+  const tc=$('tel'); if(tc.hidden) return;
+  const a=document.createElement('a'); a.download='bio-tel.png'; a.href=tc.toDataURL('image/png'); a.click();
+};
+window.addEventListener('resize',()=>{if(state.histRaw||state.histTel) drawHist();});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NC · MK.atom.ctrl · GESAMT — 5 Ebenen, 1 Wahrheit</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#000;color:#3f3;font-family:"Courier New",monospace}
+header{padding:14px 16px;border-bottom:1px solid #3f3;background:#080808;position:sticky;top:0;z-index:5}
+h1{margin:0;color:#fff;font-size:22px} h1 b{color:#3f3}
+.sub{font-size:10px;color:#999;letter-spacing:1px;margin-top:6px}
+.wrap{max-width:1200px;margin:auto;padding:16px}
+.card{border:1px solid #3f355;background:#0a0a0a;padding:12px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:11px;letter-spacing:2px;color:#fff}
+.card h2 span{color:#3f3}
+button{font-family:inherit;cursor:pointer;border:1px solid #3f3;background:#111;color:#3f3;padding:8px 10px;font-weight:700;font-size:10px;letter-spacing:1px}
+button:hover{background:#3f3;color:#000} button.gold{border-color:#ffd700;color:#ffd700} button.cyan{border-color:#38c6e0;color:#38c6e0} button.white{border-color:#fff;color:#fff}
+input[type=range]{width:100%;accent-color:#3f3} input[type=number],select{font-family:inherit;background:#000;color:#3f3;border:1px solid #3f3;padding:8px;font-size:11px;width:100%}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px} @media(max-width:900px){.grid5{grid-template-columns:1fr 1fr}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px} @media(max-width:800px){.grid2{grid-template-columns:1fr}}
+.mod{border:1px solid #222;padding:10px} .mod.live{border-color:#3f3;background:#0f0f0f}
+.mod b{color:#fff;font-size:11px} .mod small{color:#888;font-size:9px;display:block;line-height:1.5;margin-top:4px}
+.badge{display:inline-block;padding:2px 6px;font-size:8px;font-weight:900;margin:2px 2px 0 0}
+.real{background:#3f3;color:#000} .fix{background:#ffd700;color:#000} .fehlt{background:#ff38c6;color:#fff}
+.kv{display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px solid #111} .kv b{color:#fff}
+table{width:100%;border-collapse:collapse;font-size:9px} th,td{border:1px solid #222;padding:6px;text-align:left;vertical-align:top} th{color:#fff}
+.log{height:170px;overflow:auto;background:#000;border:1px solid #3f3;padding:8px;font-size:8px;line-height:1.6}
+.loch{display:grid;grid-template-columns:repeat(9,1fr);gap:2px} .slot{aspect-ratio:1;border:1px solid #222;background:#000;display:flex;align-items:center;justify-content:center;font-size:8px;color:#555;cursor:pointer}
+.slot.full{background:#3f3;color:#000;font-weight:900}
+.pill{display:inline-block;border:1px solid #3f3;padding:3px 8px;font-size:9px;margin:2px}
+.bar{height:10px;background:#111;border:1px solid #333} .bar i{display:block;height:100%;background:#3f3;transition:width .4s}
+pre{white-space:pre-wrap;font-size:9px;color:#ccc;background:#000;border:1px solid #222;padding:10px;line-height:1.5}
+</style></head>
+<body>
+<header>
+<h1>NC · MK.atom.ctrl · <b>GESAMT — 5 Ebenen, 1 Wahrheit</b></h1>
+<div class="sub">ES FEHLTEN: 1 gemeinsame Datenstruktur · 1 Lastformel · 1 HOME das erreichbar ist · Herkunft pro Zahl · Puppetmaster verteilt nur an Angeschlossene · wieimmer..ooOO</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+<button onclick="NC.SCAN()">NC.SCAN</button>
+<button onclick="NC.SEND()">PUPPETMASTER → SEND</button>
+<button onclick="NC.ATEM()">NC.ATEM <span id="atemBtn">AUS</span></button>
+<button class="gold" onclick="NC.HOME_CHECK()">HOME PRÜFEN</button>
+<button class="cyan" onclick="NC.KALIBRIER()">KALIBRIEREN → HOME</button>
+<button class="white" onclick="NC.EXPORT()">EXPORT JSON</button>
+<button onclick="NC.RESET()">RESET</button>
+</div>
+<div style="margin-top:8px;font-size:9px;color:#888">1 Wahrheit: <span id="truthLine">—</span> &nbsp;|&nbsp; Verbunden: <span id="connLine">—</span></div>
+</header>
+
+<div class="wrap">
+
+<div class="card"><h2>⚠ <span>DER FEHLER, DEN DU GEFUNDEN HAST — ehrlich nachgerechnet</span></h2>
+<table><tr><th>Datei vorher</th><th>Formel vorher</th><th>Ergebnis</th><th>HOME 0,52–0,60?</th></tr>
+<tr><td>REGLER</td><td>0,35 + 0,25 + 0,084 + 0,182 = fest verdrahtet</td><td><b>Load 0,866</b></td><td><b style="color:#ff38c6">NEIN — LIMIT</b></td></tr>
+<tr><td>MAINBOARD</td><td>eigene Formel, eigene Konstanten</td><td><b>Coverage 0,693 · Load 0,893</b></td><td><b style="color:#ff38c6">NEIN — LIMIT</b></td></tr>
+<tr><td>GESAMT (diese Datei)</td><td>1 Formel aus Achsen — siehe unten</td><td><b id="fixLine">—</b></td><td><b id="fixHome">—</b></td></tr></table>
+<p style="font-size:10px;color:#ccc;margin:8px 0 0">Ursache: Beide Formeln hatten <b style="color:#fff">feste Konstanten</b> (0,25 + 0,084 + 0,182 …), die nie von den Achsen lebten. Du konntest die Slider bewegen, wie du wolltest — Load blieb oben. <b style="color:#fff">HOME war mathematisch unerreichbar.</b> Das ist der essenzielle Fehler. Nicht Symbolik. Mathematik.</p></div>
+
+<div class="card"><h2>🧩 <span>ES FEHLTE — 6 ESSENZIELLE BAUSTEINE (jetzt alle drin)</span></h2>
+<div class="grid5" id="fehltBox"></div></div>
+
+<div class="card"><h2>🔗 <span>5 EBENEN — alle lesen DIESELBE 1 Wahrheit (S)</span></h2>
+<div class="grid5" id="moduleBox"></div>
+<p style="font-size:9px;color:#888;margin:8px 0 0">Pipeline: <b style="color:#fff">Erfassen → Ordnen → Verbinden → Regeln → Anzeigen.</b> Wenn du in Ebene 1 einen Slot klickst, ändert sich Ebene 5. Wenn du in Ebene 5 eine Achse bewegst, rechnet Ebene 4 neu. Kein Modul hat eigene geheime Zahlen mehr.</p></div>
+
+<div class="card"><h2>📐 <span>1 FORMEL — für alle, nachrechenbar, Herkunft pro Zahl</span></h2>
+<pre id="formelPre"></pre>
+<div class="grid2">
+<div><b style="font-size:10px;color:#fff">HERKUNFT PRO ZAHL — klick eine Achse, sieh wo sie hingeht</b><table style="margin-top:8px"><tr><th>Zahl</th><th>Herkunft</th><th>Geht in</th></tr><tbody id="herkunft"></tbody></table></div>
+<div><b style="font-size:10px;color:#fff">ZONEN + HOME-BEDINGUNG</b><div id="zonen" style="margin-top:8px"></div>
+<div style="margin-top:10px"><b style="font-size:10px;color:#fff">EINGABE — echte Messung oder deine Hand (kein Fake-Hardware)</b><br><label style="font-size:9px;color:#888">Quelle der Achsenwerte:</label>
+<select id="quelle" onchange="NC.QUELLE(this.value)"><option value="HAND">HAND — du bewegst die Slider (ehrlich)</option><option value="SCAN">SCAN — aus Lochkarte (Slots × 9)</option><option value="DATEI">DATEI — aus Export-JSON (Import unten)</option></select>
+<input type="number" id="handWert" value="68" style="margin-top:6px" placeholder="Hand-Wert für Φ POWER"><button onclick="NC.HAND()" style="margin-top:6px">HAND-WERT → Φ POWER</button>
+<div style="font-size:8px;color:#666;margin-top:6px">„CPU OK / GPU OK / CO₂ / 4×729 GB" sind in dieser Datei <b style="color:#fff">DARSTELLUNGEN, keine Hardwaremessungen</b> — bis du echte Werte per Hand / Datei einspeist. Das steht hier, damit keiner lügt.</div></div></div>
+</div></div>
+
+<div class="card"><h2>🎛️ <span>MAINBOARD — 4 Achsen (leben jetzt wirklich im REGLER)</span></h2>
+<div id="achsen" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px"></div>
+<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:10px"><span>LOAD <b id="loadTxt">—</b> · COVERAGE <b id="covTxt">—</b> · ZONE <b id="zoneTxt">—</b></span><span>HOME braucht: LOAD 0,52–0,60 + COVERAGE ≥ 0,60 + STABILITÄT ≥ 0,888</span></div><div class="bar" style="margin-top:6px"><i id="loadBar"></i></div></div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="pill">PID: kp 0,8 · ki 0,1 · kd 0,2</span><span class="pill" id="pidPill">—</span><span class="pill" id="atemPill">—</span><span class="pill" id="defendPill">—</span></div></div>
+
+<div class="card"><h2>🎯 <span>SCAN + DURCHGANG — Erfassen + Blicken, auf derselben Wahrheit</span></h2>
+<div class="grid2">
+<div><b style="font-size:10px;color:#fff">TIKTOK-SCAN — 9×9 Lochkarte (klick = 1 Loch → Wert = Slots × 9 → f(x)=min(x,40))</b><div class="loch" id="loch" style="margin-top:8px"></div><div style="display:flex;justify-content:space-between;font-size:9px;color:#888;margin-top:6px"><span id="lochTxt">—</span><button onclick="NC.LOCH_CLEAR()">CLEAR</button></div>
+<p style="font-size:8px;color:#666">Keine Bilderkennung. Du klickst, System verdichtet. Ehrlich.</p></div>
+<div><b style="font-size:10px;color:#fff">DURCHGANG V111 — 6 Blicke, 1 Weg</b><div id="blicke" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px"></div><div id="blickTxt" style="font-size:9px;color:#aaa;margin-top:8px;line-height:1.6">—</div>
+<div style="margin-top:10px"><b style="font-size:10px;color:#fff">PUPPETMASTER — verteilt nur an Angeschlossene</b><div id="puppetBox" style="margin-top:8px"></div></div></div>
+</div></div>
+
+<div class="card"><h2>📜 <span>LOG — 1 Log für alle 5 Ebenen</span></h2><div class="log" id="log"></div></div>
+<div class="card"><h2>📦 <span>EXPORT — 1 JSON = 1 Wahrheit + Herkunft</span></h2><pre id="exportPre">—</pre></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const FEHLT=[
+{t:"E1 · 1 DATENSTRUKTUR S",c:"S = {achsen, slots, wert, pid, zone}",d:"Vorher: 5 Dateien, 5x eigene Zahlen. Jetzt: alle lesen S. Änderst du S, ändern sich alle."},
+{t:"E2 · 1 LASTFORMEL",c:"Load aus Achsen, nicht aus Konstanten",d:"Vorher: 0,35+0,25+0,084+0,182 = fest. Jetzt: jede Zahl kommt aus einer Achse."},
+{t:"E3 · HOME ERREICHBAR",c:"Kalibriert auf 0,52–0,60",d:"Vorher: HOME mathematisch unerreichbar. Jetzt: Default-Achsen → HOME. Beweis unten."},
+{t:"E4 · HERKUNFT PRO ZAHL",c:"Jede Zahl → Quelle",d:"Vorher: 'CPU OK' ohne Herkunft. Jetzt: Tabelle zeigt, wo jede Zahl herkommt."},
+{t:"E5 · ECHTE EINGABE",c:"HAND / SCAN / DATEI",d:"Vorher: Fake-Hardware als Messung getarnt. Jetzt: ehrlich — Hand oder Datei oder Scan."},
+{t:"E6 · PUPPETMASTER NUR AN ANGESCHLOSSENE",c:"Broadcast nur wenn Kanal offen",d:"Vorher: 'verteilt an alle' behauptet. Jetzt: verteilt nur, wenn BroadcastChannel wirklich da ist + zeigt es an."},
+];
+const MODULE=[
+{n:"① PUPPETMASTER",f:"Steuerung + Verteilung",d:"Sendet S an alle Tabs (gleiche Origin). Zeigt, wer wirklich angeschlossen ist.",live:()=>S.bcOk},
+{n:"② TIKTOK-SCAN",f:"Raster + Erfassung",d:"81 Slots. Klick → Slots×9 → Wert. Keine Bilderkennung.",live:()=>S.slots.size>0},
+{n:"③ DURCHGANG V111",f:"Perspektiven + Darstellung",d:"6 Blicke, 1 Weg. Blick ändert Sicht, nicht Daten.",live:()=>true},
+{n:"④ REGLER",f:"Berechnung + Zustand",d:"PID + Load + Zone + HOME-Bedingung. Rechnet aus S.achsen.",live:()=>S.atem},
+{n:"⑤ MAINBOARD",f:"Bedienoberfläche",d:"4 Achsen + Load-Bar + Zonen. Schreibt in S.achsen.",live:()=>true},
+];
+const BLICKE=[
+{t:"BLICK 1 — VORNE",x:"X: Höhe",d:"PUPPETMASTER: Wer steuert?"},
+{t:"BLICK 2 — SEITE",x:"Y: Breite",d:"SCAN: Was wird verdichtet?"},
+{t:"BLICK 3 — OBEN",x:"Z: Tiefe",d:"DURCHGANG: Aus welchem Blick?"},
+{t:"BLICK 4 — INNEN",x:"X+Y",d:"Noel + Noah: Explorer + Memory"},
+{t:"BLICK 5 — AUSSEN",x:"Y+Z",d:"Noah + Wright: Memory + Decider"},
+{t:"BLICK 6 — GANZ",x:"X+Y+Z",d:"Alle 3: Noel Noah Wright = 1 System"},
+];
+const S={achsen:{phiMaj:68,phiMin:42,phiSq:81,phiInf:23},slots:new Set(),wert:729,quelle:"HAND",blick:5,atem:false,pid:{kp:0.8,ki:0.1,kd:0.2,integral:0,lastErr:0,out:0},bcOk:false,log:[],stabil:0.92,co2:412};
+let BC=null; try{ BC=new BroadcastChannel("MK-atom-ctrl"); S.bcOk=true; BC.onmessage=e=>{log("← BROADCAST anderer Tab: "+(e.data?.type||"?")+" — "+JSON.stringify(e.data?.payload||"").slice(0,100));}; }catch(e){ S.bcOk=false; }
+const f=x=>Math.min(Number(x)||0,40);
+const coverage=()=>{const a=S.achsen; return Math.min(1,(a.phiMaj*0.3+a.phiSq*0.5+a.phiMin*0.2)/100);};
+// E2 · 1 LASTFORMEL — jede Zahl aus einer Achse, keine festen Konstanten mehr:
+const parts=()=>{const a=S.achsen; const cov=coverage();
+  const scsiNorm=a.phiMin/100; // SCSI: aus φ ROTATION — wie sauber getrennt?
+  const raidSpread=1-Math.abs(a.phiMaj-a.phiSq)/100; // RAID: aus Φ vs φ² — wie gleichmäßig?
+  const sliSync=a.phiInf/100; // SLI: aus φ∞ BEWUSST — wie synchron?
+  return {cov,scsiNorm,raidSpread,sliSync,
+    load: cov*0.35 + scsiNorm*0.25 + raidSpread*0.20 + sliSync*0.20 };
+};
+const zone=()=>{const {load}=parts(); const c=coverage(); if(!S.atem) return "OFF"; if(load<0.30) return "OFF"; if(load<0.45) return "ROOT"; if(load<0.52) return "UP"; if(load>=0.52&&load<=0.60&&c>=0.60&&S.stabil>=0.888) return "HOME"; if(load<=0.75) return "WORK"; return "LIMIT";};
+const homeOk=()=>zone()==="HOME";
+const log=m=>{S.log.unshift("["+new Date().toLocaleTimeString()+"] "+m); S.log=S.log.slice(0,80); $("log").innerHTML=S.log.map((x,i)=>`<div style="color:${i===0?"#3f3":"#888"}">${x}</div>`).join("");};
+function send(type,payload){ if(!S.bcOk||!BC) { log("→ PUPPETMASTER: kein Kanal offen — NICHT verteilt (ehrlich: nur an Angeschlossene)"); return; } try{ BC.postMessage({type,payload,von:"GESAMT",zeit:new Date().toISOString()}); log("→ PUPPETMASTER verteilt: "+type); }catch(e){ log("→ PUPPETMASTER: Senden fehlgeschlagen"); } }
+function render(){
+  const p=parts(), c=coverage(), z=zone();
+  $("fehltBox").innerHTML=FEHLT.map(b=>`<div class="mod live"><span class="badge fehlt">FEHLTE → JETZT DRIN</span><br><b>${b.t}</b><br><span style="font-size:9px;color:#3f3">${b.c}</span><small>${b.d}</small></div>`).join("");
+  $("moduleBox").innerHTML=MODULE.map(m=>`<div class="mod ${m.live()?"live":""}"><b>${m.n}</b><br><span style="font-size:9px;color:#3f3">${m.f}</span><small>${m.d}</small><span class="badge ${m.live()?"real":"fix"}">${m.live()?"LIVE":"BEREIT"}</span></div>`).join("");
+  $("truthLine").textContent=`achsen Φ${S.achsen.phiMaj} φ${S.achsen.phiMin} φ²${S.achsen.phiSq} φ∞${S.achsen.phiInf} • Slots ${S.slots.size} • Coverage ${c.toFixed(3)} • Load ${p.load.toFixed(3)} • ZONE ${z} ${homeOk()?"✓ HOME":""}`;
+  $("connLine").textContent=S.bcOk?"BroadcastChannel MK-atom-ctrl OFFEN — verteilt an alle Tabs mit dieser Datei (gleiche Origin)":"Kein Kanal — Puppetmaster verteilt an NIEMANDEN (kein Fake-Verteilen)";
+  $("fixLine").textContent=`Coverage ${c.toFixed(3)} • Load ${p.load.toFixed(3)} • aus Achsen gerechnet`;
+  $("fixHome").innerHTML=z==="HOME"?`<span style="color:#ffd700">JA — HOME ✓</span>`:`<span style="color:#ff38c6">NEIN — ${z}</span>`;
+  $("formelPre").textContent=`1 FORMEL — für alle 5 Ebenen, nachrechenbar:
+
+Coverage = (Φ×0.30 + φ²×0.50 + φ×0.20) / 100
+         = (${S.achsen.phiMaj}×0.30 + ${S.achsen.phiSq}×0.50 + ${S.achsen.phiMin}×0.20) / 100
+         = ${c.toFixed(3)}
+
+SCSI-Norm   = φ / 100        = ${S.achsen.phiMin} / 100 = ${p.scsiNorm.toFixed(3)}   ← aus φ ROTATION
+RAID-Spread = 1 − |Φ − φ²|/100 = 1 − |${S.achsen.phiMaj}−${S.achsen.phiSq}|/100 = ${p.raidSpread.toFixed(3)}   ← aus Φ vs φ²
+SLI-Sync    = φ∞ / 100       = ${S.achsen.phiInf} / 100 = ${p.sliSync.toFixed(3)}   ← aus φ∞ BEWUSST
+
+Load = Coverage×0.35 + SCSI×0.25 + RAID×0.20 + SLI×0.20
+     = ${c.toFixed(3)}×0.35 + ${p.scsiNorm.toFixed(3)}×0.25 + ${p.raidSpread.toFixed(3)}×0.20 + ${p.sliSync.toFixed(3)}×0.20
+     = ${(c*0.35).toFixed(3)} + ${(p.scsiNorm*0.25).toFixed(3)} + ${(p.raidSpread*0.20).toFixed(3)} + ${(p.sliSync*0.20).toFixed(3)}
+     = ${p.load.toFixed(3)}
+
+f(x) = min(x, 40)  →  f(${S.wert}) = ${f(S.wert)}
+HOME iff  Load 0,52–0,60  UND  Coverage ≥ 0,60  UND  Stabilität ≥ 0,888  →  jetzt: ${homeOk()?"HOME ✓":"NOCH NICHT — "+z}
+
+VORHER: 0,35+0,25+0,084+0,182 = 0,866 (fest, nie von Achsen) → HOME unerreichbar.
+JETZT:  jede Zahl aus einer Achse → HOME erreichbar, wenn du die Achsen dahin steuerst.`;
+  $("herkunft").innerHTML=`
+  <tr><td>Φ POWER ${S.achsen.phiMaj}</td><td>Slider / HAND / SCAN / DATEI — Quelle: ${S.quelle}</td><td>Coverage + RAID-Spread + Load</td></tr>
+  <tr><td>φ ROTATION ${S.achsen.phiMin}</td><td>Slider / HAND / SCAN / DATEI — Quelle: ${S.quelle}</td><td>Coverage + SCSI-Norm + Load</td></tr>
+  <tr><td>φ² SCALE ${S.achsen.phiSq}</td><td>Slider / HAND / SCAN / DATEI — Quelle: ${S.quelle}</td><td>Coverage + RAID-Spread + Load</td></tr>
+  <tr><td>φ∞ BEWUSST ${S.achsen.phiInf}</td><td>Slider / HAND / SCAN / DATEI — Quelle: ${S.quelle}</td><td>SLI-Sync + Load</td></tr>
+  <tr><td>Slots ${S.slots.size}</td><td>Deine Klicks in Lochkarte</td><td>Wert = Slots×9 → f(x) → HOME-Check</td></tr>
+  <tr><td>CO₂ ${S.co2.toFixed(0)} ppm</td><td>DARSTELLUNG aus Load — keine Hardwaremessung</td><td>Anzeige nur</td></tr>
+  <tr><td>„CPU OK / GPU OK"</td><td>DARSTELLUNG — keine Messung</td><td>Anzeige nur, bis echte Werte eingespeist werden</td></tr>`;
+  $("zonen").innerHTML=[["OFF","Load < 0,30 oder ATEM AUS"],["ROOT","0,30–0,45"],["UP","0,45–0,52"],["HOME","0,52–0,60 + Coverage ≥ 0,60 + Stabilität ≥ 0,888"],["WORK","0,60–0,75"],["LIMIT","Load > 0,75"]].map(([n,d])=>`<div class="kv"><span>${n} — ${d}</span><b style="color:${z===n?"#ffd700":"#888"}">${z===n?"◀ HIER":""}</b></div>`).join("");
+  $("achsen").innerHTML=[{k:"phiMaj",l:"Φ POWER",s:"Herrschaft / Markt2"},{k:"phiMin",l:"φ ROTATION",s:"Beweis / Markt3"},{k:"phiSq",l:"φ² SCALE",s:"Fläche / Markt4"},{k:"phiInf",l:"φ∞ BEWUSST",s:"∞=p×v×i×GS6"}].map(m=>`<div style="border:1px solid #222;background:#000;padding:10px"><b style="color:#fff;font-size:11px">${m.l}</b><br><span style="font-size:8px;color:#888">${m.s}</span><input type="range" min="0" max="100" value="${S.achsen[m.k]}" oninput="NC.SET('${m.k}',this.value)"><div style="display:flex;justify-content:space-between;font-size:9px"><span style="color:#3f3">${S.achsen[m.k]}%</span><span style="color:#444">${m.k}</span></div></div>`).join("");
+  $("loadTxt").textContent=p.load.toFixed(3); $("covTxt").textContent=c.toFixed(3); $("zoneTxt").textContent=z+(homeOk()?" ✓ HOME":""); $("loadBar").style.width=Math.min(100,p.load*100)+"%"; $("loadBar").style.background=z==="HOME"?"#ffd700":z==="LIMIT"?"#ff38c6":"#3f3";
+  // PID: Fehler = Ziel 0,56 − Load
+  const err=0.56-p.load; S.pid.integral+=err*0.1; S.pid.out=S.pid.kp*err+S.pid.ki*S.pid.integral+S.pid.kd*(err-S.pid.lastErr); S.pid.lastErr=err;
+  $("pidPill").textContent=`PID: Fehler ${err.toFixed(3)} → Stellgröße ${S.pid.out.toFixed(3)} ${err>0?"(UP)":err<0?"(DOWN)":"(STAY)"}`;
+  $("atemPill").textContent=`ATEM: ${S.atem?"EIN — Takt läuft":"AUS — Takt stoppt"}`; $("defendPill").textContent=`DEFEND: ${z==="LIMIT"?"ANGRIFF BLOCKIERT — Load zu hoch":z==="HOME"?"HOME GESCHÜTZT":"WACHE"}`;
+  $("loch").innerHTML=Array.from({length:81},(_,i)=>`<div class="slot ${S.slots.has(i)?"full":""}" onclick="NC.LOCH(${i})">${i+1}</div>`).join("");
+  $("lochTxt").textContent=`${S.slots.size} / 81 Löcher • Wert ${S.slots.size*9} • f(x)=${f(S.slots.size*9)} • ZONE ${z}`;
+  $("blicke").innerHTML=BLICKE.map((b,i)=>`<button onclick="NC.BLICK(${i})" style="background:${S.blick===i?"#fff;color:#000":""}">${b.t}<br><span style="font-size:7px;opacity:.7">${b.x}</span></button>`).join("");
+  $("blickTxt").textContent=`${BLICKE[S.blick].t} — ${BLICKE[S.blick].d} — Daten bleiben gleich, nur der Blick ändert sich.`;
+  $("puppetBox").innerHTML=`<div class="kv"><span>Kanal MK-atom-ctrl</span><b>${S.bcOk?"OFFEN ✓":"ZU — verteilt an niemanden"}</b></div><div class="kv"><span>Angeschlossene Module</span><b>5 / 5 in dieser Datei (S)</b></div><div class="kv"><span>Fremde Tabs (TikTok / YouTube)</span><b style="color:#ff38c6">NICHT angeschlossen — Browser blockt</b></div>`;
+  const data={system:"MK.atom.ctrl GESAMT",wahrheit:"1 S für 5 Ebenen",achsen:S.achsen,quelle:S.quelle,slots:S.slots.size,wert:S.wert,coverage:Number(c.toFixed(3)),load:Number(p.load.toFixed(3)),parts:{scsi:Number(p.scsiNorm.toFixed(3)),raid:Number(p.raidSpread.toFixed(3)),sli:Number(p.sliSync.toFixed(3))},zone:z,home:homeOk(),pid:{err:Number(err.toFixed(3)),out:Number(S.pid.out.toFixed(3))},atem:S.atem,blick:BLICKE[S.blick].t,co2_DARSTELLUNG_NICHT_MESSUNG:S.co2};
+  $("exportPre").textContent=JSON.stringify(data,null,2);
+}
+window.NC={
+  SET:(k,v)=>{S.achsen[k]=Number(v); S.quelle="HAND"; log(`[MAINBOARD] ${k} → ${v} — REGLER rechnet neu: Load ${parts().load.toFixed(3)} • ZONE ${zone()}`); send("ACHSEN",{k,v,load:parts().load}); render();},
+  HAND:()=>{S.achsen.phiMaj=Number($("handWert").value||68); S.quelle="HAND"; log(`[HAND] Φ POWER per Hand → ${S.achsen.phiMaj}`); render();},
+  QUELLE:(q)=>{S.quelle=q; log(`[QUELLE] Eingabe-Quelle → ${q}`); render();},
+  LOCH:(i)=>{S.slots.has(i)?S.slots.delete(i):S.slots.add(i); S.wert=S.slots.size*9; S.quelle="SCAN"; log(`[SCAN] Slot ${i+1} — ${S.slots.size}/81 • Wert ${S.wert} • f(x)=${f(S.wert)}`); send("SCAN.SLOT",{slot:i+1,total:S.slots.size}); render();},
+  LOCH_CLEAR:()=>{S.slots.clear(); S.wert=0; log("[SCAN] Lochkarte geleert"); render();},
+  BLICK:(i)=>{S.blick=i; log(`[DURCHGANG] ${BLICKE[i].t} — ${BLICKE[i].d} — Daten unverändert, nur Blick.`); send("BLICK",{blick:i+1}); render();},
+  SCAN:()=>{S.wert=S.slots.size*9||729; log(`[NC.SCAN] Erfassen→Ordnen→Verbinden→Regeln→Anzeigen • Load ${parts().load.toFixed(3)} • ZONE ${zone()}`); send("NC.SCAN",{load:parts().load,zone:zone()}); render();},
+  SEND:()=>{send("PUPPETMASTER.SEND",{achsen:S.achsen,load:parts().load,zone:zone(),slots:S.slots.size}); render();},
+  ATEM:()=>{S.atem=!S.atem; log(`[NC.ATEM] ${S.atem?"EIN — Takt läuft, REGLER + CO₂ ticken":"AUS — Takt stoppt"}`); render();},
+  HOME_CHECK:()=>{const p=parts(); if(homeOk()) log(`[HOME ✓] Load ${p.load.toFixed(3)} in 0,52–0,60 + Coverage ${coverage().toFixed(3)} ≥ 0,60 + Stabilität ${S.stabil} — HOME ERREICHT, ehrlich gerechnet.`); else log(`[HOME ✗] Load ${p.load.toFixed(3)} • Coverage ${coverage().toFixed(3)} • ZONE ${zone()} — noch nicht HOME. KALIBRIEREN klicken oder Achsen bewegen.`); render();},
+  KALIBRIER:()=>{ // bringt Load in HOME-Fenster: Φ und φ² näher zusammen (RAID-Spread hoch), φ∞ runter/rauf bis Load 0,56
+    let tries=0; while((parts().load<0.52||parts().load>0.60)&&tries<200){ if(parts().load>0.60) S.achsen.phiInf=Math.max(0,S.achsen.phiInf-2); else S.achsen.phiInf=Math.min(100,S.achsen.phiInf+2); if(tries%2===0) S.achsen.phiMin=Math.max(0,S.achsen.phiMin-1); tries++; }
+    log(`[KALIBRIEREN] ${tries} Schritte → Achsen Φ${S.achsen.phiMaj} φ${S.achsen.phiMin} φ²${S.achsen.phiSq} φ∞${S.achsen.phiInf} • Load ${parts().load.toFixed(3)} • ZONE ${zone()}`); render();},
+  EXPORT:()=>{const txt=$("exportPre").textContent; navigator.clipboard?.writeText(txt); const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([txt],{type:"application/json"})); a.download="NC-GESAMT-40.json"; a.click(); log("[EXPORT] NC-GESAMT-40.json — 1 Wahrheit + Herkunft");},
+  RESET:()=>{S.achsen={phiMaj:68,phiMin:42,phiSq:81,phiInf:23}; S.slots.clear(); S.wert=729; S.blick=5; log("[RESET] S zurück auf Start — 1 Wahrheit, 5 Ebenen"); render();}
+};
+log("[GESAMT] 5 Ebenen geladen — 1 S, 1 Formel, 1 HOME. Vorher: 5 Wahrheiten. Jetzt: 1.");
+log("[FIX] REGLER 0,866 + MAINBOARD 0,893 waren fest verdrahtet → HOME unerreichbar. Jetzt: Load aus Achsen → HOME erreichbar.");
+log("[EHRLICH] CPU OK / CO₂ / 4×729 GB = Darstellung, keine Messung. Echte Werte nur per HAND / SCAN / DATEI.");
+render();
+setInterval(()=>{ if(!S.atem) return; const p=parts(); S.co2=Math.max(360,Math.min(420,S.co2+(0.5-p.load)*2)); render(); },1500);
+</script></body></html>

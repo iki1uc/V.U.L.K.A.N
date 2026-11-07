@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MK.atom.ctrl — ROOT Console</title>
+<style>
+:root{--bg:#080b12;--panel:#111827;--panel2:#0c1220;--line:#26344d;--txt:#e8efff;--muted:#8fa0bd;--green:#48f0a4;--cyan:#55cfff;--gold:#ffd166;--pink:#ff5d9e;--red:#ff647c}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#14233a 0,#080b12 48%);color:var(--txt);font:14px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}
+header{padding:22px clamp(14px,3vw,34px);border-bottom:1px solid var(--line);display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#080b12d9;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.brand h1{font-size:clamp(20px,3vw,29px);letter-spacing:.08em;margin:0}.brand p{color:var(--muted);margin:4px 0 0;font-size:11px}.statusline{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:99px;padding:6px 10px;color:var(--muted);font-size:11px}.chip.live{color:var(--green);border-color:#28634d}
+nav{display:flex;gap:7px;overflow:auto;padding:12px clamp(12px,3vw,30px);border-bottom:1px solid var(--line);background:#0b101b}
+nav button,.btn{border:1px solid var(--line);background:#121c2c;color:var(--txt);padding:9px 13px;border-radius:8px;cursor:pointer;font:inherit;font-size:12px;white-space:nowrap}
+nav button.active,.btn.primary{background:var(--green);color:#07120e;border-color:var(--green);font-weight:800}
+.btn:hover,nav button:hover{border-color:var(--cyan)}.btn.warn{color:var(--gold)}.btn.danger{color:var(--red)}
+main{padding:18px clamp(12px,3vw,30px) 48px;max-width:1600px;margin:auto}.view{display:none}.view.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.card{background:linear-gradient(145deg,#121b2a,#0d1421);border:1px solid var(--line);border-radius:13px;padding:16px;min-width:0}.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span6{grid-column:span 6}.span5{grid-column:span 5}.span4{grid-column:span 4}.span3{grid-column:span 3}
+h2{font-size:13px;letter-spacing:.11em;color:var(--cyan);margin:0 0 13px;text-transform:uppercase}h3{font-size:12px;color:var(--muted);margin:15px 0 8px}.muted{color:var(--muted)}.tiny{font-size:10px;color:var(--muted)}.metric{font-size:clamp(24px,4vw,38px);font-weight:800;letter-spacing:-.04em}.green{color:var(--green)}.gold{color:var(--gold)}.pink{color:var(--pink)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kpi{background:#080e19;border:1px solid var(--line);border-radius:10px;padding:12px}.kpi label{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.bar{height:9px;border-radius:20px;background:#263247;overflow:hidden;margin:7px 0 3px}.bar>i{display:block;height:100%;width:0;background:var(--green);transition:width .15s}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.stack{display:grid;gap:10px}
+input[type=range]{width:100%;accent-color:var(--green)}input[type=text],input[type=number],textarea,select{width:100%;background:#070d17;border:1px solid var(--line);border-radius:7px;color:var(--txt);padding:9px;font:inherit}textarea{min-height:170px;resize:vertical}.axis{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center}.axis input{grid-column:1/-1}
+.grid81{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px}.slot{aspect-ratio:1;border:1px solid #2a3b58;background:#101b2c;color:#8193af;border-radius:4px;display:grid;place-items:center;cursor:pointer;font-size:10px;user-select:none}.slot.on{background:var(--green);border-color:var(--green);color:#06130e;font-weight:900}.slot:focus{outline:2px solid var(--cyan)}
+.rootgrid{display:grid;grid-template-columns:repeat(27,minmax(0,1fr));gap:2px}.node{aspect-ratio:1;background:#14243c;border-radius:1px}.node.on{background:var(--green);box-shadow:0 0 5px #48f0a466}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.room{border:1px solid var(--line);background:#0a1220;padding:12px 8px;border-radius:8px;cursor:pointer;text-align:center}.room.on{border-color:var(--green);background:#123326}.core{padding:12px;border:1px solid var(--line);border-radius:9px;background:#080f1b}.core b{display:block;color:var(--gold);font-size:12px}
+table{border-collapse:collapse;width:100%;font-size:11px}td,th{text-align:left;border-bottom:1px solid var(--line);padding:8px 6px}th{color:var(--muted)}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#070d17;border:1px solid var(--line);padding:12px;border-radius:8px;font-size:11px;color:#cbd9f3;max-height:330px;overflow:auto}
+.compass{width:min(100%,280px);margin:auto;display:block}.log{height:230px;overflow:auto;font-size:10px;display:flex;flex-direction:column;gap:5px}.log div{border-bottom:1px solid #1c2940;padding-bottom:4px}
+.notice{border-left:3px solid var(--gold);padding:9px 12px;background:#241d10;color:#f6d99a;font-size:11px;border-radius:0 7px 7px 0}.goodnote{border-left:3px solid var(--green);padding:9px 12px;background:#0e241c;color:#b9f8d9;font-size:11px;border-radius:0 7px 7px 0}
+.hide{display:none!important}.pill{border:1px solid var(--line);border-radius:99px;padding:4px 8px;font-size:10px;color:var(--muted)}
+@media(max-width:850px){.span8,.span7,.span6,.span5,.span4,.span3{grid-column:span 12}.kpis{grid-template-columns:repeat(2,1fr)}header{position:static}}
+@media(max-width:420px){.rooms{grid-template-columns:repeat(2,1fr)}.grid81{gap:2px}.slot{font-size:8px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><h1>MK.atom.ctrl <span class="green">/ ROOT</span></h1><p>81 → 729 · CTRL ist Zentrale · eine gemeinsame Wahrheit S</p></div>
+ <div class="statusline"><span class="chip live" id="runtime">LOCAL ENGINE READY</span><span class="chip" id="channel">CHANNEL: STARTING</span><span class="chip" id="saveState">NICHT GESPEICHERT</span></div>
+</header>
+<nav>
+ <button class="active" data-view="overview">01 · CTRL</button><button data-view="scan">02 · SCAN 81</button><button data-view="root">03 · ROOT 729</button><button data-view="rooms">04 · 9e → 3e</button><button data-view="regler">05 · REGLER</button><button data-view="data">06 · DATEN / EXPORT</button><button data-view="nc">07 · NC-KETTE</button>
+</nav>
+<main>
+<section class="view active" id="overview">
+ <div class="grid">
+  <div class="card span12">
+   <div class="row between"><div><h2>CTRL · Zentrale</h2><div class="muted tiny">Alle Module lesen und verändern denselben Zustand S.</div></div><span class="pill" id="zonePill">ZONE OFF</span></div>
+   <div class="kpis">
+    <div class="kpi"><label>HOME / FIXPUNKT</label><div class="metric" id="homeMetric">—</div><div class="tiny">f(x) = min(x,40)</div></div>
+    <div class="kpi"><label>COVERAGE</label><div class="metric" id="covMetric">0.000</div><div class="bar"><i id="covBar"></i></div></div>
+    <div class="kpi"><label>LOAD</label><div class="metric" id="loadMetric">0.000</div><div class="bar"><i id="loadBar"></i></div></div>
+    <div class="kpi"><label>ROOT / 729</label><div class="metric" id="rootMetric">0</div><div class="tiny">aktive Zellen</div></div>
+   </div>
+  </div>
+  <div class="card span7"><h2>Vier Achsen · Mainboard</h2><div id="axisControls" class="stack"></div><div class="row between tiny"><span>Achsen-Eingabe: <b id="sourceText">HAND</b></span><button class="btn" onclick="CTRL.resetAxes()">Achsen zurücksetzen</button></div></div>
+  <div class="card span5"><h2>Kompass · Richtung / Tiefe</h2><svg class="compass" viewBox="0 0 300 300" aria-label="Kompass"><circle cx="150" cy="150" r="119" fill="none" stroke="#34445f" stroke-width="2"/><circle cx="150" cy="150" r="86" fill="none" stroke="#23344d"/><path d="M150 22V278 M22 150H278" stroke="#27364e"/><text x="145" y="18" fill="#e8efff">N</text><text x="282" y="155" fill="#e8efff">E</text><text x="145" y="295" fill="#e8efff">S</text><text x="7" y="155" fill="#e8efff">W</text><line id="needle" x1="150" y1="150" x2="150" y2="42" stroke="#48f0a4" stroke-width="5" stroke-linecap="round"/><circle cx="150" cy="150" r="7" fill="#fff"/></svg><div class="row between"><span class="tiny">Winkel</span><b id="angleText">240° · WSW</b></div><input id="angle" type="range" min="0" max="359" value="240" oninput="CTRL.setAngle(this.value)"><div class="tiny">240° = WSW · 270° = WEST / GRAB</div></div>
+  <div class="card span6"><h2>Arbeitskette</h2><div class="row" id="chain"></div><div class="goodnote" style="margin-top:12px">Erfassen → Ordnen → Verbinden → Regeln → Anzeigen. Jede Aktion schreibt in S und aktualisiert die Anzeigen.</div></div>
+  <div class="card span6"><h2>Live-Protokoll</h2><div class="log" id="log"></div><div class="row"><button class="btn" onclick="CTRL.clearLog()">Log leeren</button><button class="btn" onclick="CTRL.save()">Zustand speichern</button></div></div>
+ </div>
+</section>
+
+<section class="view" id="scan">
+ <div class="grid">
+  <div class="card span8"><h2>81 · Arbeitsmatrix / Lochkarte</h2><p class="tiny">Klicke Felder an oder aus. Jeder aktive Slot zählt 9 Einheiten. Die Begrenzung auf HOME40 wird separat berechnet.</p><div class="grid81" id="grid81"></div><div class="row between" style="margin-top:12px"><b id="slotSummary">0 / 81 · Wert 0</b><div class="row"><button class="btn" onclick="CTRL.fill81()">Alle 81 setzen</button><button class="btn warn" onclick="CTRL.clear81()">Leeren</button></div></div></div>
+  <div class="card span4"><h2>SCAN-Auswertung</h2><div class="metric" id="rawValue">0</div><div class="tiny">Rohwert = aktive Slots × 9</div><div class="bar"><i id="scanBar"></i></div><p>HOME40-Ausgabe</p><div class="metric green" id="clampedValue">0</div><pre id="scanFormula"></pre><button class="btn primary" onclick="CTRL.commitScan()">SCAN → CTRL übernehmen</button></div>
+  <div class="card span12"><h2>RAW-Eingabe</h2><textarea id="rawInput" placeholder="Text / Notizen / Scan-Beschreibung eingeben …"></textarea><div class="row between"><span class="tiny">Textlänge wird als RAW-Metadatum erfasst, nicht als Bilderkennung ausgegeben.</span><button class="btn" onclick="CTRL.readRaw()">RAW erfassen</button></div></div>
+ </div>
+</section>
+
+<section class="view" id="root">
+ <div class="grid">
+  <div class="card span8"><h2>729 · ROOT-Raum</h2><p class="tiny">27 × 27 Zellen. Die belegte Fläche folgt dem Tiefen-Prozentwert; du kannst die Tiefe selbst einstellen.</p><div class="rootgrid" id="rootGrid"></div><div class="row between" style="margin-top:12px"><b id="rootCount">0 / 729 aktiv</b><span class="pill" id="depthLabel">DEPTH 6 · TIEF WURZEL</span></div></div>
+  <div class="card span4"><h2>Höhe / Breite / Tiefe</h2><div class="axis"><label>HÖHE <b id="heightVal">100%</b></label><span></span><input id="height" type="range" min="0" max="100" value="100" oninput="CTRL.setDimension('height',this.value)"></div><div class="axis"><label>BREITE <b id="widthVal">100%</b></label><span></span><input id="width" type="range" min="0" max="100" value="100" oninput="CTRL.setDimension('width',this.value)"></div><div class="axis"><label>TIEFE <b id="depthVal">100%</b></label><span></span><input id="depth" type="range" min="0" max="100" value="100" oninput="CTRL.setDimension('depth',this.value)"></div><h3>Stufenmodell</h3><table><tr><td>Depth 4</td><td>Stamm</td></tr><tr><td>Depth 5</td><td>Wurzel</td></tr><tr><td>Depth 6</td><td>Tiefwurzel</td></tr></table><h3>JSON-Modell</h3><pre id="dimensionJSON"></pre></div>
+ </div>
+</section>
+
+<section class="view" id="rooms">
+ <div class="grid">
+  <div class="card span7"><h2>9e · Neun Räume</h2><p class="tiny">Wähle einzelne Räume. Die Gruppierung zu NOEL, NOAH und WRIGHT ist fest definiert; die Werte werden aus den ausgewählten Räumen berechnet.</p><div class="rooms" id="roomsGrid"></div><div class="row between" style="margin-top:12px"><b id="roomsCount">0 / 9 gewählt</b><button class="btn warn" onclick="CTRL.clearRooms()">Auswahl leeren</button></div></div>
+  <div class="card span5"><h2>3e · Drei Kerne</h2><div class="stack" id="cores"></div><div class="goodnote" style="margin-top:12px">Verdichtung ist eine Gruppierung der gewählten Räume, keine externe Messung.</div></div>
+  <div class="card span12"><h2>Verdichtung → HOME</h2><div class="row"><button class="btn primary" onclick="CTRL.collapseRooms()">9e → 3e → 1 Wert berechnen</button><span class="tiny" id="collapseResult">Noch keine Verdichtung ausgeführt.</span></div></div>
+ </div>
+</section>
+
+<section class="view" id="regler">
+ <div class="grid">
+  <div class="card span6"><h2>REGLER · HOME-Bedingung</h2><pre id="formula"></pre><div class="row"><button class="btn primary" onclick="CTRL.homeCheck()">HOME prüfen</button><button class="btn" onclick="CTRL.calibrate()">Auf HOME kalibrieren</button></div><p class="tiny">Kalibrieren verändert die Achsen automatisch, damit Load in das definierte Fenster fällt. Es verändert keine externe Hardware.</p></div>
+  <div class="card span6"><h2>Zonenmodell</h2><div id="zones" class="stack"></div></div>
+  <div class="card span6"><h2>PID · Stellgröße</h2><div class="kpi"><label>FEHLER · ZIEL 0,56 − LOAD</label><div class="metric" id="pidError">0.000</div><div class="tiny" id="pidOutput">Stellgröße 0.000</div></div><div class="row" style="margin-top:10px"><button class="btn" onclick="CTRL.pidReset()">PID zurücksetzen</button><button class="btn" onclick="CTRL.breathToggle()" id="breathBtn">ATEM EIN</button></div><p class="tiny" id="breathState">ATEM AUS · kein Takt</p></div>
+  <div class="card span6"><h2>Fixpunkt-Test</h2><p class="tiny">Idempotenz: Die zweite Anwendung verändert das Ergebnis nicht mehr.</p><div class="row"><input type="number" id="testX" value="729" min="0" max="1000000"><button class="btn primary" onclick="CTRL.testFixed()">f² = f testen</button></div><pre id="fixedResult">f(729) = 40\nf(f(729)) = 40</pre></div>
+ </div>
+</section>
+
+<section class="view" id="data">
+ <div class="grid">
+  <div class="card span6"><h2>JSON · Import</h2><textarea id="jsonInput" spellcheck="false" placeholder="JSON hier einfügen …"></textarea><div class="row"><button class="btn primary" onclick="CTRL.importJSON()">JSON validieren & importieren</button><label class="btn">Datei laden<input type="file" id="fileInput" accept=".json,application/json" hidden onchange="CTRL.loadFile(this.files[0])"></label></div><p class="tiny">Importiert unterstützte Felder und prüft Wertebereiche. Unbekannte Felder bleiben unberührt im Import-Log.</p></div>
+  <div class="card span6"><h2>JSON · Export / Sicherung</h2><pre id="exportJSON"></pre><div class="row"><button class="btn primary" onclick="CTRL.exportJSON()">JSON herunterladen</button><button class="btn" onclick="CTRL.copyJSON()">JSON kopieren</button><button class="btn" onclick="CTRL.save()">Lokal speichern</button><button class="btn danger" onclick="CTRL.resetAll()">Alles zurücksetzen</button></div></div>
+  <div class="card span12"><h2>Verbindungen · ehrlich angezeigt</h2><table><tr><th>Verbindung</th><th>Status</th><th>Reichweite</th></tr><tr><td>CTRL → Module</td><td class="green">AKTIV</td><td>Gleiche Seite, gemeinsamer Zustand S</td></tr><tr><td>Tab → Tab</td><td id="bcStatus">PRÜFE</td><td>BroadcastChannel, gleicher Origin und gleicher Kanal</td></tr><tr><td>Reload → Zustand</td><td>LOCAL STORAGE</td><td>Nur auf diesem Browser / Origin</td></tr><tr><td>Video → automatische Erkennung</td><td class="gold">NICHT IMPLEMENTIERT</td><td>Video kann als Datei geladen werden; Slots werden manuell gesetzt</td></tr></table><div class="row" style="margin-top:12px"><button class="btn" onclick="CTRL.broadcastTest()">Broadcast-Test senden</button><button class="btn" onclick="CTRL.save()">Speichern</button><button class="btn" onclick="CTRL.restore()">Gespeicherten Zustand laden</button></div></div>
+ </div>
+</section>
+
+<section class="view" id="nc">
+ <div class="grid">
+  <div class="card span4">
+   <h2>Dreieck → 9 Ecken</h2>
+   <svg viewBox="0 0 260 260" style="width:100%;max-width:300px">
+    <polygon id="ncTri" points="" fill="rgba(255,45,149,.08)" stroke="#ff5d9e" stroke-width="2"/>
+    <polygon id="ncNona" points="" fill="none" stroke="#26344d"/>
+    <g id="ncVerts"></g>
+   </svg>
+   <div class="row between tiny"><span>Schritt <b id="ncStep">0/9</b></span><span>AUTO <b id="ncAuto">AUS</b></span><span>HOME <b id="ncHome">—</b></span></div>
+   <div class="notice" style="margin-top:12px">Die NC-Kette verarbeitet fünf fest definierte Beispieldatenquellen. Sie ist ein nachvollziehbarer Modelllauf – kein Zugriff auf externe Geräte oder fremde Seiten.</div>
+  </div>
+  <div class="card span8">
+   <h2>Neun NC-Commands · feste Reihenfolge</h2>
+   <div class="row" id="ncCommands"></div>
+   <div class="row" style="margin-top:10px">
+    <input id="ncInput" type="text" placeholder="NC.ESSENZ (Enter)" />
+    <button class="btn primary" onclick="CTRL.ncRunInput()">RUN</button>
+   </div>
+   <div class="row" style="margin-top:8px">
+    <button class="btn warn" onclick="CTRL.ncRun('NC.ATTACK')">NC.ATTACK · Auto ab Schritt 6</button>
+    <button class="btn" onclick="CTRL.ncRun('NC.EXPORT')">NC.EXPORT</button>
+    <button class="btn danger" onclick="CTRL.ncReset()">NC.RESET</button>
+   </div>
+   <div class="log" id="ncLog" style="height:260px;margin-top:10px"></div>
+   <pre id="ncOutput" class="hide"></pre>
+  </div>
+  <div class="card span12">
+   <h2>NC-Ergebnis · fünf Quellen getrennt</h2>
+   <div class="kpis">
+    <div class="kpi"><label>QUELLEN</label><div class="metric" id="ncSources">5</div></div>
+    <div class="kpi"><label>WERTE</label><div class="metric" id="ncValues">0</div></div>
+    <div class="kpi"><label>ÜBER 40</label><div class="metric" id="ncClamped">0</div></div>
+    <div class="kpi"><label>FUSION</label><div class="metric" id="ncFusion">—</div></div>
+   </div>
+   <pre id="ncSummary">Noch kein NC-Lauf gestartet.</pre>
+  </div>
+ </div>
+</section>
+
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const ROOM_DATA=[
+ {n:'111 BIOS',k:'NOEL',d:'Boot · Start · BIOS 2.30'},
+ {n:'222 VERBUND',k:'NOEL',d:'Verbindung · Verbund'},
+ {n:'333 RECALL',k:'NOEL',d:'Erinnerung · Recall'},
+ {n:'444 PEAK',k:'NOAH',d:'Spitze · Leistung'},
+ {n:'555 ABWEHR',k:'NOAH',d:'Schutz · Abwehr'},
+ {n:'666 ENERGIE',k:'NOAH',d:'Energie · Power'},
+ {n:'777 CO₂',k:'WRIGHT',d:'CO₂ · Wechsel'},
+ {n:'888 ATOM',k:'WRIGHT',d:'Kern · Atom'},
+ {n:'999 BENCH',k:'WRIGHT',d:'Test · Bench'}
+];
+const DEFAULT={axes:{phiMaj:68,phiMin:42,phiSq:81,phiInf:23},slots:[],rooms:[],value:729,source:'HAND',angle:240,dimensions:{height:100,width:100,depth:100,maxDepth:6},atem:false,pid:{integral:0,lastErr:0,out:0},raw:'',updated:null};
+const S=structuredClone(DEFAULT);
+let BC=null, pidLast=0, breathTimer=null;
+const NC_SRC=[
+ {id:"wurzel.729",n:[3,9,81,729,2187,40]},
+ {id:"hoelle.24",n:[42,40,89,38,40,76,89,44,12,40,86,40,64,41,81,40,18,72,40,86,50,33,34,9]},
+ {id:"leben.1389",n:[1389,100,16,4,28,14,61,158,20,20]},
+ {id:"grab.270",n:[100,100,6,240,100,2.96]},
+ {id:"moin.wind",n:[15,81,6.9,237,13.4,28,1,38,2268]}
+];
+const NC_ORDER=[
+ ["NC.ESSENZ","111","BIOS"],["NC.SCAN","222","VERBUND"],["NC.SCSI","333","RECALL"],
+ ["NC.RAID","444","PEAK"],["NC.SLI","555","ABWEHR"],["NC.ATTACK","666","ENERGIE"],
+ ["NC.DEFEND","777","CO2"],["NC.FUSION","888","ATOM"],["NC.HOME","999","BENCH"]
+];
+S.nc={step:0,auto:false,result:{},busy:false};
+const clamp=(x,a=0,b=100)=>Math.max(a,Math.min(b,Number(x)||0));
+const f=x=>Math.min(Math.max(0,Number(x)||0),40);
+const coverage=()=>{const a=S.axes;return Math.min(1,(a.phiMaj*.30+a.phiSq*.50+a.phiMin*.20)/100)};
+const parts=()=>{const a=S.axes,c=coverage(),scsi=a.phiMin/100,raid=1-Math.abs(a.phiMaj-a.phiSq)/100,sli=a.phiInf/100;return{coverage:c,scsi,raid,sli,load:c*.35+scsi*.25+raid*.20+sli*.20}};
+const zone=()=>{const p=parts();if(!S.atem)return'OFF';if(p.load<.30)return'OFF';if(p.load<.45)return'ROOT';if(p.load<.52)return'UP';if(p.load<=.60&&p.coverage>=.60)return'HOME';if(p.load<=.75)return'WORK';return'LIMIT'};
+const home=()=>zone()==='HOME';
+const activeRoot=()=>Math.round(729*S.dimensions.depth/100);
+function log(msg){const el=$('log');if(!el)return;const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' · '+msg;el.prepend(d);while(el.children.length>80)el.lastChild.remove()}
+function send(type,payload={}){if(!BC)return;try{BC.postMessage({type,payload,from:'MK.atom.ctrl',at:new Date().toISOString()})}catch(e){log('Broadcast fehlgeschlagen: '+e.message)}}
+function markChanged(message){S.updated=new Date().toISOString();$('saveState').textContent='UNGESPEICHERT';render();if(message)log(message);send('STATE.UPDATE',{state:exportState(),message})}
+function exportState(){return{system:'MK.atom.ctrl ROOT',version:2,model:{workMatrix:81,rootSpace:729,depth:{4:'Stamm',5:'Wurzel',6:'Tiefwurzel'},fixpoint:'f(x)=min(x,40)',idempotence:'f(f(x))=f(x)'},...JSON.parse(JSON.stringify(S)),metrics:{...parts(),zone:zone(),home:home(),rootActive:activeRoot(),slotCount:S.slots.length,roomCount:S.rooms.length}}}
+function renderAxes(){$('axisControls').innerHTML=[['phiMaj','Φ POWER','Herrschaft / Markt2'],['phiMin','φ ROTATION','Beweis / Markt3'],['phiSq','φ² SCALE','Fläche / Markt4'],['phiInf','φ∞ BEWUSST','Synchronität / Markt6']].map(([k,l,d])=>`<div class="axis"><label>${l}</label><b>${S.axes[k]}</b><span class="tiny">${d}</span><input type="range" min="0" max="100" value="${S.axes[k]}" oninput="CTRL.setAxis('${k}',this.value)"></div>`).join('')}
+function renderGrid(){$('grid81').innerHTML=Array.from({length:81},(_,i)=>`<button class="slot ${S.slots.includes(i)?'on':''}" aria-label="Slot ${i+1}" aria-pressed="${S.slots.includes(i)}" onclick="CTRL.toggleSlot(${i})">${i+1}</button>`).join('');const raw=S.slots.length*9;$('slotSummary').textContent=`${S.slots.length} / 81 aktiv · Rohwert ${raw} · HOME40 ${f(raw)}`;$('rawValue').textContent=raw;$('clampedValue').textContent=f(raw);$('scanBar').style.width=(raw/729*100)+'%';$('scanFormula').textContent=`Rohwert = ${S.slots.length} × 9 = ${raw}\nHOME40 = f(${raw}) = ${f(raw)}\nf(f(${raw})) = ${f(f(raw))}\nFixpunkt stabil: ${f(raw)===f(f(raw))?'JA':'NEIN'}`}
+function renderRoot(){$('rootGrid').innerHTML=Array.from({length:729},(_,i)=>`<i class="node ${i<activeRoot()?'on':''}"></i>`).join('');$('rootCount').textContent=`${activeRoot()} / 729 aktiv`;$('depthLabel').textContent=`DEPTH ${S.dimensions.maxDepth} · ${S.dimensions.maxDepth===4?'STAMM':S.dimensions.maxDepth===5?'WURZEL':'TIEF WURZEL'}`;for(const k of ['height','width','depth']){$(k).value=S.dimensions[k];$(k+'Val').textContent=S.dimensions[k]+'%'}$('dimensionJSON').textContent=JSON.stringify(S.dimensions,null,2)}
+function renderRooms(){$('roomsGrid').innerHTML=ROOM_DATA.map((r,i)=>`<button class="room ${S.rooms.includes(i)?'on':''}" onclick="CTRL.toggleRoom(${i})"><b>${r.n}</b><div class="tiny">${r.k} · ${r.d}</div></button>`).join('');$('roomsCount').textContent=`${S.rooms.length} / 9 gewählt`;$('cores').innerHTML=['NOEL','NOAH','WRIGHT'].map(k=>{const all=ROOM_DATA.map((r,i)=>({...r,i})).filter(r=>r.k===k),sel=all.filter(r=>S.rooms.includes(r.i));return`<div class="core"><b>${k} · ${sel.length}/${all.length}</b><div class="bar"><i style="width:${sel.length/all.length*100}%"></i></div><span class="tiny">${sel.map(x=>x.n).join(' · ')||'Keine Räume gewählt'}</span><div class="tiny">Kernwert ${Math.round(sel.length/all.length*40)} / 40</div></div>`}).join('')}
+function renderMetrics(){const p=parts(),z=zone();$('homeMetric').textContent=home()?'HOME':'—';$('homeMetric').className='metric '+(home()?'green':'gold');$('covMetric').textContent=p.coverage.toFixed(3);$('loadMetric').textContent=p.load.toFixed(3);$('rootMetric').textContent=activeRoot();$('covBar').style.width=p.coverage*100+'%';$('loadBar').style.width=clamp(p.load*100)+'%';$('zonePill').textContent='ZONE '+z;$('zonePill').className='pill '+(z==='HOME'?'green':'');$('sourceText').textContent=S.source;$('angle').value=S.angle;$('needle').setAttribute('transform',`rotate(${S.angle} 150 150)`);$('angleText').textContent=S.angle+'° · '+(S.angle===270?'WEST / GRAB':S.angle===240?'WSW':S.angle<90?'N/NE':S.angle<180?'E/SE':S.angle<270?'S/SW':'NW');$('chain').innerHTML=['ESSENZ','SCAN','SCSI','RAID','SLI','REGLER','ATEM','DEFEND','FUSION','HOME','COVERAGE'].map((x,i)=>`<span class="pill">${i+1}. ${x}</span>`).join('');}
+function renderRegler(){const p=parts(),z=zone(),err=.56-p.load;const formula=`Coverage = (Φ×0.30 + φ²×0.50 + φ×0.20) / 100\n          = (${S.axes.phiMaj}×.30 + ${S.axes.phiSq}×.50 + ${S.axes.phiMin}×.20) / 100\n          = ${p.coverage.toFixed(3)}\nSCSI = φ/100 = ${p.scsi.toFixed(3)}\nRAID = 1 − |Φ−φ²|/100 = ${p.raid.toFixed(3)}\nSLI = φ∞/100 = ${p.sli.toFixed(3)}\nLoad = Coverage×.35 + SCSI×.25 + RAID×.20 + SLI×.20\n     = ${p.load.toFixed(3)}\nHOME iff Load 0.52–0.60 AND Coverage ≥ 0.60 AND ATEM EIN\nJetzt: ${home()?'HOME ✓':'NOCH NICHT · '+z}\nf(x)=min(x,40) · f²=f`; $('formula').textContent=formula;$('pidError').textContent=err.toFixed(3);$('pidOutput').textContent='Stellgröße '+S.pid.out.toFixed(3);$('breathBtn').textContent=S.atem?'ATEM AUS':'ATEM EIN';$('breathState').textContent=S.atem?'ATEM EIN · Statusberechnung aktiv':'ATEM AUS · Zone bleibt OFF';$('zones').innerHTML=[['OFF','ATEM AUS oder Load < 0,30'],['ROOT','0,30–0,45'],['UP','0,45–0,52'],['HOME','0,52–0,60 + Coverage ≥ 0,60'],['WORK','0,60–0,75'],['LIMIT','Load > 0,75']].map(([n,d])=>`<div class="row between"><span>${n} · ${d}</span><b class="${z===n?'green':'muted'}">${z===n?'◀ AKTIV':''}</b></div>`).join('');}
+function renderExport(){$('exportJSON').textContent=JSON.stringify(exportState(),null,2)}
+function render(){renderAxes();renderGrid();renderRoot();renderRooms();renderMetrics();renderRegler();renderExport()}
+window.CTRL={
+ setAxis(k,v){S.axes[k]=clamp(v);S.source='HAND';markChanged(`${k} → ${S.axes[k]} · Load ${parts().load.toFixed(3)}`)},
+ resetAxes(){Object.assign(S.axes,DEFAULT.axes);S.source='RESET';markChanged('Achsen auf Startwerte gesetzt')},
+ setAngle(v){S.angle=clamp(v,0,359);$('needle').setAttribute('transform',`rotate(${S.angle} 150 150)`);$('angleText').textContent=S.angle+'° · '+(S.angle===270?'WEST / GRAB':S.angle===240?'WSW':'Kompass');S.source='HAND'},
+ setDimension(k,v){S.dimensions[k]=clamp(v);if(k==='depth')S.value=activeRoot();S.source='HAND';markChanged(`${k.toUpperCase()} → ${v}%`)},
+ toggleSlot(i){const a=S.slots.indexOf(i);if(a>=0)S.slots.splice(a,1);else S.slots.push(i);S.slots.sort((a,b)=>a-b);S.value=S.slots.length*9;S.source='SCAN';markChanged(`SCAN Slot ${i+1} · ${S.slots.length}/81 · f(x)=${f(S.value)}`)},
+ fill81(){S.slots=Array.from({length:81},(_,i)=>i);S.value=729;S.source='SCAN';markChanged('Alle 81 Slots aktiviert')},
+ clear81(){S.slots=[];S.value=0;S.source='SCAN';markChanged('81er-Matrix geleert')},
+ commitScan(){S.value=f(S.slots.length*9);S.source='SCAN';markChanged(`SCAN → CTRL übernommen · Roh ${S.slots.length*9} · HOME40 ${S.value}`)},
+ readRaw(){S.raw=$('rawInput').value;S.source='RAW';markChanged(`RAW erfasst · ${S.raw.length} Zeichen · keine automatische Bilderkennung`)},
+ toggleRoom(i){const a=S.rooms.indexOf(i);if(a>=0)S.rooms.splice(a,1);else S.rooms.push(i);S.rooms.sort((a,b)=>a-b);S.source='9e→3e';markChanged(`Raum ${ROOM_DATA[i].n} ${a>=0?'abgewählt':'gewählt'}`)},
+ clearRooms(){S.rooms=[];S.source='9e→3e';markChanged('Raumauswahl geleert')},
+ collapseRooms(){const count=S.rooms.length;const raw=count?count*9:729;S.value=f(raw);S.source='9e→3e';$('collapseResult').textContent=`${count} Räume → ${Math.min(3,new Set(S.rooms.map(i=>ROOM_DATA[i].k)).size)} Kerne → Rohwert ${raw} → HOME40 ${f(raw)}`;markChanged('9e → 3e → 1 Wert berechnet')},
+ homeCheck(){log(home()?`HOME ERREICHT · Load ${parts().load.toFixed(3)} · Coverage ${coverage().toFixed(3)}`:`HOME NOCH NICHT · Load ${parts().load.toFixed(3)} · Zone ${zone()}`);render()},
+ calibrate(){S.atem=true;let best=null;for(let a=0;a<=100;a++)for(let b=0;b<=100;b+=2){S.axes.phiInf=a;S.axes.phiMin=b;const p=parts();if(p.load>=.52&&p.load<=.60&&p.coverage>=.60){const score=Math.abs(p.load-.56);if(!best||score<best.score)best={a,b,score}}}if(best){S.axes.phiInf=best.a;S.axes.phiMin=best.b;S.source='KALIBRIERUNG';markChanged(`Kalibriert · φ∞ ${best.a} · φ ${best.b} · Load ${parts().load.toFixed(3)}`)}else{S.atem=false;log('Keine HOME-Kombination mit diesen Achsen gefunden')}},
+ breathToggle(){S.atem=!S.atem;markChanged('ATEM '+(S.atem?'EIN':'AUS'))},
+ pidReset(){S.pid={integral:0,lastErr:0,out:0};render();log('PID zurückgesetzt')},
+ testFixed(){const x=Number($('testX').value)||0,y=f(x),z=f(y);$('fixedResult').textContent=`Eingabe x = ${x}\nf(x) = min(${x},40) = ${y}\nf(f(x)) = f(${y}) = ${z}\nf²(x) = f(x): ${z===y?'JA ✓':'NEIN'}`},
+ clearLog(){ $('log').innerHTML='';log('Protokoll geleert')},
+ save(){try{localStorage.setItem('MK.atom.ctrl.state.v2',JSON.stringify(exportState()));$('saveState').textContent='GESPEICHERT';log('Zustand lokal gespeichert')}catch(e){log('Speichern nicht möglich: '+e.message)}},
+ restore(){try{const raw=localStorage.getItem('MK.atom.ctrl.state.v2');if(!raw)throw Error('Kein gespeicherter Zustand');CTRL.applyImport(JSON.parse(raw));$('saveState').textContent='GELADEN';log('Gespeicherten Zustand geladen')}catch(e){log(e.message)}},
+ importJSON(){try{const data=JSON.parse($('jsonInput').value);CTRL.applyImport(data);log('JSON erfolgreich importiert')}catch(e){alert('Import fehlgeschlagen: '+e.message);log('JSON-Import fehlgeschlagen: '+e.message)}},
+ applyImport(data){const s=data.state||data;if(s.axes||s.achsen){const a=s.axes||s.achsen;for(const k of Object.keys(DEFAULT.axes))if(Number.isFinite(Number(a[k])))S.axes[k]=clamp(a[k])}if(Array.isArray(s.slots))S.slots=[...new Set(s.slots.map(Number).filter(x=>Number.isInteger(x)&&x>=0&&x<81))].sort((a,b)=>a-b);if(Array.isArray(s.rooms))S.rooms=[...new Set(s.rooms.map(Number).filter(x=>Number.isInteger(x)&&x>=0&&x<9))].sort((a,b)=>a-b);if(s.dimensions)for(const k of ['height','width','depth'])if(Number.isFinite(Number(s.dimensions[k])))S.dimensions[k]=clamp(s.dimensions[k]);if(Number.isFinite(Number(s.angle)))S.angle=clamp(s.angle,0,359);if(typeof s.atem==='boolean')S.atem=s.atem;if(typeof s.raw==='string')S.raw=s.raw;S.value=f(Number(s.value)||S.slots.length*9);S.source='DATEI';markChanged('Daten aus JSON übernommen')},
+ loadFile(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{$('jsonInput').value=reader.result;CTRL.importJSON()};reader.onerror=()=>log('Datei konnte nicht gelesen werden');reader.readAsText(file)},
+ exportJSON(){const blob=new Blob([JSON.stringify(exportState(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='MK-atom-ctrl-root.json';a.click();URL.revokeObjectURL(a.href);log('JSON exportiert')},
+ copyJSON(){const txt=JSON.stringify(exportState(),null,2);navigator.clipboard?.writeText(txt).then(()=>log('JSON in Zwischenablage kopiert')).catch(()=>log('Zwischenablage nicht verfügbar'))},
+ broadcastTest(){send('CTRL.TEST',{message:'HOKUS POKUS · anderer Tab empfängt diesen Test'});log(BC?'Broadcast-Test gesendet':'Kein BroadcastChannel verfügbar')},
+ ncLog(message,cls=''){const el=$('ncLog');if(!el)return;const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' · '+message;el.prepend(d);},
+ ncRender(){const n=S.nc;const pts=[];for(let i=0;i<9;i++){const a=-Math.PI/2+i*2*Math.PI/9;pts.push([130+105*Math.cos(a),130+105*Math.sin(a)])}const ns='http://www.w3.org/2000/svg';$('ncNona').setAttribute('points',pts.map(p=>p.join(',')).join(' '));$('ncTri').setAttribute('points',[0,3,6].map(i=>pts[i].join(',')).join(' '));$('ncVerts').innerHTML='';pts.forEach((p,i)=>{const c=document.createElementNS(ns,'circle');c.setAttribute('cx',p[0]);c.setAttribute('cy',p[1]);c.setAttribute('r',9);c.setAttribute('fill',i<n.step?'#48f0a4':i===n.step?'#ffd166':'#111827');c.setAttribute('stroke','#26344d');$('ncVerts').appendChild(c);const t=document.createElementNS(ns,'text');t.setAttribute('x',p[0]);t.setAttribute('y',p[1]+3);t.setAttribute('text-anchor','middle');t.setAttribute('font-size','7');t.setAttribute('fill','#081018');t.textContent=NC_ORDER[i][1];$('ncVerts').appendChild(t)});$('ncStep').textContent=n.step+'/9';$('ncAuto').textContent=n.auto?'AN':'AUS';$('ncHome').textContent=n.result.home??'—';$('ncCommands').innerHTML='';NC_ORDER.forEach((o,i)=>{const b=document.createElement('button');b.className='btn '+(i<n.step?'':'') ;b.textContent=o[0];b.disabled=n.busy||i!==n.step;b.onclick=()=>CTRL.ncRun(o[0]);$('ncCommands').appendChild(b)});const r=n.result;$('ncSources').textContent=NC_SRC.length;$('ncValues').textContent=r.attack?.values??NC_SRC.reduce((a,s)=>a+s.n.length,0);$('ncClamped').textContent=r.attack?.clamped??0;$('ncFusion').textContent=r.fusion?(r.fusion.all?'OK':'CHECK'):'—';$('ncSummary').textContent=JSON.stringify(r,null,2);},
+ ncRunInput(){let c=$('ncInput').value.trim().toUpperCase();$('ncInput').value='';if(c&&!c.startsWith('NC.'))c='NC.'+c;CTRL.ncRun(c)},
+ async ncRun(raw){const n=S.nc;let c=String(raw||'').trim().toUpperCase();if(!c)return;if(!c.startsWith('NC.'))c='NC.'+c;if(c==='NC.RESET'){CTRL.ncReset();return}if(c==='NC.EXPORT'){if(n.step<9){CTRL.ncLog('Export erst nach NC.HOME.');return}const txt=JSON.stringify(n.result,null,2);$('ncOutput').textContent=txt;$('ncOutput').classList.remove('hide');try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download='NC-HOME-40.json';a.click();URL.revokeObjectURL(a.href);CTRL.ncLog('NC-HOME-40.json exportiert')}catch(e){CTRL.ncLog('Export nicht möglich: '+e.message)}return}
+ const idx=NC_ORDER.findIndex(o=>o[0]===c);if(idx<0){CTRL.ncLog('Unbekannter Befehl: '+c);return}if(idx!==n.step){CTRL.ncLog('Erwartet: '+(NC_ORDER[n.step]?.[0]||'NC.EXPORT')+' – Reihenfolge bleibt fest.');return}if(n.busy)return;n.busy=true;
+ const execute=command=>{
+  const nums=()=>NC_SRC.flatMap(s=>s.n),all=nums(),R=n.result;
+  CTRL.ncLog('> '+command+' · '+NC_ORDER[n.step][1]+' '+NC_ORDER[n.step][2]);
+  if(command==='NC.ESSENZ'){Object.assign(R,{agent:'NOAH',HOME:40,formula:'f(x)=min(x,40)',rule:'f(40)=40'});CTRL.ncLog('Essenz geladen: HOME40 / f(x)=min(x,40)')}
+  if(command==='NC.SCAN'){R.scan=NC_SRC.map(s=>({id:s.id,count:s.n.length}));CTRL.ncLog('5 Quellen gesehen; Quellen bleiben einzeln')}
+  if(command==='NC.SCSI'){R.scsi=NC_SRC.map(s=>({id:s.id,delta:+s.n.reduce((a,x)=>a+(x-f(x)),0).toFixed(2)}));CTRL.ncLog('SCSI: Deltas je Quelle, kein stilles Zusammenführen')}
+  if(command==='NC.RAID'){const groups=[NC_SRC.slice(0,3),NC_SRC.slice(3)];R.raid=groups.map((g,i)=>{const v=g.flatMap(s=>s.n);return{group:i,sources:g.length,merged:f(Math.min(...v)),avg:+(v.reduce((a,x)=>a+x,0)/v.length).toFixed(2)}});CTRL.ncLog('RAID: zwei Gruppen, Min-Wert geklemmt')}
+  if(command==='NC.SLI'){const m=Math.min(...R.raid.map(x=>x.merged));R.sli={final:f(m),parts:R.raid.length};CTRL.ncLog('SLI führt '+R.sli.parts+' Teile zusammen → '+R.sli.final)}
+  if(command==='NC.ATTACK'){const hit=all.filter(x=>x>40);R.attack={values:all.length,clamped:hit.length,max:Math.max(...all)};n.auto=true;CTRL.ncLog('ATTACK: '+hit.length+' von '+all.length+' Werten über 40 erkannt und auf 40 begrenzt')}
+  if(command==='NC.DEFEND'){const masked=all.filter(x=>x>40).length;R.defend={mask:'Wright TMP Rär Maske',masked,passed:all.length-masked};CTRL.ncLog('DEFEND: '+masked+' Werte maskiert, '+(all.length-masked)+' durchgelassen')}
+  if(command==='NC.FUSION'){const ok=all.filter(x=>f(f(x))===f(x)).length;R.fusion={check:'f(f(x))=f(x)',tested:all.length,idempotent:ok,all:ok===all.length};CTRL.ncLog('FUSION: Fixpunkt-Test '+ok+'/'+all.length)}
+  if(command==='NC.HOME'){R.home=40;R.final=f(f(f(R.sli.final)));R.timestamp=new Date().toISOString();n.auto=false;CTRL.ncLog('HOME40 fertig · NC.EXPORT kann sichern')}
+  n.step++;n.busy=false;CTRL.ncRender();renderExport();
+ };
+ execute(c);
+ if(n.auto){while(n.step<9){await new Promise(r=>setTimeout(r,350));execute(NC_ORDER[n.step][0])}}
+ markChanged('NC-Kette: '+c+' · Schritt '+n.step+'/9');
+ },
+ ncReset(){S.nc={step:0,auto:false,result:{},busy:false};$('ncOutput').classList.add('hide');CTRL.ncLog('NC zurück zu ESSENZ');CTRL.ncRender();markChanged('NC-Kette zurückgesetzt')},
+ resetAll(){if(!confirm('Wirklich alle Eingaben und Einstellungen zurücksetzen?'))return;Object.assign(S,structuredClone(DEFAULT));$('rawInput').value='';CTRL.ncRender();markChanged('Gesamter Zustand zurückgesetzt')}
+};
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id==='view-'+b.dataset.view||x.id===b.dataset.view));}));
+try{BC=new BroadcastChannel('MK-atom-ctrl');BC.onmessage=e=>{if(e.data?.type==='STATE.UPDATE'&&e.data.payload?.state){log('Anderer Tab meldet Zustandsänderung · Import über JSON möglich');$('channel').textContent='CHANNEL: EMPFANG AKTIV'}else log('Broadcast empfangen: '+(e.data?.type||'Nachricht'))};$('channel').textContent='CHANNEL: OFFEN'}catch(e){$('channel').textContent='CHANNEL: NICHT VERFÜGBAR'}
+window.addEventListener('storage',e=>{if(e.key==='MK.atom.ctrl.state.v2')log('Ein anderer Tab hat den lokalen Zustand aktualisiert · zum Übernehmen „Gespeicherten Zustand laden“ klicken')});
+$('rawInput').value='';$('jsonInput').value=JSON.stringify(exportState(),null,2);render();CTRL.ncRender();$('ncInput').addEventListener('keydown',e=>{if(e.key==='Enter')CTRL.ncRunInput()});log('CTRL ROOT gestartet · eine gemeinsame Datenstruktur S');log('f² = f · HOME40 ist idempotenter Fixpunkt');
+</script>
+</body>
+</html>

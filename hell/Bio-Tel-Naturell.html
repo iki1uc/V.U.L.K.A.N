@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bio.tel — naturell</title>
+<style>
+:root{--bg:#0d0f0c;--fg:#f2efe8;--muted:#9a958a;--line:#26281f;--gold:#e8c87a;--green:#7ec98a;--red:#ff8a8a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:14px/1.65 Georgia, 'Times New Roman', serif;max-width:900px;margin:0 auto;padding:24px 18px 48px}
+header{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:20px}
+h1{font-size:22px;font-weight:400;letter-spacing:.02em}
+h1 b{color:var(--gold);font-weight:600}
+.rule{margin-top:8px;font-size:13px;color:var(--muted);font-style:italic}
+.note{margin-top:4px;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-family:ui-monospace,monospace}
+section{margin-bottom:20px}
+.cell{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.cell{grid-template-columns:1fr}}
+figure{border:1px solid var(--line);border-radius:14px;background:#11130e;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:220px}
+figure canvas{max-width:100%;max-height:100%;display:block;border-radius:10px}
+figcaption{position:absolute;top:10px;left:12px;font-size:11px;letter-spacing:.12em;color:var(--muted);background:rgba(0,0,0,.6);padding:3px 8px;border-radius:20px;font-family:ui-monospace,monospace;z-index:1}
+figcaption b{color:var(--gold)}
+.empty{color:var(--muted);font-size:13px;padding:20px;text-align:center;line-height:1.5;font-style:italic}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.metrics>div{background:#14160f;padding:14px}
+.metrics small{display:block;color:var(--muted);font-size:10px;letter-spacing:.15em;font-family:ui-monospace,monospace}
+.metrics b{font-size:24px;font-weight:400}
+.metrics b.delta-pos{color:var(--green)}
+.metrics b.delta-neg{color:var(--red)}
+.fixline{margin-top:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.fixline b{color:var(--fg);font-weight:600}
+.fixline .ok{color:var(--green)}
+.fixline .bad{color:var(--red)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:500px){.actions{grid-template-columns:1fr}}
+button{background:#1c1e15;border:1px solid var(--line);color:var(--fg);padding:14px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer;letter-spacing:.04em}
+button:hover{border-color:var(--gold)}
+button:disabled{opacity:.3;cursor:not-allowed}
+button.go{border-color:var(--gold);color:var(--gold);background:#241f0a;font-weight:600}
+.division{display:flex;justify-content:center;align-items:center;gap:12px;padding:14px 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.division b{color:var(--gold)}
+.division .on{color:var(--green)}
+h2{font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:400;margin:22px 0 10px;text-transform:uppercase;font-family:ui-monospace,monospace}
+ol.essences{list-style:none;counter-reset:e}
+ol.essences li{counter-increment:e;padding:12px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+ol.essences li::before{content:counter(e,decimal-leading-zero);color:var(--gold);font-size:11px;padding-top:3px;font-family:ui-monospace,monospace}
+ol.essences .ess{font-weight:600;font-size:14px}
+ol.essences .grund{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.5}
+ol.trace{list-style:none;font-size:12px;max-height:180px;overflow:auto;font-family:ui-monospace,monospace}
+ol.trace li{padding:4px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+ol.trace li b{color:var(--fg);font-weight:400}
+footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);letter-spacing:.1em;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>BIO.<b>TEL</b> — naturell</h1>
+  <p class="rule">f(x) = min(x, 40) · zweimal gleich = wahr · das Original bleibt, die Kopie zeigt</p>
+  <p class="note">aus 4 quellen · nur was hilft · nur warum</p>
+</header>
+<main>
+  <section class="cell">
+    <figure><figcaption>ORIGINAL · so wie es war</figcaption><canvas id="cvRaw" hidden></canvas><div class="empty" id="emptyRaw">Wähl ein Bild aus.<br>Es wird nie verändert.</div></figure>
+    <figure><figcaption><b>BIO.TEL</b> · so wie es klarer wird</figcaption><canvas id="cvTel" hidden></canvas><div class="empty" id="emptyTel">Hier erscheint die klarere Kopie.<br>Das Original bleibt.</div></figure>
+  </section>
+  <section>
+    <div class="metrics">
+      <div><small>ORIGINAL</small><b id="mRaw">—</b></div>
+      <div><small>BIO.TEL</small><b id="mTel">—</b></div>
+      <div><small>UNTERSCHIED</small><b id="mDelta">—</b></div>
+    </div>
+    <div class="fixline"><span>f(tel) = <b id="mFix">—</b></span><span>f²(tel) = <b id="mFix2">—</b></span><span>bleibt gleich: <b id="mStable">—</b></span></div>
+    <div class="actions"><input type="file" id="fileIn" accept="image/*" hidden><button id="btnLoad">Bild auswählen</button><button class="go" id="btnTel" disabled>Klarer machen</button></div>
+  </section>
+  <section class="division"><span>1</span><span>→</span><span class="on">2</span><span>→</span><span>4</span><span>→</span><b>8</b><span>→</span><span>4</span><span>→</span><span class="on">2</span><span>→</span><span>1</span></section>
+  <section class="division"><span>9 Räume</span><span>→</span><b>3 Kerne</b><span>→</span><b>1 Zuhause</b></section>
+  <h2>Neun Sachen, die stimmen · und warum</h2>
+  <ol class="essences">
+    <li><div><div class="ess">Das Original bleibt, die Kopie zeigt.</div><div class="grund">Weil Wahrheit nur da ist, wo man sie nicht überschreibt. Die Kopie ist der Beweis, nicht der Ersatz.</div></div></li>
+    <li><div><div class="ess">Ein Knopf, ein Ergebnis.</div><div class="grund">Weil zwanzig Regler nur zwanzig Ausreden sind. Ein Knopf zwingt dich, dich zu entscheiden.</div></div></li>
+    <li><div><div class="ess">Vier Schritte, jeder für sich.</div><div class="grund">NC, dann CODEC, dann CODEX, dann ADAPT. Jeder Schritt ist messbar und umkehrbar. Kein Topf, in dem alles verschwimmt.</div></div></li>
+    <li><div><div class="ess">Auge → Kopf → Arme → Beine.</div><div class="grund">Weil eine Kette nur so stark ist wie ihr schwächstes Glied. Ein Glied, das steht, ist noch kein Laufen.</div></div></li>
+    <li><div><div class="ess">Nur vorwärts.</div><div class="grund">Weil ein Kreis, der zurückgeht, lügt. Vorwärts heißt: Kein Trick mit Reset.</div></div></li>
+    <li><div><div class="ess">Prüfen, lernen, zurück können.</div><div class="grund">Weil Steuern ohne Gedächtnis nur Zufall ist. Wer nicht zurück kann, kann auch nicht prüfen.</div></div></li>
+    <li><div><div class="ess">f(x) = min(x, 40) · zweimal gleich = wahr.</div><div class="grund">Weil was zweimal gleich ist, wahr ist. Alles über 40 ist 40. 40 ist das Maximum, weil es das Minimum der Wahrheit ist.</div></div></li>
+    <li><div><div class="ess">81 → 729.</div><div class="grund">Weil neun mal neun mal neun. Jede Zelle zählt, weil der Raum aus Zellen gebaut ist.</div></div></li>
+    <li><div><div class="ess">Neun Räume, drei Kerne, ein Zuhause.</div><div class="grund">Weil das Biologie ist: Viele Organe, wenige Systeme, ein Leben.</div></div></li>
+  </ol>
+  <h2>Spuren · nur was passiert ist</h2>
+  <ol class="trace" id="trace"></ol>
+</main>
+<footer>ein Knopf · ein Bild · ein Unterschied · kein Blabla · läuft nur bei dir im Browser · Original bleibt Original</footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const F = x => Math.max(0, Math.min(40, Number(x) || 0));
+const state = { rawCanvas: null, rawScore: 0, telScore: 0 };
+function log(msg){const li=document.createElement('li');li.innerHTML=new Date().toLocaleTimeString()+' · <b>'+msg+'</b>';$('trace').prepend(li);while($('trace').children.length>40)$('trace').lastChild.remove();}
+function scoreOf(data){const n=data.length/4;if(!n)return 0;const lumas=new Float32Array(n);let sum=0;for(let i=0,j=0;i<data.length;i+=4,j++){const l=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2];lumas[j]=l;sum+=l;}const mean=sum/n;let varSum=0;for(let j=0;j<n;j++)varSum+=(lumas[j]-mean)**2;const contrast=Math.sqrt(varSum/n);let edge=0,eN=0;for(let j=0;j<n-2;j+=7){edge+=Math.abs(lumas[j]-lumas[j+1])+Math.abs(lumas[j]-lumas[j+2]);eN+=2;}const sharp=eN?edge/eN:0;const brightness=100-Math.min(100,Math.abs(mean-108)*0.9);const c=Math.min(100,contrast*1.55);const s=Math.min(100,sharp*8);return Math.round(Math.max(0,Math.min(100,brightness*0.35+c*0.40+s*0.25)));}
+function bioTel(data,w,h){const out=new Uint8ClampedArray(data);const brightness=42,contrast=32,gamma=0.62,sharpness=45;const cf=(100+contrast)/100;for(let i=0;i<out.length;i+=4){for(let k=0;k<3;k++){let v=(out[i+k]-128)*cf+128+brightness;v=255*Math.pow(Math.max(0,Math.min(255,v))/255,gamma);out[i+k]=Math.max(0,Math.min(255,v));}}if(sharpness>0&&w>2&&h>2){const src=new Uint8ClampedArray(out);const amount=sharpness/100*1.2;for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){const idx=(y*w+x)*4;for(let k=0;k<3;k++){let blur=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)blur+=src[((y+dy)*w+(x+dx))*4+k];blur/=9;out[idx+k]=Math.max(0,Math.min(255,src[idx+k]+(src[idx+k]-blur)*amount));}}}}return out;}
+function setFixDisplay(score){if(score===null||score===undefined){$('mFix').textContent='—';$('mFix2').textContent='—';$('mStable').textContent='—';$('mStable').className='';return;}const f1=F(score),f2=F(f1);$('mFix').textContent=f1;$('mFix2').textContent=f2;$('mStable').textContent=f1===f2?'Ja ✓':'Nein';$('mStable').className=f1===f2?'ok':'bad';}
+function loadImage(file){if(!file)return;if(!file.type.startsWith('image/')){log('kein Bild · nur Bilder');return;}const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>{const scale=Math.min(1,900/img.naturalWidth);const w=Math.max(1,Math.round(img.naturalWidth*scale));const h=Math.max(1,Math.round(img.naturalHeight*scale));const rc=$('cvRaw');rc.width=w;rc.height=h;const rctx=rc.getContext('2d',{willReadFrequently:true});rctx.drawImage(img,0,0,w,h);rc.hidden=false;$('emptyRaw').hidden=true;state.rawCanvas=rc;const rawData=rctx.getImageData(0,0,w,h);state.rawScore=scoreOf(rawData.data);$('mRaw').textContent=state.rawScore;$('mTel').textContent='—';$('mDelta').textContent='—';$('mDelta').className='';setFixDisplay(null);const tc=$('cvTel');tc.width=w;tc.height=h;tc.hidden=true;$('emptyTel').hidden=false;$('emptyTel').textContent='Bereit · Knopf drücken';$('btnTel').disabled=false;log('geladen · '+file.name+' · Original-Wert '+state.rawScore);URL.revokeObjectURL(url);};img.onerror=()=>{log('Bild konnte nicht gelesen werden');URL.revokeObjectURL(url);};img.src=url;}
+function entkorrigieren(){if(!state.rawCanvas)return;const w=state.rawCanvas.width,h=state.rawCanvas.height;const rctx=state.rawCanvas.getContext('2d',{willReadFrequently:true});const raw=rctx.getImageData(0,0,w,h);const tel=bioTel(raw.data,w,h);const tc=$('cvTel');tc.width=w;tc.height=h;tc.getContext('2d').putImageData(new ImageData(tel,w,h),0,0);tc.hidden=false;$('emptyTel').hidden=true;state.telScore=scoreOf(tel);const delta=state.telScore-state.rawScore;$('mTel').textContent=state.telScore;$('mDelta').textContent=(delta>=0?'+':'')+delta;$('mDelta').className=delta>0?'delta-pos':delta<0?'delta-neg':'';setFixDisplay(state.telScore);log('Original '+state.rawScore+' → Bio.tel '+state.telScore+' · Unterschied '+(delta>=0?'+':'')+delta+' · '+(delta>0?'mehr zu sehen':delta===0?'kein Gewinn':'schlechter · zurück zum Original'));const f1=F(state.telScore),f2=F(f1);log('f(tel) = '+f1+' · f² = f · '+(f1===f2?'Ja ✓':'Nein'));}
+$('btnLoad').addEventListener('click',()=>$('fileIn').click());$('fileIn').addEventListener('change',e=>loadImage(e.target.files[0]));$('btnTel').addEventListener('click',entkorrigieren);log('bio.tel naturell gestartet · f(x)=min(x,40) · Original bleibt Original');
+</script>
+</body>
+</html>

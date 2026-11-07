@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NC · MK.atom.ctrl · PUZZLE — PUPPETMASTER + SCAN + DURCHGANG = 1 System</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#000;color:#3f3;font-family:"Courier New",monospace}
+header{padding:14px 16px;border-bottom:1px solid #3f3;background:#080808;position:sticky;top:0;z-index:5}
+h1{margin:0;color:#fff;font-size:22px} h1 b{color:#3f3}
+.sub{font-size:10px;color:#999;letter-spacing:1px;margin-top:6px}
+.wrap{max-width:1200px;margin:auto;padding:16px}
+.card{border:1px solid #3f355;background:#0a0a0a;padding:12px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:11px;letter-spacing:2px;color:#fff}
+.card h2 span{color:#3f3}
+button{font-family:inherit;cursor:pointer;border:1px solid #3f3;background:#111;color:#3f3;padding:8px 10px;font-weight:700;font-size:10px;letter-spacing:1px}
+button:hover{background:#3f3;color:#000} button.gold{border-color:#ffd700;color:#ffd700} button.cyan{border-color:#38c6e0;color:#38c6e0} button.white{border-color:#fff;color:#fff}
+input,select{font-family:inherit;background:#000;color:#3f3;border:1px solid #3f3;padding:8px;font-size:11px;width:100%}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px} @media(max-width:800px){.grid3{grid-template-columns:1fr}}
+.layer{border:1px solid #222;padding:10px} .layer.on{border-color:#3f3;background:#0f0f0f}
+.layer b{color:#fff;font-size:12px} .layer small{color:#888;font-size:9px;display:block;margin-top:4px;line-height:1.5}
+.badge{display:inline-block;padding:2px 6px;font-size:8px;font-weight:900;margin:2px 2px 0 0}
+.real{background:#3f3;color:#000} .konzept{background:#ffd700;color:#000} .fehlt{background:#ff38c6;color:#fff} .nein{background:#444;color:#fff}
+.kv{display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px solid #111} .kv b{color:#fff}
+.loch{display:grid;grid-template-columns:repeat(9,1fr);gap:2px} .slot{aspect-ratio:1;border:1px solid #222;background:#000;display:flex;align-items:center;justify-content:center;font-size:8px;color:#555;cursor:pointer}
+.slot.full{background:#3f3;color:#000;font-weight:900} .slot.sel{border-color:#fff;color:#fff;box-shadow:0 0 8px #fff}
+.log{height:180px;overflow:auto;background:#000;border:1px solid #3f3;padding:8px;font-size:8px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:9px} th,td{border:1px solid #222;padding:6px;text-align:left;vertical-align:top} th{color:#fff}
+pre{white-space:pre-wrap;font-size:9px;color:#ccc;background:#000;border:1px solid #222;padding:10px;line-height:1.5}
+.pill{display:inline-block;border:1px solid #3f3;padding:3px 8px;font-size:9px;margin:2px}
+</style></head>
+<body>
+<header>
+<h1>✨ ABRA KADABRA — <b>PUZZLE = 1 SYSTEM</b> ✨</h1>
+<div class="sub">NC · MK.atom.ctrl · PUPPETMASTER (steuert) + SCAN / RESPO (verdichtet) + DURCHGANG V111 (blickt) · Kein Zauber, kein externes Steuern — nur was Code wirklich tut · wieimmer..ooOO</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+<button onclick="NC.SCAN()">NC.SCAN</button>
+<button onclick="NC.SEND()">NC.SEND → alle Tabs</button>
+<button class="cyan" onclick="NC.BROADCAST()">BROADCAST TEST</button>
+<button class="gold" onclick="NC.BAUSTEIN()">FEHLENDE BAUSTEINE → EINBAUEN</button>
+<button onclick="NC.ATEM()">NC.ATEM <span id="atemBtn">AUS</span></button>
+<button class="white" onclick="NC.EXPORT()">EXPORT JSON</button>
+<button onclick="NC.RESET()">RESET</button>
+</div>
+<div style="margin-top:8px;font-size:9px;color:#888">Status: <span id="statusLine">—</span> &nbsp;|&nbsp; Kanal: <span id="chanLine">—</span> &nbsp;|&nbsp; Tabs im selben Origin: <span id="tabCount">1 (dieser)</span></div>
+</header>
+
+<div class="wrap">
+
+<div class="card"><h2>1 — <span>VERBORGENE TECHNIK</span> · Was Code WIRKLICH ausführt — ehrlich, ohne Hokus Pokus</h2>
+<div class="grid3">
+<div class="layer"><b>① PUPPETMASTER — Steuerung</b><small>Master-Repo soll andere Repos steuern.</small>
+<span class="badge real">REAL: fetch</span><span class="badge real">REAL: localStorage</span><span class="badge real">REAL: BroadcastChannel</span><span class="badge real">REAL: postMessage</span><br>
+<span class="badge nein">NEIN: kein Backend</span><span class="badge nein">NEIN: kein Fernsteuern fremder Seiten</span>
+<p style="font-size:9px;color:#aaa">Wahrheit: Geht nur, wenn beide Tabs <b style="color:#fff">gleiche Origin</b> (z.B. beide iki1uc.github.io/MK.trans.warb/) + beide offen + beide lauschen. Fremde Seite / TikTok / YouTube = <b style="color:#fff">kannst du NICHT steuern.</b> Das ist Browser-Sicherheit, kein Bug.</p></div>
+<div class="layer"><b>② TIKTOK-SCAN — Verdichtung</b><small>9×9 Lochkarte, 81 Slots, 9 Karten, 729 RAM, f(x)=min(x,40)</small>
+<span class="badge real">REAL: 81 Slots klickbar</span><span class="badge real">REAL: f(x)=min(x,40)</span><span class="badge real">REAL: 0→3→9→81→729</span><br>
+<span class="badge konzept">KONZEPT: Bilderkennung</span><span class="badge konzept">KONZEPT: Video-Decoder</span>
+<p style="font-size:9px;color:#aaa">Wahrheit: Der Code beweist <b style="color:#fff">KEINE echte Bilderkennung, KEINEN Video-Decoder.</b> Er verdichtet, was DU eingibst / anklickst. Das ist legitim — aber es ist Verdichtung, nicht Erkennung. Nicht lügen, sonst glaubt dir keiner mehr.</p></div>
+<div class="layer"><b>③ DURCHGANG V111 — Perspektiven</b><small>6 Blicke, aber nur 1 Weg. Achsen Höhe / Breite / Tiefe.</small>
+<span class="badge real">REAL: 6 Blick-Buttons</span><span class="badge real">REAL: Achsen X / Y / Z</span><span class="badge real">REAL: 0→3→9→81→729</span><br>
+<span class="badge konzept">KONZEPT: 6 Wege</span>
+<p style="font-size:9px;color:#aaa">Wahrheit: 6 Blicke = 6 Mal dasselbe System aus anderer Richtung ansehen. Nicht 6 verschiedene Wege. <b style="color:#fff">1 Weg, 6 Blicke.</b> Genau so steht es im Code — und genau so ist es richtig.</p></div>
+</div></div>
+
+<div class="card"><h2>2 — <span>VERBORGENE STRUKTUR</span> · Was sich immer wiederholt — deine Sprache</h2>
+<table><tr><th>Muster</th><th>Wo</th><th>Was es bedeutet</th></tr>
+<tr><td><b>0 → 3 → 9 → 81 → 729</b></td><td>Alle 3 Dateien</td><td>3¹ → 3² → 9² → 9³. Dreieck → 9 Ecken → 9×9 Room → 729 Matrix. Dein Takt.</td></tr>
+<tr><td><b>f(x) = min(x, 40)</b></td><td>SCAN + NC</td><td>HOME 40. Alles über 40 wird auf 40 gedeckelt. f(f(x)) = f(x) — einmal HOME, immer HOME.</td></tr>
+<tr><td><b>9 Karten / 9 Ecken / 9 Räume</b></td><td>SCAN + DURCHGANG + NC</td><td>111 BIOS, 222 VERBUND, 333 RECALL, 444 PEAK, 555 ABWEHR, 666 ENERGIE, 777 CO2, 888 ATOM, 999 BENCH</td></tr>
+<tr><td><b>Noel / Noah / Wright</b></td><td>SCAN + NC + Kaggle</td><td>Noel = X Explorer, Noah = Y Memory / 333 RECALL, Wright = Z Decider / TMP Rär Maske</td></tr>
+<tr><td><b>SCSI → RAID → SLI</b></td><td>PUPPETMASTER + NC</td><td>SCSI trennt 5 Quellen, RAID spiegelt 3→1, SLI fügt zusammen. Immer gleiche Reihenfolge.</td></tr>
+<tr><td><b>ATEM EIN / AUS</b></td><td>NC.REGLER</td><td>Taktgeber. Ohne ATEM läuft nichts weiter. Mit ATEM tickt alles.</td></tr>
+</table></div>
+
+<div class="card"><h2>3 — <span>VERBINDUNGEN</span> · Was WIRKLICH miteinander reden kann</h2>
+<div id="connTable"></div>
+<p style="font-size:9px;color:#888;margin-top:8px">Test es selbst: Öffne diese Datei 2x in 2 Tabs (gleiche Origin). Klick in Tab 1 auf <b style="color:#fff">BROADCAST TEST</b> — Tab 2 bekommt die Nachricht in seinem Log. Das ist der Beweis. Kein Zauber.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+<div><b style="font-size:10px;color:#fff">POSTMESSAGE — an iframe / anderes Fenster (gleiche Origin)</b><br><iframe id="echoFrame" style="width:100%;height:90px;border:1px solid #3f3;background:#000" srcdoc="<body style='background:#000;color:#3f3;font-family:monospace;font-size:10px;padding:8px'>ECHO-FRAME — wartet auf postMessage…<script>window.addEventListener('message',e=>{document.body.innerHTML+='<br>← '+e.data.type+' : '+JSON.stringify(e.data.payload).slice(0,120)});window.parent.postMessage({type:'FRAME.BEREIT',payload:'echo bereit'},'*');</script>"></iframe>
+<button onclick="NC.POSTMSG()" style="margin-top:6px">POSTMESSAGE → FRAME</button></div>
+<div><b style="font-size:10px;color:#fff">LOCALSTORAGE — bleibt auch nach Reload</b><br><input id="lsInput" placeholder="Text → localStorage → alle Tabs mit dieser Datei sehen ihn"><button onclick="NC.LS_SAVE()" style="margin-top:6px">SPEICHERN + SENDEN</button><div id="lsOut" style="font-size:9px;color:#aaa;margin-top:6px">—</div></div>
+</div></div>
+
+<div class="card"><h2>4 — <span>UNGENUTZTES POTENZIAL</span> · Fehlende Bausteine vom Puzzle — jetzt eingebaut</h2>
+<p style="font-size:10px;color:#ccc">Vorher: 3 Dateien, 3x Konzept, keine gemeinsame Sprache. Nachher: 1 System, 1 Sprache, 1 Takt. Das hier sind die Bausteine, die gefehlt haben:</p>
+<div class="grid3" id="bausteine"></div>
+<div style="margin-top:12px;border:1px solid #ff38c6;padding:10px"><b style="color:#ff38c6;font-size:11px">⚠ EHRLICH-BOX — was IMMER NOCH nicht geht (und warum das gut ist):</b>
+<ul style="font-size:9px;color:#aaa;line-height:1.7;margin:8px 0 0 16px">
+<li>Keine echte TikTok-Bilderkennung — du müsstest ein Video per Hand in 81 Slots übersetzen. Der Code tut das nicht von allein.</li>
+<li>Kein Steuern fremder Seiten (TikTok / YouTube / Kimi) — Browser verbietet das. Nur eigene Tabs, gleiche Origin.</li>
+<li>Kein Backend — wenn alle Tabs zu sind, ist der Kanal still. localStorage überlebt, BroadcastChannel nicht.</li>
+<li>Kein Video-Decoder — <code>&lt;video&gt;</code> abspielen ≠ Video verstehen. Verstehen = du klickst, System verdichtet.</li>
+</ul></div></div>
+
+<div class="card"><h2>🎛️ <span>PUZZLE-BOARD — Jetzt spielen: 1 System, 3 Ebenen</span></h2>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+<span class="pill">EBENE: <b id="ebeneTxt">PUPPETMASTER</b></span>
+<span class="pill">BLICK: <b id="blickTxt">V111 — BLICK 1</b></span>
+<span class="pill">SLOT: <b id="slotTxt">—</b></span>
+<span class="pill">WERT: <b id="wertTxt">0 → f(x)=0</b></span>
+<span class="pill">ZONE: <b id="zoneTxt">OFF</b></span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div><b style="font-size:10px;color:#fff">6 BLICKE — DURCHGANG V111 (1 Weg, 6 Blicke)</b><div id="blicke" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px"></div>
+<div style="margin-top:10px"><b style="font-size:10px;color:#fff">3 EBENEN — umschalten</b><div id="ebenen" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px"></div></div>
+<div style="margin-top:10px"><b style="font-size:10px;color:#fff">WERT EINGEBEN — SCAN verdichtet auf max 40</b><br><input id="wertInput" type="number" value="729" style="margin-top:6px"><button onclick="NC.SETWERT()" style="margin-top:6px">VERDICHTEN → f(x)=min(x,40)</button></div></div>
+<div><b style="font-size:10px;color:#fff">9×9 LOCHKARTE — TIKTOK-SCAN (81 Slots, klick = 1 Loch)</b><div class="loch" id="loch" style="margin-top:8px"></div>
+<div style="display:flex;justify-content:space-between;font-size:9px;color:#888;margin-top:8px"><span id="lochTxt">0 / 81 Löcher • 0 / 9 Karten voll</span><button onclick="NC.LOCH_CLEAR()">CLEAR</button></div></div>
+</div>
+<div style="margin-top:12px"><b style="font-size:10px;color:#fff">KETTE — 0 → 3 → 9 → 81 → 729 → f(x)=40 → HOME</b><div id="kette" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div></div>
+</div>
+
+<div class="card"><h2>📜 <span>LOG — PUPPETMASTER hört alles (eigene Tabs + Frame + Storage)</span></h2><div class="log" id="log"></div></div>
+
+<div class="card"><h2>🧩 <span>PUZZLE-EXPORT — 1 JSON = 1 System</span></h2><pre id="exportPre">— noch kein Export —</pre></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const BAUSTEINE=[
+{t:"B1 · GEMEINSAME SPRACHE",c:"NC.MSG",d:"Alle 3 Ebenen sprechen jetzt gleich: {type, payload, von, zeit}. Vorher: jede Datei eigene Worte. Jetzt: 1 Protokoll.",tag:"FEHLTE"},
+{t:"B2 · BROADCASTCHANNEL",c:"NC.BC",d:"Echter Kanal 'MK-atom-ctrl'. Alle Tabs mit dieser Datei hören mit. Vorher: nur Konzept. Jetzt: wirklich verbunden.",tag:"FEHLTE"},
+{t:"B3 · POSTMESSAGE ECHO",c:"NC.POST",d:"Frame unten ist der Beweis: postMessage hin + Antwort zurück. Vorher: nur im Text erwähnt.",tag:"FEHLTE"},
+{t:"B4 · LOCALSTORAGE SYNC",c:"NC.LS",d:"'storage'-Event: änderst du in Tab 1, sieht Tab 2 es. Überlebt Reload. Vorher: localStorage genannt, nie benutzt.",tag:"FEHLTE"},
+{t:"B5 · VERDICHTER f(x)=min(x,40)",c:"NC.VERDICHT",d:"Echte Funktion, nicht nur Text. 729 → 40. 1000 → 40. f(f(x))=f(x). HOME 40 ist Ziel, nicht Zufall.",tag:"FEHLTE"},
+{t:"B6 · 81-SLOT LOCHKARTE",c:"NC.LOCH",d:"Klickbar, zählbar, exportierbar. 9 volle Reihen = 9 Karten. Vorher: Bild. Jetzt: Daten.",tag:"FEHLTE"},
+{t:"B7 · 6 BLICKE = 1 WEG",c:"NC.BLICK",d:"Blick ändert nur Perspektive (X/Y/Z + Text), nicht die Daten. Vorher: 6 Wege vermutet. Jetzt: 1 Weg, 6 Blicke — ehrlich.",tag:"FEHLTE"},
+{t:"B8 · ATEM + ZONE",c:"NC.ATEM",d:"Taktgeber + Zone (OFF/ROOT/UP/HOME/WORK/LIMIT). Vorher: ATEM nur in NC.REGLER. Jetzt: steuert auch Puzzle.",tag:"FEHLTE"},
+{t:"B9 · EHRLICH-BOX",c:"NC.EHRLICH",d:"Sagt klar: keine Bilderkennung, kein Fremd-Steuern, kein Backend. Das ist kein Mangel — das ist Vertrauen.",tag:"FEHLTE"},
+];
+const BLICKE=[
+{n:1,t:"BLICK 1 — VORNE",x:"X: Höhe",d:"PUPPETMASTER sieht: Wer steuert?"},
+{n:2,t:"BLICK 2 — SEITE",x:"Y: Breite",d:"SCAN sieht: Was wird verdichtet?"},
+{n:3,t:"BLICK 3 — OBEN",x:"Z: Tiefe",d:"DURCHGANG sieht: Aus welchem Blick?"},
+{n:4,t:"BLICK 4 — INNEN",x:"X+Y",d:"Noel + Noah: Explorer + Memory"},
+{n:5,t:"BLICK 5 — AUSSEN",x:"Y+Z",d:"Noah + Wright: Memory + Decider"},
+{n:6,t:"BLICK 6 — GANZ",x:"X+Y+Z",d:"Alle 3: Noel Noah Wright = 1 System"},
+];
+const EBENEN=["PUPPETMASTER","SCAN / RESPO","DURCHGANG V111"];
+const S={ebene:0,blick:0,slots:new Set(),wert:0,atem:false,atemPhase:0,log:[]};
+const f=x=>Math.min(Number(x)||0,40);
+const zone=()=>{const v=f(S.wert); if(!S.atem) return "OFF"; if(v<10) return "ROOT"; if(v<30) return "UP"; if(v===40) return "HOME"; if(v<38) return "WORK"; return "LIMIT";};
+const log=m=>{S.log.unshift("["+new Date().toLocaleTimeString()+"] "+m); S.log=S.log.slice(0,80); $("log").innerHTML=S.log.map((x,i)=>`<div style="color:${i===0?"#3f3":"#888"}">${x}</div>`).join("");};
+let BC=null; try{ BC=new BroadcastChannel("MK-atom-ctrl"); BC.onmessage=e=>{log("← BROADCAST von anderem Tab: "+(e.data?.type||"?")+" — "+JSON.stringify(e.data?.payload||"").slice(0,120)); render();}; $("chanLine").textContent="MK-atom-ctrl • BEREIT"; }catch(e){ $("chanLine").textContent="NICHT VERFÜGBAR (privater Modus?)"; }
+window.addEventListener("message",e=>{ if(e.data?.type==="FRAME.BEREIT") log("← FRAME: ECHO-FRAME bereit (postMessage geht)"); });
+window.addEventListener("storage",e=>{ if(e.key==="MK.atom.ctrl"){ log("← STORAGE von anderem Tab: "+String(e.newValue).slice(0,120)); $("lsOut").textContent="Anderer Tab schrieb: "+e.newValue; render(); }});
+function send(type,payload){ const msg={type,payload,von:"PUZZLE",zeit:new Date().toISOString()}; try{ BC?.postMessage(msg); }catch(e){} try{ localStorage.setItem("MK.atom.ctrl.last",JSON.stringify(msg)); }catch(e){} log("→ SEND "+type+" — "+JSON.stringify(payload).slice(0,120)); }
+function render(){
+  $("ebeneTxt").textContent=EBENEN[S.ebene]; $("blickTxt").textContent="V111 — "+BLICKE[S.blick].t; $("slotTxt").textContent=S.slots.size+" Löcher"; $("wertTxt").textContent=S.wert+" → f(x)="+f(S.wert); $("zoneTxt").textContent=zone();
+  $("statusLine").textContent=`EBENE ${EBENEN[S.ebene]} • BLICK ${S.blick+1} • f(x)=${f(S.wert)} • ZONE ${zone()} • ${S.atem?"ATEM EIN":"ATEM AUS"}`;
+  $("atemBtn").textContent=S.atem?"EIN":"AUS";
+  $("bausteine").innerHTML=BAUSTEINE.map(b=>`<div class="layer on"><span class="badge fehlt">${b.tag}</span><br><b>${b.t}</b><br><span style="font-size:9px;color:#3f3">${b.c}</span><small>${b.d}</small></div>`).join("");
+  $("blicke").innerHTML=BLICKE.map((b,i)=>`<button onclick="NC.BLICK(${i})" style="background:${S.blick===i?"#fff;color:#000":""}">${b.t}<br><span style="font-size:7px;opacity:.7">${b.x}</span></button>`).join("");
+  $("ebenen").innerHTML=EBENEN.map((e,i)=>`<button onclick="NC.EBENE(${i})" style="background:${S.ebene===i?"#fff;color:#000":""}">${e}</button>`).join("");
+  $("loch").innerHTML=Array.from({length:81},(_,i)=>`<div class="slot ${S.slots.has(i)?"full":""}" onclick="NC.LOCH(${i})">${i+1}</div>`).join("");
+  $("lochTxt").textContent=`${S.slots.size} / 81 Löcher • ${Math.floor(S.slots.size/9)} / 9 Karten voll • f(${S.slots.size})=${f(S.slots.size)}`;
+  $("kette").innerHTML=[0,3,9,81,729].map(v=>`<span class="pill" style="border-color:${S.wert>=v?"#3f3":"#333"};color:${S.wert>=v?"#3f3":"#666"}">${v}</span>`).join("")+`<span class="pill" style="background:#3f3;color:#000">f(x) = ${f(S.wert)}</span><span class="pill" style="background:${zone()==="HOME"?"#ffd700;color:#000":"#222"}">ZONE ${zone()} ${zone()==="HOME"?"✓ HOME 40":""}</span>`;
+  $("connTable").innerHTML=`<table><tr><th>Von → Nach</th><th>Geht?</th><th>Wie</th></tr>
+  <tr><td>PUPPETMASTER → SCAN (gleicher Tab)</td><td><b style="color:#3f3">JA</b></td><td>Direkter Funktionsaufruf — diese Datei tut es.</td></tr>
+  <tr><td>Tab 1 → Tab 2 (gleiche Origin, beide offen)</td><td><b style="color:#3f3">JA</b></td><td>BroadcastChannel "MK-atom-ctrl" — TEST oben.</td></tr>
+  <tr><td>Tab → iframe (gleiche Origin)</td><td><b style="color:#3f3">JA</b></td><td>postMessage — ECHO-FRAME unten beweist es.</td></tr>
+  <tr><td>Tab 1 → Tab 2 (nach Reload)</td><td><b style="color:#3f3">JA</b></td><td>localStorage + storage-Event — überlebt Reload.</td></tr>
+  <tr><td>Diese Datei → TikTok / YouTube / Kimi (fremd)</td><td><b style="color:#ff38c6">NEIN</b></td><td>Browser blockt. Nur du per Hand kannst dort posten. Kein Code der Welt darf das.</td></tr>
+  <tr><td>SCAN → echte Bilderkennung</td><td><b style="color:#ff38c6">NEIN (noch)</b></td><td>Fehlt: du klickst / tippst, System verdichtet. Echte Erkennung bräuchte Modell + Video-Frame-Analyse — nicht in diesen 3 Dateien.</td></tr></table>`;
+  const data={system:"MK.atom.ctrl PUZZLE",ebene:EBENEN[S.ebene],blick:BLICKE[S.blick],slots:[...S.slots],slotsCount:S.slots.size,wert:S.wert,verdichtet:f(S.wert),zone:zone(),kette:[0,3,9,81,729],atem:S.atem};
+  $("exportPre").textContent=JSON.stringify(data,null,2);
+}
+window.NC={
+  BLICK:i=>{S.blick=i; log(`[DURCHGANG] ${BLICKE[i].t} — ${BLICKE[i].d}`); send("DURCHGANG.BLICK",{blick:i+1,text:BLICKE[i].t}); render();},
+  EBENE:i=>{S.ebene=i; log(`[EBENE] → ${EBENEN[i]}`); send("EBENE",{ebene:EBENEN[i]}); render();},
+  LOCH:i=>{ S.slots.has(i)?S.slots.delete(i):S.slots.add(i); S.wert=S.slots.size*9; log(`[SCAN] Slot ${i+1} ${S.slots.has(i)?"gesetzt":"gelöscht"} — ${S.slots.size}/81 • f(x)=${f(S.wert)}`); send("SCAN.SLOT",{slot:i+1,total:S.slots.size}); render();},
+  LOCH_CLEAR:()=>{S.slots.clear(); S.wert=0; log("[SCAN] Lochkarte geleert"); render();},
+  SETWERT:()=>{S.wert=Number($("wertInput").value||0); log(`[SCAN] Wert ${S.wert} → verdichtet f(x)=${f(S.wert)} → ZONE ${zone()}`); send("SCAN.WERT",{wert:S.wert,verdichtet:f(S.wert)}); render();},
+  SCAN:()=>{S.wert=S.slots.size*9||729; log(`[NC.SCAN] Slots ${S.slots.size} → Wert ${S.wert} → f(x)=${f(S.wert)} → ZONE ${zone()} • Blick ${S.blick+1} • Ebene ${EBENEN[S.ebene]}`); send("NC.SCAN",{wert:S.wert,verdichtet:f(S.wert),zone:zone()}); render();},
+  SEND:()=>{send("PUPPETMASTER.SEND",{ebene:EBENEN[S.ebene],blick:S.blick+1,wert:S.wert,verdichtet:f(S.wert),slots:S.slots.size,zone:zone()}); render();},
+  BROADCAST:()=>{send("BROADCAST.TEST",{text:"HOKUS POKUS — hörst du mich, anderer Tab? 1ns!",von:"PUZZLE"}); log("[BROADCAST] Test gesendet — öffne diese Datei in 2. Tab, dann siehst du ihn dort."); render();},
+  POSTMSG:()=>{const fr=$("echoFrame"); fr.contentWindow.postMessage({type:"PUPPETMASTER.PING",payload:{wert:S.wert,zone:zone()}},"*"); log("[POSTMESSAGE] → ECHO-FRAME gesendet");},
+  LS_SAVE:()=>{const v=$("lsInput").value||""; try{localStorage.setItem("MK.atom.ctrl",v); localStorage.setItem("MK.atom.ctrl.last",JSON.stringify({type:"LS",payload:v}));}catch(e){} $("lsOut").textContent="Gespeichert: "+v+" — anderer Tab mit dieser Datei sieht es via storage-Event."; log("[STORAGE] Gespeichert: "+v); send("STORAGE",{text:v}); render();},
+  BAUSTEIN:()=>{log("[PUZZLE] Alle 9 Bausteine sind in dieser 1 Datei drin: Sprache + Broadcast + PostMessage + Storage + Verdichter + Lochkarte + 6 Blicke + ATEM + Ehrlich-Box."); render();},
+  ATEM:()=>{S.atem=!S.atem; log(`[NC.ATEM] ${S.atem?"EIN — Takt läuft":"AUS — Takt stoppt"}`); render();},
+  EXPORT:()=>{const txt=$("exportPre").textContent; navigator.clipboard?.writeText(txt); const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([txt],{type:"application/json"})); a.download="NC-PUZZLE-40.json"; a.click(); log("[EXPORT] NC-PUZZLE-40.json gespeichert");},
+  RESET:()=>{S.slots.clear(); S.wert=0; S.ebene=0; S.blick=0; log("[RESET] Puzzle zurück auf Start"); render();}
+};
+log("[PUZZLE] 1 System geladen: PUPPETMASTER + SCAN + DURCHGANG — ehrlich getrennt: REAL vs KONZEPT vs FEHLT.");
+log("[PUPPETMASTER] BroadcastChannel MK-atom-ctrl bereit — nur eigene Tabs, gleiche Origin.");
+log("[SCAN] Kein Video-Decoder — Verdichtung aus dem, was DU klickst / tippst. Das ist die Wahrheit, und sie reicht.");
+render();
+setInterval(()=>{ if(!S.atem) return; S.atemPhase=(S.atemPhase+1)%2; S.wert=S.slots.size*9||S.wert; render(); },1200);
+</script></body></html>

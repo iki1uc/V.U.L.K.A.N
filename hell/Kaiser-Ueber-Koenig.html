@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KAISER über KÖNIG · CTRL.LER</title>
+<style>
+:root{--bg:#0d0f0c;--panel:#131610;--line:#26281f;--ink:#f2efe8;--muted:#9a958a;--gold:#e8c87a;--ok:#7ec98a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.55 Georgia,serif;max-width:920px;margin:0 auto;padding:28px 16px 60px}
+header{text-align:center;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:18px}
+.eyebrow{font:10px/1 ui-monospace,monospace;letter-spacing:.25em;color:var(--gold);text-transform:uppercase}
+h1{font-weight:400;font-size:32px;margin:10px 0} h1 b{color:var(--gold)}
+.rule{color:var(--muted);font-style:italic;font-size:13px;max-width:640px;margin:0 auto}
+h2{font:11px/1 ui-monospace,monospace;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;font-weight:400}
+section{margin-bottom:18px}
+.kaiser{background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:20px;text-align:center}
+#dial{display:block;max-width:100%;height:auto;margin:0 auto;background:#0a0d08;border-radius:50%}
+.btns{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+button{font:inherit;font-size:13px;padding:11px 20px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover:not(:disabled){border-color:var(--gold)} button:disabled{opacity:.35;cursor:not-allowed}
+button.go{border-color:var(--gold);background:#1e180a;color:var(--gold);font-weight:700}
+#log{margin-top:14px;font:11px/1.6 ui-monospace,monospace;color:var(--muted);text-align:left;max-height:110px;overflow:auto;background:#0a0d08;border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:40px}
+#log div:first-child{color:var(--gold)}
+.koenig{background:var(--panel);border:2px solid var(--gold);border-radius:14px;padding:18px}
+.cells{display:grid;grid-template-columns:repeat(3,1fr);gap:12px} @media(max-width:600px){.cells{grid-template-columns:1fr}}
+.cell{background:#0a0d08;border:1px solid var(--gold);border-radius:10px;padding:12px;text-align:center}
+.cell .sw{height:58px;border-radius:6px;margin-bottom:8px;background:#1a1a1a}
+.cell .lab{font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.cell .val{font:11px/1.4 ui-monospace,monospace;color:var(--gold);margin-top:5px}
+.cell .vit{font:10px/1 ui-monospace,monospace;color:var(--muted);margin-top:3px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+#rings{display:block;max-width:100%;height:auto;margin:0 auto}
+.imgs{display:grid;grid-template-columns:1fr 1fr;gap:12px} @media(max-width:600px){.imgs{grid-template-columns:1fr}}
+.fig{background:#0a0d08;border:1px solid var(--line);border-radius:10px;padding:10px} .fig.k{border-color:var(--gold)}
+.fig figcaption{font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:8px} .fig.k figcaption{color:var(--gold)}
+.fig canvas{width:100%;height:auto;display:block;border-radius:5px;background:#000;max-height:300px}
+footer{text-align:center;font:10px/1 ui-monospace,monospace;letter-spacing:.15em;color:var(--muted);padding-top:18px;border-top:1px solid var(--line)}
+</style></head>
+<body>
+<header><p class="eyebrow">BTC729 · CTRL · CTRL.LER · messen und bemessen</p><h1>KAISER <b>über</b> KÖNIG</h1><p class="rule">Der Kaiser misst. Der Kaiser bemisst. Der Kaiser wählt — König und alle anderen Figuren. Rund und runder. Alles Gegebene wie genommen. Alles so wie es soll.</p></header>
+<main>
+<section class="kaiser"><h2>♛ KAISER · CTRL.LER · 9 SEKTOREN · RUND</h2><canvas id="dial" width="420" height="420"></canvas>
+<div class="btns"><input id="file" type="file" accept="image/*" hidden><button id="load">Bild laden</button><button id="measure" class="go">Messen</button><button id="bemessen" disabled>Bemessen</button></div>
+<div id="log"><div>Kaiser bereit. Lade ein Bild.</div></div></section>
+<section class="koenig"><h2>♔ KÖNIG · 3 · VOM KAISER GEWÄHLT</h2><div class="cells">
+<div class="cell" id="kAuge"><div class="sw"></div><div class="lab">AUGE</div><div class="val">—</div><div class="vit">wartet</div></div>
+<div class="cell" id="kHirn"><div class="sw"></div><div class="lab">HIRN</div><div class="val">—</div><div class="vit">wartet</div></div>
+<div class="cell" id="kOffen"><div class="sw"></div><div class="lab">OFFEN</div><div class="val">—</div><div class="vit">wartet</div></div>
+</div></section>
+<section class="panel"><h2>RINGE · 3 → 9 → 81 → 729 · RUND UND RUNDER</h2><canvas id="rings" width="380" height="380"></canvas></section>
+<section class="panel"><h2>BILD · Original vs Rekonstruktion aus König</h2><div class="imgs">
+<figure class="fig"><figcaption>ORIGINAL · 729</figcaption><canvas id="raw"></canvas></figure>
+<figure class="fig k"><figcaption>REKONSTRUKTION · AUS 3 · KAISER-GEWÄHLT</figcaption><canvas id="recon"></canvas></figure>
+</div></section>
+</main>
+<footer>KAISER · KÖNIG · 9 · 81 · 729 · CTRL.LER · alles gegeben wie genommen · alles so wie es soll</footer>
+<script>
+(()=>{'use strict';const $=id=>document.getElementById(id);
+const S={raw:null,w:0,h:0,c729:[],c81:[],c9:[],meas:[],ranks:[],konig:[]};
+function enc729(d,w,h){const out=[];const cw=w/27,ch=h/27;
+for(let gy=0;gy<27;gy++)for(let gx=0;gx<27;gx++){const x0=Math.floor(gx*cw),x1=Math.floor((gx+1)*cw),y0=Math.floor(gy*ch),y1=Math.floor((gy+1)*ch);let r=0,g=0,b=0,c=0;const lums=[];
+for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){const i=(y*w+x)*4;r+=d[i];g+=d[i+1];b+=d[i+2];c++;lums.push(0.299*d[i]+0.587*d[i+1]+0.114*d[i+2]);}
+const m=lums.reduce((a,b)=>a+b,0)/lums.length;let v=0;for(const l of lums)v+=(l-m)**2;out.push({r:r/c,g:g/c,b:b/c,contrast:Math.sqrt(v/lums.length),lum:m});}return out;}
+function collapse(cells,size){const ns=size/3,out=[];for(let by=0;by<ns;by++)for(let bx=0;bx<ns;bx++){let r=0,g=0,b=0,con=0,lum=0;for(let dy=0;dy<3;dy++)for(let dx=0;dx<3;dx++){const cc=cells[(by*3+dy)*size+(bx*3+dx)];r+=cc.r;g+=cc.g;b+=cc.b;con+=cc.contrast;lum+=cc.lum;}out.push({r:r/9,g:g/9,b:b/9,contrast:con/9,lum:lum/9});}return out;}
+function vit(c){const col=Math.max(c.r,c.g,c.b)-Math.min(c.r,c.g,c.b);const br=(c.r+c.g+c.b)/3;return c.contrast*0.5+col*0.3+br*0.2;}
+function drawKaiser(p=0){const cv=$('dial'),ctx=cv.getContext('2d');const W=cv.width,H=cv.height,cx=W/2,cy=H/2,maxR=Math.min(W,H)*0.44,cr=maxR*0.22,rw=(maxR-cr)/3;
+ctx.clearRect(0,0,W,H);ctx.beginPath();ctx.arc(cx,cy,maxR,0,Math.PI*2);ctx.fillStyle='#0a0d08';ctx.fill();ctx.strokeStyle='rgba(232,200,122,.2)';ctx.stroke();
+for(let ring=0;ring<3;ring++){const ir=cr+ring*rw,or=cr+(ring+1)*rw;
+for(let sec=0;sec<3;sec++){const sa=(sec/3)*Math.PI*2-Math.PI/2,ea=((sec+1)/3)*Math.PI*2-Math.PI/2,idx=ring*3+sec,cell=S.c9[idx];
+ctx.beginPath();ctx.arc(cx,cy,ir,sa,ea);ctx.arc(cx,cy,or,ea,sa,true);ctx.closePath();
+if(!cell){ctx.fillStyle='#131610';ctx.fill();ctx.strokeStyle='#26281f';ctx.stroke();continue;}
+const rank=S.ranks[idx]??8,isK=rank<3,swept=p>0&&p<1&&((sec+1)/3)>p;
+ctx.fillStyle=swept?'#131610':`rgb(${Math.round(cell.r)},${Math.round(cell.g)},${Math.round(cell.b)})`;ctx.fill();ctx.strokeStyle=isK?'#e8c87a':'#26281f';ctx.lineWidth=isK?3:1;ctx.stroke();
+const ma=(sa+ea)/2,lr=(ir+or)/2,lx=cx+Math.cos(ma)*lr,ly=cy+Math.sin(ma)*lr;ctx.font='bold 13px ui-monospace,monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+if(isK&&S.meas.length){ctx.beginPath();ctx.arc(lx,ly,13,0,Math.PI*2);ctx.fillStyle='#e8c87a';ctx.fill();ctx.fillStyle='#0d0f0c';}else ctx.fillStyle='rgba(242,239,232,.6)';
+ctx.fillText('#'+(rank+1),lx,ly);}}
+ctx.beginPath();ctx.arc(cx,cy,cr,0,Math.PI*2);ctx.fillStyle='#1e180a';ctx.fill();ctx.strokeStyle='#e8c87a';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#e8c87a';ctx.font='26px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('♛',cx,cy);
+if(p>0&&p<1){const a=p*Math.PI*2-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*maxR,cy+Math.sin(a)*maxR);ctx.strokeStyle='rgba(232,200,122,.9)';ctx.lineWidth=2;ctx.stroke();}}
+function measure(){if(!S.c9.length)return;$('measure').disabled=true;log('Kaiser beginnt zu messen…');const st=performance.now();
+(function anim(){const t=Math.min(1,(performance.now()-st)/1400);drawKaiser(t);if(t<1)requestAnimationFrame(anim);else{compute();drawKaiser(0);updKonig();updRings();updRecon();$('measure').disabled=false;$('bemessen').disabled=false;log('gemessen · 9 Sektoren · König gewählt · alle anderen Figuren gesetzt');}})();}
+function compute(){const ms=S.c9.map((cell,i)=>({index:i,vitality:vit(cell),cell}));const sorted=[...ms].sort((a,b)=>b.vitality-a.vitality);S.meas=ms;S.ranks=ms.map(m=>sorted.findIndex(s=>s.index===m.index));S.konig=sorted.slice(0,3).map(m=>m.cell);}
+function bemessen(){if(S.konig.length!==3||!S.raw)return;log('Kaiser bemisst: Rekonstruktion vs Original…');const rec=$('recon').getContext('2d').getImageData(0,0,S.w,S.h);let mse=0;const n=S.raw.length/4;for(let i=0;i<S.raw.length;i+=4)for(let k=0;k<3;k++){const d=S.raw[i+k]-rec.data[i+k];mse+=d*d;}mse/=(n*3);const psnr=mse>0?10*Math.log10(255*255/mse):99;
+const LA=new Float32Array(n),LB=new Float32Array(n);let mA=0,mB=0;for(let i=0,j=0;i<S.raw.length;i+=4,j++){LA[j]=0.299*S.raw[i]+0.587*S.raw[i+1]+0.114*S.raw[i+2];LB[j]=0.299*rec.data[i]+0.587*rec.data[i+1]+0.114*rec.data[i+2];mA+=LA[j];mB+=LB[j];}mA/=n;mB/=n;let vA=0,vB=0,cov=0;for(let j=0;j<n;j++){const da=LA[j]-mA,db=LB[j]-mB;vA+=da*da;vB+=db*db;cov+=da*db;}vA/=n;vB/=n;cov/=n;const C1=6.5025,C2=58.5225;const ssim=((2*mA*mB+C1)*(2*cov+C2))/((mA*mA+mB*mB+C1)*(vA+vB+C2));
+log(`bemessen · PSNR ${psnr.toFixed(2)} dB · SSIM ${ssim.toFixed(3)}`);log('der Kaiser ist gemessen — rund und runder.');}
+function updKonig(){if(!S.konig.length)return;const ids=['kAuge','kHirn','kOffen'],des=['Sehen','Verstehen','Fundament'];S.konig.forEach((c,i)=>{const el=$(ids[i]);el.querySelector('.sw').style.background=`rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`;el.querySelector('.val').textContent=`R${Math.round(c.r)} G${Math.round(c.g)} B${Math.round(c.b)}`;el.querySelector('.vit').textContent=`${des[i]} · V ${vit(c).toFixed(1)} · vom Kaiser gewählt`;});}
+function updRings(){const cv=$('rings'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2,maxR=Math.min(W,H)*0.44;ctx.fillStyle='#0a0d08';ctx.fillRect(0,0,W,H);
+if(S.c729.length){const size=maxR*2,step=size/27,off=(W-size)/2;for(let gy=0;gy<27;gy++)for(let gx=0;gx<27;gx++){const c=S.c729[gy*27+gx];ctx.fillStyle=`rgba(${Math.round(c.r*0.4)},${Math.round(c.g*0.4)},${Math.round(c.b*0.4)},0.85)`;ctx.fillRect(off+gx*step,off+gy*step,step+1,step+1);}}
+if(S.c81.length){const s81=maxR*1.4,st81=s81/9,off81=(W-s81)/2;for(let gy=0;gy<9;gy++)for(let gx=0;gx<9;gx++){const c=S.c81[gy*9+gx];ctx.fillStyle=`rgba(${Math.round(c.r*0.7)},${Math.round(c.g*0.7)},${Math.round(c.b*0.7)},0.95)`;ctx.fillRect(off81+gx*st81,off81+gy*st81,st81+1,st81+1);}ctx.strokeStyle='#4a5a44';ctx.lineWidth=2;ctx.strokeRect(off81,off81,s81,s81);}
+if(S.c9.length){const s9=maxR*0.9,st9=s9/3,off9=(W-s9)/2;for(let gy=0;gy<3;gy++)for(let gx=0;gx<3;gx++){const idx=gy*3+gx,c=S.c9[idx],rank=S.ranks[idx]??8,isK=rank<3;ctx.fillStyle=`rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`;ctx.fillRect(off9+gx*st9,off9+gy*st9,st9+1,st9+1);ctx.strokeStyle=isK?'#e8c87a':'#26281f';ctx.lineWidth=isK?3:1;ctx.strokeRect(off9+gx*st9,off9+gy*st9,st9+1,st9+1);}}
+if(S.konig.length===3){const ks=maxR*0.4,kst=ks/3,koff=(W-ks)/2;for(let y=0;y<3;y++){const c=S.konig[y];ctx.fillStyle=`rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`;ctx.fillRect(koff,koff+y*kst,ks,kst+1);}ctx.strokeStyle='#e8c87a';ctx.lineWidth=3;ctx.strokeRect(koff,koff,ks,ks);ctx.fillStyle='#e8c87a';ctx.font='20px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('♔',cx,koff-12);}}
+function updRecon(){if(S.konig.length!==3)return;const w=S.w,h=S.h,nine=[];for(let y=0;y<3;y++){const k=S.konig[y];for(let x=0;x<3;x++){const v=0.88+x*0.06;nine.push({r:Math.min(255,k.r*v),g:Math.min(255,k.g*v),b:Math.min(255,k.b*v)});}}const e81=expand(nine,3),s729=expand(e81,9),cv=render(s729,w,h),rc=$('recon');rc.width=w;rc.height=h;rc.getContext('2d').drawImage(cv,0,0);}
+function expand(cells,size){const ns=size*3,out=[];for(let oy=0;oy<ns;oy++)for(let ox=0;ox<ns;ox++){const by=Math.floor(oy/3),bx=Math.floor(ox/3);out.push({...cells[by*size+bx]});}return out;}
+function render(cells,w,h){const cv=document.createElement('canvas');cv.width=w;cv.height=h;const ctx=cv.getContext('2d');const img=ctx.createImageData(w,h);const g=27;for(let gy=0;gy<g;gy++)for(let gx=0;gx<g;gx++){const c=cells[gy*g+gx];const x0=Math.floor(gx*w/g),x1=Math.floor((gx+1)*w/g),y0=Math.floor(gy*h/g),y1=Math.floor((gy+1)*h/g);for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){const i=(y*w+x)*4;img.data[i]=c.r;img.data[i+1]=c.g;img.data[i+2]=c.b;img.data[i+3]=255;}}ctx.putImageData(img,0,0);return cv;}
+function load(f){if(!f||!f.type.startsWith('image/'))return;const url=URL.createObjectURL(f);const img=new Image();img.onload=()=>{const sc=Math.min(1,810/img.naturalWidth),w=Math.max(1,Math.round(img.naturalWidth*sc)),h=Math.max(1,Math.round(img.naturalHeight*sc));S.w=w;S.h=h;const raw=$('raw');raw.width=w;raw.height=h;const ctx=raw.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0,w,h);S.raw=ctx.getImageData(0,0,w,h).data;S.c729=enc729(S.raw,w,h);S.c81=collapse(S.c729,27);S.c9=collapse(S.c81,9);S.meas=[];S.ranks=[];S.konig=[];drawKaiser(0);updRings();$('measure').disabled=false;$('bemessen').disabled=true;['kAuge','kHirn','kOffen'].forEach(id=>{$(id).querySelector('.sw').style.background='#1a1a1a';$(id).querySelector('.val').textContent='—';$(id).querySelector('.vit').textContent='wartet auf Messung';});$('recon').width=w;$('recon').height=h;log(`Bild geladen · ${w}×${h} · 729→81→9 · Kaiser bereit`);URL.revokeObjectURL(url);};img.onerror=()=>URL.revokeObjectURL(url);img.src=url;}
+function log(m){const el=$('log'),d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' · '+m;el.prepend(d);while(el.children.length>8)el.lastChild.remove();}
+function demo(){const cv=document.createElement('canvas');cv.width=720;cv.height=480;const ctx=cv.getContext('2d');const g=ctx.createLinearGradient(0,0,720,480);g.addColorStop(0,'#1d2f2a');g.addColorStop(0.45,'#8a7a45');g.addColorStop(0.72,'#e8c87a');g.addColorStop(1,'#101714');ctx.fillStyle=g;ctx.fillRect(0,0,720,480);ctx.fillStyle='#f2ecd9';ctx.beginPath();ctx.arc(560,130,70,0,Math.PI*2);ctx.fill();ctx.fillStyle='#0d0f0c';ctx.fillRect(50,380,620,20);ctx.fillRect(90,300,130,80);ctx.fillRect(280,220,100,160);ctx.fillRect(450,340,170,40);cv.toBlob(b=>{load(new File([b],'kaiser-demo.png',{type:'image/png'}));},'image/png');}
+$('load').onclick=()=>$('file').click();$('file').onchange=e=>load(e.target.files[0]);$('measure').onclick=measure;$('bemessen').onclick=bemessen;drawKaiser(0);updRings();setTimeout(demo,200);
+})();
+</script></body></html>
