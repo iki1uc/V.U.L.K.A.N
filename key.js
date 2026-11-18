@@ -1,35 +1,29 @@
+const identities = {
+  3:  { wesensform: "Achse", rolle: "Basis", darf: ["lesen"] },
+  9:  { wesensform: "Achse", rolle: "Partner", darf: ["lesen", "teilen"] },
+  27: { wesensform: "Cube", rolle: "Erweitert", darf: ["lesen", "teilen", "bearbeiten"] },
+  81: { wesensform: "Diamant", rolle: "Admin", darf: ["lesen", "teilen", "bearbeiten", "verwalten"] },
+};
+
 function DiamondDiagram() {
-  const rows = [
-    ["◉"],
-    ["3", "9"],
-    ["◎"],
-    ["3", "9"],
-    ["◎"],
-    ["81", "◆"],
-    ["△"],
-    ["27", "▣"],
-    ["3 ↺"],
-    ["81", "◆"],
-    ["△"],
-    ["27", "▣"],
-    ["3 ↺"],
-  ];
+  const [selected, setSelected] = React.useState(null);
+
+  const number = (n) => (
+    <button key={n} onClick={() => setSelected(identities[n])}>
+      {n}
+    </button>
+  );
 
   return (
-    <pre
-      style={{
-        color: "#22ff88",
-        fontFamily: "monospace",
-        lineHeight: 1.5,
-        whiteSpace: "pre",
-        overflowX: "auto",
-      }}
-    >
-      {rows.map((row, i) => (
-        <div key={i} style={{ textAlign: "center" }}>
-          {row.length === 1 ? row[0] : `${row[0]}     ↗  ↘     ${row[1]}`}
-        </div>
-      ))}
-    </pre>
+    <div>
+      <pre>{/* Diagramm-Anordnung hier rendern */}</pre>
+
+      {selected && (
+        <section>
+          <h3>{selected.wesensform} — {selected.rolle}</h3>
+          <p>Darf: {selected.darf.join(", ")}</p>
+        </section>
+      )}
+    </div>
   );
 }
