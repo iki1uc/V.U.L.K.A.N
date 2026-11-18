@@ -1,14 +1,18 @@
-const ZOOM_LEVELS = [3, 9, 81];
+// stand.js
+export const state = {
+  stand: 3,
+  pos: 0,
+  index: 0
+};
 
-function syncZoom(level = ZM.level, pos = ZM.pos) {
-  const levelIndex = ZOOM_LEVELS.indexOf(Number(level));
-  if (levelIndex < 0) return;
+export function setStand(stand) {
+  state.stand = stand;
+  state.pos = 0;
+  state.index = 0;
+}
 
-  ZM.level = ZOOM_LEVELS[levelIndex];
-  const count = ZM.level;
-  ZM.pos = ((Number(pos) % count) + count) % count;
-
-  document.querySelectorAll("[data-zl]").forEach(button => {
-    button.classList.toggle("on", Number(button.dataset.zl) === ZM.level);
-  });
+export function setPos(pos) {
+  const count = state.stand;
+  state.pos = ((pos % count) + count) % count;
+  state.index = Math.floor(state.pos);
 }
